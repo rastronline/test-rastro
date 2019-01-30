@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const passport = require('passport');
 const FBStrategy = require ('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser((user, next) => {
   next(null, user._id);
@@ -21,11 +22,17 @@ passport.use('facebook-auth', new FBStrategy({
   profileFields: ['displayName', 'emails']
 }, authenticateOAuthUser));
 
+passport.use('google-auth', new GoogleStrategy({
+  clientID: process.env.GOOGLE_AUTH_CLIENT_ID || 'todo',
+  clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET || 'todo',
+  callbackURL: process.env.GOOGLE_AUTH_CB || '/sessions/google/cb',
+}, authenticateOAuthUser));
+
 function authenticateOAuthUser(accessToken, refreshToken, profile, next) {
   
-  //let socialId = `${profile.provider}Id`;
-  //User.findOne({ [`social.${socialId}`]: profile.id })
-  User.findOne({ ['social.facebookId']: profile.id })
+  let socialId = `${profile.provider}Id`;
+  User.findOne({ [`social.${socialId}`]: profile.id })
+  //User.findOne({ ['social.facebookId']: profile.id })
     .then(user => {
       if (user) {
         next(null, user);
@@ -35,8 +42,8 @@ function authenticateOAuthUser(accessToken, refreshToken, profile, next) {
           email: profile.emails[0].value,
           //password: Math.random().toString(36).substring(7),
           social: {
-            //[socialId]: profile.id
-            facebookId: profile.Id
+            [socialId]: profile.id
+            //facebookId: profile.Id
           }
           
         })

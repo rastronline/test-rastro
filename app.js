@@ -7,11 +7,16 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index.routes');
 var usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes')
+const passport = require('passport');
 
 require('./configs/db.config');
 require('./configs/passport.config');
+require('dotenv').config();
 
 var app = express();
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

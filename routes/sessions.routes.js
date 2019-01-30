@@ -7,9 +7,10 @@ router.get('/create', sessionsController.create);
 //router.post('/facebook', (req, res, next) => {res.send("probandoo")});
 router.post('/facebook', passport.authenticate('facebook-auth', {scope:['email']}));
 //router.get('/facebook/cb');
+router.post('/google', passport.authenticate('google-auth', { scope: ['openid', 'profile', 'email'] }));
 
-/* router.get('/facebook/cb', passport.authenticate('facebook-auth', { failureRedirect: '/create' }),
-  function(req, res) {
+router.get('/:provider/cb',sessionsController.createWithIDPCallback),
+  /* function(req, res) {
     // Successful authentication, redirect home.
     //res.redirect('/');
     res.send("LOGADOOOOOO");
