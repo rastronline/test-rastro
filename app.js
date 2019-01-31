@@ -9,12 +9,14 @@ const logger = require('morgan');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const indexRouter = require('./routes/index.routes');
-const usersRouter = require('./routes/users.routes');
-const sessionsRouter = require('./routes/sessions.routes')
+//const usersRouter = require('./routes/users.routes');
+const sessionsRouter = require('./routes/sessions.routes');
+const articlesRouter = require('./routes/articles.routes')
 
 
 require('./configs/db.config');
 require('./configs/passport.config');
+require('./configs/hbs.config');
 
 
 const app = express();
@@ -47,8 +49,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 })); */
 
 app.use('/', indexRouter);
-app.use('/sessions', sessionsRouter)
-app.use('/users', usersRouter);
+app.use('/sessions', sessionsRouter);
+app.use('/articles', articlesRouter);
+//app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
