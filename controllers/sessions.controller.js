@@ -1,3 +1,4 @@
+const passport = require('passport');
 const mongoose = require('mongoose');
 
 module.exports.create = (req, res, next) => {
