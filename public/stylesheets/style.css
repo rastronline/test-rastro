@@ -7,6 +7,14 @@ a {
   color: #00B7FF;
 }
 
+
+
+#map {
+  width:  75%;
+  height: 400px;
+  margin-top:  20px;
+  margin: auto;
+  
 .profile-img {
   width: 15%;
 }

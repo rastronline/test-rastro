@@ -7,6 +7,14 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+  
+    {{> nav }}
+    {{{ body }}}
+  
+    <script src="/js/index.js"></script>
+    <script src="/js/my-map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWcM2jbYQu522kGFL7dmtsyQN01EkpRQI&callback=initMap"></script> 
+
     <div class="container-fluid">
     {{> nav }} 
     <div class= "row flex-xl-nowrap">

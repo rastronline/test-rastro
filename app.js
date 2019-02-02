@@ -37,7 +37,6 @@ app.use(session({
   })
 }));
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -57,12 +56,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'))
 app.use(express.static(path.join(__dirname, 'public')));
+/* app.use(session({
+  secret: 'SuperSecret - (Change it)',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 1000
+  },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60
+  })
+})); */
 
 app.use('/', indexRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/articles', articlesRouter);
 app.use('/users', usersRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
