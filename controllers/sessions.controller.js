@@ -1,3 +1,4 @@
+const passport = require('passport');
 const mongoose = require('mongoose');
 
 module.exports.create = (req, res, next) => {
@@ -17,7 +18,7 @@ module.exports.createWithIDPCallback = (req, res, next) => {
         if (error) {
           next(error)
         } else {
-          res.redirect(`/users`)
+          res.redirect(`/articles`)
         }
       });
     }

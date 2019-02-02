@@ -9,7 +9,7 @@ router.post('/facebook', passport.authenticate('facebook-auth', {scope:['email']
 //router.get('/facebook/cb');
 router.post('/google', passport.authenticate('google-auth', { scope: ['openid', 'profile', 'email'] }));
 
-router.get('/:provider/cb',sessionsController.createWithIDPCallback),
+router.get('/:provider/cb',sessionsController.createWithIDPCallback);
   /* function(req, res) {
     // Successful authentication, redirect home.
     //res.redirect('/');

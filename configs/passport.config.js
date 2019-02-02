@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
-const passport = require('passport');
 const FBStrategy = require ('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const passport = require('passport');
 
 passport.serializeUser((user, next) => {
   next(null, user._id);

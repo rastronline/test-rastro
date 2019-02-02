@@ -1,26 +1,32 @@
-const constants = require('../constants');
+//const constants = require('../constants');
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  owner : {
+const articleSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
   },
-  sold : {
+  isSold : {
     type: Boolean,
     default: false
   },
-  auction: {
+  isAuction: {
     type: Boolean,
     default: false
   },
   price: {
     type: Number
   },
-  photos: {
+   photos: {
     type: [String],
-    default: [""]
-  },
+    default: ['../images/img0.png']
+   /*  type: String,
+    default: ['https://semantic-ui.com/images/wireframe/image.png'] */
+  }, 
   description: {
     type: String,
   },
@@ -40,6 +46,6 @@ const userSchema = new mongoose.Schema({
   }
 }, {timestamps: true});
 
-const Article = mongoose.model('Article', userSchema);
+const Article = mongoose.model('Article', articleSchema);
 
 module.exports = Article;
