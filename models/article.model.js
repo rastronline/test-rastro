@@ -14,6 +14,11 @@ const articleSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+
+  isActive : {
+    type: Boolean,
+    default: false
+  },
   isAuction: {
     type: Boolean,
     default: false
@@ -43,7 +48,7 @@ const articleSchema = new mongoose.Schema({
   },
   category: {
     type: [String]
-  }
+  },
 }, {timestamps: true});
 
 const Article = mongoose.model('Article', articleSchema);

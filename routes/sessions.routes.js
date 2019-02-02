@@ -4,6 +4,7 @@ const passport = require('passport');
 const sessionsController = require('../controllers/sessions.controller');
 
 router.get('/create', sessionsController.create);
+router.get('/delete', sessionsController.delete);
 //router.post('/facebook', (req, res, next) => {res.send("probandoo")});
 router.post('/facebook', passport.authenticate('facebook-auth', {scope:['email']}));
 //router.get('/facebook/cb');

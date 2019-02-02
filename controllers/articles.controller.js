@@ -1,25 +1,14 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
 const Article = require('../models/article.model');
-const User = require('../models/user.model')
+const User = require('../models/user.model');
 
 module.exports.list = (req, res, next) => {
-  let query = "";
-  if (req.params.id) { 
-    console.log ('estoy en el if')
-    query = `owner:${req.params.id}`
-    Article.find({owner: req.params.id})
-    .then((articles) =>
-    User.findById(req.params.id)
-    .then((user)=>
-    res.render('articles/list', {articles, user}))
-    )
-  } else {
-  
+  //console.log("req user is  "+ req.user)
+  //res.send(req.session.user);
   Article.find()
-  .then((articles) => res.render('articles/list', { articles }))
-  .catch(err => next(err))
-}
+    .then((articles) => res.render('articles/list', { articles }))
+    .catch(err => next(err))
 }
 
 module.exports.get = (req, res, next) => {
@@ -31,4 +20,15 @@ module.exports.get = (req, res, next) => {
         })
       })
     .catch(err => next(err));
+}
+
+module.exports.listByUser = (req, res, next) => {
+  Article.find({owner: req.params.id})
+    .then(articles => {
+      User.findById(req.params.id)
+        .then(user => {
+          res.render('articles/userListings', { articles, user })
+        })
+    })
+    .catch(err => next(err))
 }

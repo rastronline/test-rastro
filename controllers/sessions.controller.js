@@ -6,10 +6,6 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.createWithIDPCallback = (req, res, next) => {
-  /* res.send(`
-    TODO: callback for social login. use the right strategy (check req.params)
-  `); */
-  //passport.authenticate(`${req.params.facebook}-auth`, (error, user) => {
   passport.authenticate(`${req.params.provider}-auth`, (error, user) => {
     if (error) {
       next(error);
@@ -23,4 +19,9 @@ module.exports.createWithIDPCallback = (req, res, next) => {
       });
     }
   })(req, res, next);
+}
+
+module.exports.delete = (req, res, next) => {
+  req.logout();
+  res.redirect('/sessions/create');
 }
