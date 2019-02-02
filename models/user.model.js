@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
    unique: true
  },
- /* role: {
+ role: {
    type: String,
    enum: [constants.ROLE_ADMIN, constants.ROLE_USER],
    default: constants.ROLE_USER
@@ -30,16 +30,16 @@ const userSchema = new mongoose.Schema({
  },
  profilePic: {
    type: String,
-   default: ''
+   default: '../images/profile-default.png'
  },
- favorites: {
+ /* favorites: {
    type: [mongoose.Schema.Types.ObjectId],
    ref: 'Article'
- },
- aficiones: {
+ }, */
+ hobbies: {
    type: [String],
  }
- */
+
 }, {timestamps: true})
 
 const User = mongoose.model('User', userSchema);
