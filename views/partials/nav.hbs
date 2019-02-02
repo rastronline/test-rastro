@@ -16,9 +16,26 @@
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
       </li>
     </ul>
+    
+
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
+    <ul>
+    	{{#if session }}
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">¡Hola {{ session.email }}!</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sessions/delete">Logout</a>
+        </li>
+      {{else }}
+        <li class="nav-item">
+          <a class="nav-link" href="/sessions/create">Login</a>
+        </li>
+		  {{/if }}
+    </ul>
   </div>
 </nav>
