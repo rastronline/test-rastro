@@ -19,8 +19,8 @@ console.info('ID => ', process.env.FB_AUTH_CLIENT_ID)
 console.info('SECRET => ', process.env.FB_AUTH_CLIENT_SECRET)
 
 passport.use('facebook-auth', new FBStrategy({
-  clientID: process.env.FB_AUTH_CLIENT_ID || '770839846630715',
-  clientSecret: process.env.FB_AUTH_CLIENT_SECRET || 'b273f72331b80dde762a2d778086a100',
+  clientID: process.env.FB_AUTH_CLIENT_ID,
+  clientSecret: process.env.FB_AUTH_CLIENT_SECRET ,
   callbackURL: process.env.FB_AUTH_CB || '/sessions/facebook/cb',
   profileFields: ['displayName', 'emails']
 }, authenticateOAuthUser));
