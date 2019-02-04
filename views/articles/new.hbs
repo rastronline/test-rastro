@@ -1,0 +1,51 @@
+<h2 class="my-3">SUBIDA DE ARTÍCULO</h2>
+
+<form action="/articles/{{ session.id }}/myProducts" method="post">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Nombre del artículo</label>
+    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Nombre artículo">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput2">¿A qué precio te gustaría vender?</label>
+    <input type="text" class="form-control" name="price" id="exampleFormControlInput2" placeholder="Nombre artículo">
+  </div>
+
+  <div class="input-group mb-3">
+  {{!-- <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div> --}}
+  <select class="custom-select" name="category" id="inputGroupSelect01">
+    <option selected>Elija la categoría ...</option>
+    {{!-- <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option> --}}
+    {{#each categories as |category| }}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+    {{/each }}
+  </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Descripción del artículo</label>
+    <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+  <div class="input-group mb-3">
+  {{!-- <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div> --}}
+  <select class="custom-select" name="condition" id="inputGroupSelect02">
+    <option selected>Estado de conservación ...</option>
+    {{!-- <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option> --}}
+    {{#each conditions as |condition| }}
+      <option value="{{ condition }}">{{ condition }}</option>
+    {{/each }}
+  </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary my-3">Subir a valoración</button>
+
+</form>

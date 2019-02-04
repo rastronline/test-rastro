@@ -17,4 +17,23 @@ function initMap() {
             radius:1000
       });
     }
+
+$(".card-category").click(function() {
+  const categoryId = this.dataset.category;
+
+  $(this).toggleClass('selected');
+
+  if ($(this).hasClass('selected')) {    
+    const newInput = $(document.createElement('input'))
+                        .attr("name", "hobbies")
+                        .attr("value", categoryId)
+                        .attr("id", `category-${categoryId}`)
+                        .attr("display", "none");
+
+    $(".edit-user-form").append(newInput);
+  } else {
+    $(`#category-${categoryId}`).remove();
+  }
+});
+    
   

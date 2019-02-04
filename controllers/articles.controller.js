@@ -32,3 +32,30 @@ module.exports.listByUser = (req, res, next) => {
     })
     .catch(err => next(err))
 }
+
+module.exports.delete = (req, res, next) => {
+  Article.findByIdAndDelete(req.params.id)
+    .then(article => {
+      console.log("articulo ELIMINADOOOOOO");
+      res.redirect(`/users/${req.user.id}/myProducts`)})
+    .catch(err => next(err));
+}
+
+module.exports.create = (req, res, next) => {
+  /* User.findById(req.params.id)
+    .then(User => {
+      res.render('articles/new', user);
+    })
+    .catch(err => next(err)); */
+    res.render('articles/new');
+    //res.send("HOLAAA")
+}
+
+module.exports.doCreate = (req, res, next) => {
+  const article = new Article(req.body);
+  console.log("dentroooooo");
+  article.save()
+    .then((article) => { 
+      res.redirect('/users/{{ session.id }}/myProducts')
+    });
+}

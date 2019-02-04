@@ -15,7 +15,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Suzanne Collins",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
+    owner: "5c585e930f651c25c8f4499d",
     isSold: true
   },
   {
@@ -23,7 +23,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "J.K. Rowling ",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -31,7 +31,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Harper Lee",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -39,7 +39,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Jane Austen",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -47,7 +47,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Stephenie Meyer ",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -55,7 +55,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Markus Zusak",
     price: 7,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -63,7 +63,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "C.S. Lewis",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isSold: true,
     isActive: true
   },
@@ -72,7 +72,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "George Orwell",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c585e930f651c25c8f4499d",
     isSold: true,
     isActive: true
   },
@@ -81,7 +81,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "Margaret Mitchell",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
+    owner: "5c585e930f651c25c8f4499d",
     isActive: true
   },
   {
@@ -89,7 +89,7 @@ const articles = [
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     category: "John Green",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e"
+    owner: "5c585e930f651c25c8f4499d"
   }
 ];
 

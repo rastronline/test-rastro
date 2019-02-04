@@ -1,4 +1,4 @@
-//const constants = require('../constants');
+const constants = require('../constants');
 const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
@@ -28,7 +28,7 @@ const articleSchema = new mongoose.Schema({
   },
    photos: {
     type: [String],
-    default: ['../images/img0.png']
+    default: ['../categories/images/img0.png']
    /*  type: String,
     default: ['https://semantic-ui.com/images/wireframe/image.png'] */
   }, 
@@ -37,7 +37,8 @@ const articleSchema = new mongoose.Schema({
   },
   condition: {
     type: String,
-    enum: ["Poor", "Good", "Excelent"]
+    enum: constants.CONDITIONS.map(condition => condition)
+    //enum: ["Poor", "Good", "Excelent"]
   },
   location: {
     type: {
@@ -47,8 +48,9 @@ const articleSchema = new mongoose.Schema({
     coordinates: [Number]
   },
   category: {
-    type: [String]
-  },
+    type: String,
+    enum: constants.CATEGORIES.map(category => category.id)
+  }
 }, {timestamps: true});
 
 const Article = mongoose.model('Article', articleSchema);

@@ -18,6 +18,7 @@ const indexRouter = require('./routes/index.routes');
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
 const articlesRouter = require('./routes/articles.routes');
+const constants = require('./constants');
 
 // const upload = multer({ dest: 'uploads/' });
 const app = express();
@@ -42,6 +43,9 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.session = req.user;
+  res.locals.categories = constants.CATEGORIES;
+  res.locals.conditions = constants.CONDITIONS;
+  //console.log("EOOOOOOOOOOOOOOOOOOOOOOOOO", res.locals.categories)
   next();
 })
 

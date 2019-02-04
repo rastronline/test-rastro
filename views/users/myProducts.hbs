@@ -15,6 +15,9 @@
           <p>{{ article.name }}<span class="badge badge-primary">{{ article.price }}</span></p>
           <p>{{ article.description }}</p>
           <a href="/articles/{{ article.id }}">Ver detalle</a>
+          <form action="/articles/{{ article.id }}/delete" method="POST">
+            <button class="btn btn-danger" type="submit">Eliminar</button>
+          </form>
         </div> 
       </li>
     {{/each}}

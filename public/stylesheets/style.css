@@ -14,7 +14,12 @@ a {
   height: 400px;
   margin-top:  20px;
   margin: auto;
-  
+}
+
 .profile-img {
   width: 15%;
+}
+
+.selected{
+  opacity: 0.3;
 }
