@@ -3,22 +3,53 @@
 </div>
 
 <div class="container">
-  <form action="/users/{{ session.id }}/edit" method="POST" enctype="multipart/form-data">
-  <div class="form-group">
+  <form action="/users/{{ session.id }}/edit" class="edit-user-form" method="POST" enctype="multipart/form-data">
+  {{!-- <form action="/users/upload" method="post" enctype="multipart/form-data"> --}}
+    <img class="profile-img" src="/uploads/{{ session.profilePic }}" alt="no saleee">
+    <label for="profilePic" class="mx-3">Seleccione una foto de perfil:</label>
+    <input type="file" name="profilePic" accept="image/jpeg">
+    {{!-- <button type="submit" class="btn btn-primary my-3">Subir foto</button> --}}
+ {{!--  </form> --}}
+  <div class="form-group my-4">
     <label for="formGroupExampleInput">Nombre: </label>
     <input type="text" class="form-control" id="formGroupExampleInput"  name="name" placeholder="Introduzca el nombre" value="{{ session.name }}">
   </div>
-  <div class="form-group">
+  {{!-- <div class="form-group my-4">
     <label for="formGroupExampleInput2">localización</label>
-    <input type="text" class="form-control" id="formGroupExampleInput2" name="location" placeholder="location..." value="{{ session.location }}">
+    <input type="text" class="form-control" id="formGroupExampleInput2" name="location" placeholder="location..." value="{{ session.location.coordinates }}">
     <span>(esta será la ubicación por defecto de los artículos)</span>
-  </div>
-  {{!-- <form action="/users/upload" method="post" enctype="multipart/form-data"> --}}
-    <img class="profile-img" src="/uploads/{{ session.profilePic }}" alt="no saleee">
-    <label for="profilePic">Seleccione una foto de perfil:</label>
-    <input type="file" name="profilePic">
-    {{!-- <button type="submit" class="btn btn-primary my-3">Subir foto</button> --}}
- {{!--  </form> --}}
-  <button type="submit" class="btn btn-primary my-3">Save</button>
+  </div> --}}
+  
+
+<h3 class="my-3">¿¿EN QUÉ TIPO DE ARTÍCULOS ESTÁS INTERESADO??</h3>
+<div class="row">
+    {{#each categories as |category|}}
+        <div class="card col-4 my-2 card-category" data-category="{{ category.id }}" id="div-category-{{category.id}}">
+            {{!-- <img src="{{ category.image }}" class="card-img-top" alt="..."> --}}
+            <div class="card-body text-center" style="background-image: url({{ category.image }})">
+                <h5 class="card-title text-success">{{ category.name }}</h5>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+{{#each session.hobbies as |hobby| }}
+    <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
+    <script>
+        document.getElementById("div-category-{{hobby}}").classList.add("selected")
+    </script>
+{{/each }}
+
+<div>
+    <input id="address" type="textbox" value="Madrid, Spain">
+    <input type="button" value="Save Address" onclick="codeAddress()">
+</div>
+<div>
+    <label for="lat-long">Lat and Long</label><br>
+    <input type ='text' name="location.coordinates" id="lat-long">
+    <span>(esta será la ubicación por defecto de los artículos)</span>
+</div>
+<div id="map"></div>
+  <button type="submit" class="btn btn-primary my-3">Actualizar</button>
 </form>
 </div>

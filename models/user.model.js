@@ -26,18 +26,19 @@ const userSchema = new mongoose.Schema({
      type: String,
      default: 'Point'
    },
-   coordinates: [Number]
+   coordinates: String
  },
  profilePic: {
    type: String,
    default: '../images/profile-default.png'
  },
- /* favorites: {
+ favorites: {
    type: [mongoose.Schema.Types.ObjectId],
    ref: 'Article'
- }, */
+ },
  hobbies: {
    type: [String],
+   enum: constants.CATEGORIES.map(category => category.id)
  }
 
 }, {timestamps: true})

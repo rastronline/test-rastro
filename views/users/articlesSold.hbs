@@ -1,0 +1,31 @@
+<div class="cointainer">
+  <h1 class="my-2">MIS ARTICULOS VENDIDOS</h1>
+  <div>
+    <a href="/articles/new" class="btn btn-primary my-5">SUBIR UN NUEVO ARTÍCULO</a>
+  </div>
+  <div class="row">
+    <div class="col-3"><a href="/users/{{ session.id }}/selling">EN VENTA</a></div>
+    <div class="col-3"><a href="/users/{{ session.id }}/...........">EN SUBASTA</a></div>
+    <div class="col-3"><a href="/users/{{ session.id }}/sold">VENDIDOS</a></div>
+    <div class="col-3"><a href="/users/{{ session.id }}/pricing">PENDIENTES DE TASAR</a></div>
+  </div>
+
+  <ul class="list-group mt-5">
+    {{#each articles as |article|}}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="row">
+          <div class="col-3">
+            <img src="/uploads/{{ article.photos }}" class="w-100" alt="photo article">
+          </div>
+          <div class="col-8 mx-3">
+            <p>Vendido a : {{article.buyer.email}}</p>
+            <p>Fecha de venta: {{ article.dateOfPurchase }}</p>
+            <p>{{ article.name }}<span class="badge badge-primary">{{ article.price }}</span></p>
+            <p>{{ article.description }}</p>
+            <a href="/articles/{{ article.id }}" class="my-4">Ver detalle</a>
+          </div>
+        </div> 
+      </li>
+    {{/each}}
+  </ul>
+</div>

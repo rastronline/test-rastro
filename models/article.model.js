@@ -1,4 +1,4 @@
-//const constants = require('../constants');
+const constants = require('../constants');
 const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
@@ -6,39 +6,27 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' 
-  },
-  isSold : {
-    type: Boolean,
-    default: false
-  },
-
-  isActive : {
-    type: Boolean,
-    default: false
-  },
-  isAuction: {
-    type: Boolean,
-    default: false
-  },
   price: {
     type: Number
   },
-   photos: {
+  description: {
+    type: String,
+  },
+  category: {
+    type: String,
+    enum: constants.CATEGORIES.map(category => category.id)
+  },
+  condition: {
+    type: String,
+    enum: constants.CONDITIONS.map(condition => condition)
+    //enum: ["Poor", "Good", "Excelent"]
+  },
+  photos: {
     type: [String],
     default: ['../images/img0.png']
    /*  type: String,
     default: ['https://semantic-ui.com/images/wireframe/image.png'] */
   }, 
-  description: {
-    type: String,
-  },
-  condition: {
-    type: String,
-    enum: ["Poor", "Good", "Excelent"]
-  },
   location: {
     type: {
       type: String,
@@ -46,9 +34,33 @@ const articleSchema = new mongoose.Schema({
     },
     coordinates: [Number]
   },
-  category: {
-    type: [String]
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' 
   },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' 
+  },
+  dateOfPurchase: {
+    type: Date,
+  },
+  isSold: {
+    type: Boolean,
+    default: false
+  },
+  isActive: {
+    type: Boolean,
+    default: false
+  },
+  isPriced: {
+    type: Boolean,
+    default: false
+  },
+  isAuction: {
+    type: Boolean,
+    default: false
+  }
 }, {timestamps: true});
 
 const Article = mongoose.model('Article', articleSchema);

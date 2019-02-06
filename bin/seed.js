@@ -8,88 +8,86 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
   .then(() => console.info(`Connected to the database: ${MONGODB_URI}`))
   .catch(error => console.error('Database connection error:', error));
 
-
 const articles = [
   {
     name: "pc",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Suzanne Collins",
+    category: "chromes",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
-    isSold: true
+    owner: "5c59d13d18dd7047eb85d474",
+    isActive: true
   },
   {
     name: "Harry Potter",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "J.K. Rowling ",
+    category: "chromes",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
-    isActive: true
+    owner: "5c59d13d18dd7047eb85d474",
+    isActive: true,
   },
   {
     name: "To Kill a Mockingbird ",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Harper Lee",
+    category: "chromes",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "Pride and Prejudice ",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Jane Austen",
+    category: "chromes",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "Twilight",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Stephenie Meyer ",
+    category: "chromes",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "The Book Thief ",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Markus Zusak",
+    category: "chromes",
     price: 7,
-    owner: "5c5234f1a0e0d0244ccf032e",
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "The Chronicles of Narnia",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "C.S. Lewis",
+    category: "chromes",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e",
-    isSold: true,
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "Animal Farm",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "George Orwell",
+    category: "chromes",
     price: 9,
-    owner: "5c5234f1a0e0d0244ccf032e",
-    isSold: true,
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "Gone with the Wind ",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "Margaret Mitchell",
+    category: "chromes",
     price: 10,
-    owner: "5c5235e5fa670926a72081bf",
+    owner: "5c59d13d18dd7047eb85d474",
     isActive: true
   },
   {
     name: "The Fault in Our Stars ",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    category: "John Green",
+    category: "chromes",
     price: 8,
-    owner: "5c5234f1a0e0d0244ccf032e"
+    owner: "5c59d13d18dd7047eb85d474",
+    isActive: true
   }
 ];
 
