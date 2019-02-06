@@ -1,4 +1,5 @@
 <div class="container details">
+  <h1 class="my-5">DETALLES DEL ARTÍCULO</h1>
  {{!--  <div class="media row">
 
     <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
@@ -29,14 +30,13 @@
     <span class="sr-only">Next</span>
   </a>
 </div> --}}
-
+<div class="row">
+  <div class="col-3">
     {{#each article.photos as |photo| }}
-      <img src="/uploads/{{ photo }}" class="align-self-center mr-3 col-4" alt="...">  
+      <img src="/uploads/{{ photo }}" class="align-self-center mr-3 w-100" alt="...">  
     {{/each }}
+  </div>
     {{!-- <img src="/uploads/{{ article.photos }}" class="align-self-center mr-3 col-4" alt="..."> --}}
-    
-    
-    
     
     <div class="media-body col-8">
       <div class="mt-0 row py-4">
@@ -60,9 +60,10 @@
   <div class="row justify-content-around">
     {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a> --}}
     <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a>
-    <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/buy">COMPRAR!</a>
+    <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/{{ session.id }}/buy">COMPRAR!</a>
     <a class="my-5 font-weight-bold text-right btn btn-danger" href="/articles">AÑADIR A FAVORITOS</a>
   </div>
+</div>
    <div id="map"></div>
   </div>
 </div>

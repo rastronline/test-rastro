@@ -11,7 +11,7 @@ router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
 router.post('/new', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doCreate);
 router.get('/:id/edit', authMiddleware.isAuthenticated, articlesController.edit);
 router.post('/:id/edit', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doEdit);
-router.get('/:id/buy', authMiddleware.isAuthenticated, articlesController.buy);
+router.get('/:articleId/:buyerId/buy', authMiddleware.isAuthenticated, articlesController.buy);
 router.get('/:id', authMiddleware.isAuthenticated, articlesController.get);
 router.post('/:id/delete', authMiddleware.isAuthenticated, articlesController.delete);
 router.get('/user/:userId', authMiddleware.isAuthenticated, articlesController.listByUser);

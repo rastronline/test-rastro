@@ -1,10 +1,10 @@
-const passport = require('passport');
-const mongoose = require('mongoose');
+//const passport = require('passport');
+//const mongoose = require('mongoose');
 const Article = require('../models/article.model');
 const User = require('../models/user.model');
 
 module.exports.edit = (req, res, next) => {
-  //console.log("EL REQ.LOCAS ES", res.locals);
+  //console.log("EL REQ.LOCALS ES", res.locals);
   console.log("los hobbies son ", res.locals.session.hobbies)
   res.render('users/edit');
 }
@@ -38,37 +38,53 @@ module.exports.uploadProfilePic = (req, res, next) => {
     .catch(err => next(err));
 }
 
-module.exports.listProducts = (req, res, next) => {
-    Article.find({owner: req.params.id, isSold: false, isActive: false, isAuction: false})
+module.exports.listArticlesSelling = (req, res, next) => {
+    Article.find({owner: req.params.id, isSold: false, isActive: true, isAuction: false})
       .then(articles => {
         User.findById(req.params.id)
           .then(user => {
-            res.render('users/myProducts', { articles, user })
+            res.render('users/articlesSelling', { articles, user })
           })
       })
       .catch(err => next(err))
 }
 
-module.exports.listProductsSold = (req, res, next) => {
-  console.log("\n\nDENTRO DE LOS VENDIDOS!!!\n")
-  Article.find({owner: req.params.id, isSold: true})
+module.exports.listArticlesAuctioning = (req, res, next) => {
+  Article.find({owner: req.params.id, isSold: false, isAuction: true})
     .then(articles => {
-      User.findById(req.params.id)
+      /* User.findById(req.params.id)
         .then(user => {
           res.render('users/myProducts', { articles, user })
-        })
+        }) */
+        res.render('users/........', { articles })
     })
     .catch(err => next(err))
 }
 
-module.exports.listProductsPending = (req, res, next) => {
+module.exports.listArticlesSold = (req, res, next) => {
+  console.log("\n\nDENTRO DE LOS VENDIDOS!!!\n")
+  Article.find({owner: req.params.id, isSold: true})
+    .populate("buyer")
+      .then(articles => {
+        res.render('users/articlesSold', { articles })
+      //res.send({articles})
+      /* User.findById(req.params.id)
+        .then(user => {
+          res.render('users/articlesSold', { articles, user })
+        }) */
+      })
+      .catch(err => next(err))
+}
+
+module.exports.listArticlesPricing = (req, res, next) => {
   console.log("\n\nDENTRO DE LOS PENDIENTES!!! \n")
   Article.find({owner: req.params.id, isActive: false})
     .then(articles => {
-      User.findById(req.params.id)
+      res.render('users/articlesPricing', { articles })
+      /* User.findById(req.params.id)
         .then(user => {
           res.render('users/pending', { articles, user })
-        })
+        }) */
     })
     .catch(err => next(err))
 }

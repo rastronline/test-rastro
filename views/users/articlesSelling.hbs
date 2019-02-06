@@ -1,12 +1,13 @@
 <div class="cointainer">
+  <h1 class="my-2">MIS ARTICULOS EN VENTA</h1>
   <div>
     <a href="/articles/new" class="btn btn-primary my-5">SUBIR UN NUEVO ARTÍCULO</a>
   </div>
   <div class="row">
-    <div class="col-3"><a href="/users/{{ session.id }}/myProducts">EN VENTA</a></div>
+    <div class="col-3"><a href="/users/{{ session.id }}/selling">EN VENTA</a></div>
     <div class="col-3"><a href="/users/{{ session.id }}/...........">EN SUBASTA</a></div>
     <div class="col-3"><a href="/users/{{ session.id }}/sold">VENDIDOS</a></div>
-    <div class="col-3"><a href="/users/{{ session.id }}/pending">PENDIENTES DE TASAR</a></div>
+    <div class="col-3"><a href="/users/{{ session.id }}/pricing">PENDIENTES DE TASAR</a></div>
   </div>
 
   <ul class="list-group mt-5">
@@ -24,9 +25,6 @@
               <button class="btn btn-warning mx-2" type="submit">Eliminar</button>
             </form>
             <a href="/articles/{{ article.id }}/edit" class="btn btn-info my-2" type="submit">Editar</a>
-            <form action="/articles/{{ article.id }}/addToFav" method="POST">
-              <button class="btn btn-danger mx-2" type="submit">Añadir a Favoritos</button>
-            </form>
           </div>
         </div> 
       </li>

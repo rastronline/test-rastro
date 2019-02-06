@@ -11,8 +11,8 @@ router.get('/:id/edit', authMiddleware.isAuthenticated, usersController.edit);
 router.post('/:id/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit);
 //router.post('/upload', upload.single('profilePic'), usersController.uploadProfilePic);
 
-router.get('/:id/myProducts', authMiddleware.isAuthenticated, usersController.listProducts);
-router.get('/:id/sold', authMiddleware.isAuthenticated, usersController.listProductsSold);
-router.get('/:id/pending', authMiddleware.isAuthenticated, usersController.listProductsPending);
+router.get('/:id/selling', authMiddleware.isAuthenticated, usersController.listArticlesSelling);
+router.get('/:id/sold', authMiddleware.isAuthenticated, usersController.listArticlesSold);
+router.get('/:id/pricing', authMiddleware.isAuthenticated, usersController.listArticlesPricing);
 
 module.exports = router;

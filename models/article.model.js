@@ -6,9 +6,44 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  price: {
+    type: Number
+  },
+  description: {
+    type: String,
+  },
+  category: {
+    type: String,
+    enum: constants.CATEGORIES.map(category => category.id)
+  },
+  condition: {
+    type: String,
+    enum: constants.CONDITIONS.map(condition => condition)
+    //enum: ["Poor", "Good", "Excelent"]
+  },
+  photos: {
+    type: [String],
+    default: ['../images/img0.png']
+   /*  type: String,
+    default: ['https://semantic-ui.com/images/wireframe/image.png'] */
+  }, 
+  location: {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: [Number]
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
+  },
+  buyer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' 
+  },
+  dateOfPurchase: {
+    type: Date,
   },
   isSold: {
     type: Boolean,
@@ -25,34 +60,6 @@ const articleSchema = new mongoose.Schema({
   isAuction: {
     type: Boolean,
     default: false
-  },
-  price: {
-    type: Number
-  },
-  photos: {
-    type: [String],
-    default: ['../images/img0.png']
-   /*  type: String,
-    default: ['https://semantic-ui.com/images/wireframe/image.png'] */
-  }, 
-  description: {
-    type: String,
-  },
-  condition: {
-    type: String,
-    enum: constants.CONDITIONS.map(condition => condition)
-    //enum: ["Poor", "Good", "Excelent"]
-  },
-  location: {
-    type: {
-      type: String,
-      default: 'Point'
-    },
-    coordinates: [Number]
-  },
-  category: {
-    type: String,
-    enum: constants.CATEGORIES.map(category => category.id)
   }
 }, {timestamps: true});
 

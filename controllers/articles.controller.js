@@ -37,7 +37,7 @@ module.exports.delete = (req, res, next) => {
   Article.findByIdAndDelete(req.params.id)
     .then(article => {
       console.log("articulo ELIMINADOOOOOO");
-      res.redirect(`/users/${req.user.id}/myProducts`)})
+      res.redirect(`/users/${req.user.id}/articlesSelling`)})
     .catch(err => next(err));
 }
 
@@ -64,12 +64,12 @@ module.exports.doCreate = (req, res, next) => {
           .then(article => {
             console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
             debugger;
-            res.redirect(`/users/${article.owner}/myProducts`);
+            res.redirect(`/users/${article.owner}/selling`);
           })
           .catch(err => next(err)); 
       }
       //res.send("YEAAAAAAAAAHH")
-      res.redirect(`/users/${article.owner}/myProducts`)
+      res.redirect(`/users/${article.owner}/selling`)
     });
 }
 
@@ -86,16 +86,16 @@ module.exports.doEdit = (req, res, next) => {
       if (req.files) {
         return Article.findByIdAndUpdate(article.id, {$set:{photos: req.files.map(photo => photo.filename)}})
           .then(article => {
-            res.redirect(`/users/${article.owner}/myProducts`)
+            res.redirect(`/users/${article.owner}/selling`)
           })
       }
-      res.redirect(`/users/${article.owner}/myProducts`)
+      res.redirect(`/users/${article.owner}/selling`)
     })
     .catch(err => next(err))
 }
 
 module.exports.buy = (req, res, next) => {
-  Article.findByIdAndUpdate(req.params.id, {$set: {isSold: true}})
+  Article.findByIdAndUpdate(req.params.articleId, {$set: {isSold: true, buyer: req.params.buyerId, dateOfPurchase: Date.now()}})
     .then(article => {
       res.redirect('/articles/search');
     })
