@@ -28,7 +28,7 @@ $(".card-category").click(function() {
                         .attr("name", "hobbies")
                         .attr("value", categoryId)
                         .attr("id", `category-${categoryId}`)
-                        .attr("display", "none");
+                        .css("display", "none");
 
     $(".edit-user-form").append(newInput);
   } else {

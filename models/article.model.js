@@ -10,12 +10,15 @@ const articleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
   },
-  isSold : {
+  isSold: {
     type: Boolean,
     default: false
   },
-
-  isActive : {
+  isActive: {
+    type: Boolean,
+    default: false
+  },
+  isPriced: {
     type: Boolean,
     default: false
   },
@@ -26,9 +29,9 @@ const articleSchema = new mongoose.Schema({
   price: {
     type: Number
   },
-   photos: {
+  photos: {
     type: [String],
-    default: ['../categories/images/img0.png']
+    default: ['../images/img0.png']
    /*  type: String,
     default: ['https://semantic-ui.com/images/wireframe/image.png'] */
   }, 

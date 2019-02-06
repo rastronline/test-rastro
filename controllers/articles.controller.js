@@ -6,7 +6,7 @@ const User = require('../models/user.model');
 module.exports.list = (req, res, next) => {
   //console.log("req user is  "+ req.user)
   //res.send(req.session.user);
-  Article.find()
+  Article.find({ owner: {$ne: req.user.id }, isSold: false, isActive: true, isAuction: false})
     .then((articles) => res.render('articles/list', { articles }))
     .catch(err => next(err))
 }
@@ -53,9 +53,51 @@ module.exports.create = (req, res, next) => {
 
 module.exports.doCreate = (req, res, next) => {
   const article = new Article(req.body);
-  console.log("dentroooooo");
+  console.log("dentroooooo", req.body);
+  debugger;
   article.save()
     .then((article) => { 
-      res.redirect('/users/{{ session.id }}/myProducts')
+      if (req.files) {
+        console.log ("\n FOTOS", req.files);
+        return Article.findByIdAndUpdate(article.id, {$set:{photos: req.files.map(photo => photo.filename)}})
+        //req.files.map(f => f.path.replace('public', ''))
+          .then(article => {
+            console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
+            debugger;
+            res.redirect(`/users/${article.owner}/myProducts`);
+          })
+          .catch(err => next(err)); 
+      }
+      //res.send("YEAAAAAAAAAHH")
+      res.redirect(`/users/${article.owner}/myProducts`)
     });
+}
+
+module.exports.edit = (req, res, next) => {
+  Article.findById(req.params.id)
+    .then(article => {
+      res.render('articles/edit', {article});
+    })
+}
+
+module.exports.doEdit = (req, res, next) => {
+  Article.findByIdAndUpdate(req.params.id, {$set: req.body})
+    .then(article => {
+      if (req.files) {
+        return Article.findByIdAndUpdate(article.id, {$set:{photos: req.files.map(photo => photo.filename)}})
+          .then(article => {
+            res.redirect(`/users/${article.owner}/myProducts`)
+          })
+      }
+      res.redirect(`/users/${article.owner}/myProducts`)
+    })
+    .catch(err => next(err))
+}
+
+module.exports.buy = (req, res, next) => {
+  Article.findByIdAndUpdate(req.params.id, {$set: {isSold: true}})
+    .then(article => {
+      res.redirect('/articles/search');
+    })
+    .catch(err => next(err));
 }

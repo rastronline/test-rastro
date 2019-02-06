@@ -14,7 +14,7 @@ module.exports.createWithIDPCallback = (req, res, next) => {
         if (error) {
           next(error)
         } else {
-          res.redirect(`/articles`)
+          res.redirect(`/articles/search`)
         }
       });
     }

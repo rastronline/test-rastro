@@ -13,7 +13,7 @@ const MongoStore = require("connect-mongo")(session);
 const passport = require('passport');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const multer  = require('multer');
+//const multer  = require('multer');
 const indexRouter = require('./routes/index.routes');
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
   res.locals.session = req.user;
   res.locals.categories = constants.CATEGORIES;
   res.locals.conditions = constants.CONDITIONS;
-  //console.log("EOOOOOOOOOOOOOOOOOOOOOOOOO", res.locals.categories)
+  //console.log("\n\n\nEOOOOOOOOOOOOOOOOOOOOOOOOO\n\n\n", res.locals.categories)
   next();
 })
 
@@ -60,6 +60,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'))
 app.use(express.static(path.join(__dirname, 'public')));
+
 /* app.use(session({
   secret: 'SuperSecret - (Change it)',
   resave: false,

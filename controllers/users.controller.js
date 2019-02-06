@@ -16,11 +16,12 @@ module.exports.doEdit = (req, res, next) => {
     .then(user => {
       console.log("encuentro el usuarioooo")
       if (req.file) {
+        console.log("encuentro cambio de fichero")
         return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
-          .then(user => res.redirect('/articles'))
+          .then(user => res.redirect(`/users/${req.user.id}/edit`))
           .catch(err => next(err)); 
-      }})
-      //res.redirect('/articles')})
+      }
+      res.redirect(`/users/${req.user.id}/edit`)})
     .catch(err => next(err));
 
     
@@ -38,7 +39,7 @@ module.exports.uploadProfilePic = (req, res, next) => {
 }
 
 module.exports.listProducts = (req, res, next) => {
-    Article.find({owner: req.params.id})
+    Article.find({owner: req.params.id, isSold: false, isActive: false, isAuction: false})
       .then(articles => {
         User.findById(req.params.id)
           .then(user => {
@@ -49,6 +50,7 @@ module.exports.listProducts = (req, res, next) => {
 }
 
 module.exports.listProductsSold = (req, res, next) => {
+  console.log("\n\nDENTRO DE LOS VENDIDOS!!!\n")
   Article.find({owner: req.params.id, isSold: true})
     .then(articles => {
       User.findById(req.params.id)
@@ -60,11 +62,12 @@ module.exports.listProductsSold = (req, res, next) => {
 }
 
 module.exports.listProductsPending = (req, res, next) => {
+  console.log("\n\nDENTRO DE LOS PENDIENTES!!! \n")
   Article.find({owner: req.params.id, isActive: false})
     .then(articles => {
       User.findById(req.params.id)
         .then(user => {
-          res.render('users/myProducts', { articles, user })
+          res.render('users/pending', { articles, user })
         })
     })
     .catch(err => next(err))
