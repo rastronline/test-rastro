@@ -14,11 +14,11 @@
     <label for="formGroupExampleInput">Nombre: </label>
     <input type="text" class="form-control" id="formGroupExampleInput"  name="name" placeholder="Introduzca el nombre" value="{{ session.name }}">
   </div>
-  <div class="form-group my-4">
+  {{!-- <div class="form-group my-4">
     <label for="formGroupExampleInput2">localización</label>
     <input type="text" class="form-control" id="formGroupExampleInput2" name="location" placeholder="location..." value="{{ session.location.coordinates }}">
     <span>(esta será la ubicación por defecto de los artículos)</span>
-  </div>
+  </div> --}}
   
 
 <h3 class="my-3">¿¿EN QUÉ TIPO DE ARTÍCULOS ESTÁS INTERESADO??</h3>
@@ -40,6 +40,16 @@
     </script>
 {{/each }}
 
+<div>
+    <input id="address" type="textbox" value="Madrid, Spain">
+    <input type="button" value="Save Address" onclick="codeAddress()">
+</div>
+<div>
+    <label for="lat-long">Lat and Long</label><br>
+    <input type ='text' name="location.coordinates" id="lat-long">
+    <span>(esta será la ubicación por defecto de los artículos)</span>
+</div>
+<div id="map"></div>
   <button type="submit" class="btn btn-primary my-3">Actualizar</button>
 </form>
 </div>

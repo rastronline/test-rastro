@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
      type: String,
      default: 'Point'
    },
-   coordinates: [Number]
+   coordinates: String
  },
  profilePic: {
    type: String,
