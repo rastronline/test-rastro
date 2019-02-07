@@ -22,11 +22,8 @@ const userSchema = new mongoose.Schema({
    default: constants.ROLE_USER
  },
  location: {
-   type: {
-     type: String,
-     default: 'Point'
-   },
-   coordinates: String
+   type: { type: String },
+   coordinates: [Number]
  },
  profilePic: {
    type: String,
@@ -42,6 +39,8 @@ const userSchema = new mongoose.Schema({
  }
 
 }, {timestamps: true})
+
+userSchema.index({ location: '2dsphere' });
 
 const User = mongoose.model('User', userSchema);
 

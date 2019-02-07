@@ -1,3 +1,4 @@
+
 var geocoder;
 var map;
 
@@ -5,7 +6,7 @@ function initMap() {
   // Create the map.
   geocoder = new google.maps.Geocoder();
   
-  var latlng = new google.maps.LatLng(-34.397, 150.644);
+  var latlng = new google.maps.LatLng(40.41, -3.7);
   var mapOptions = {
     zoom: 10,
     center: latlng
@@ -25,14 +26,14 @@ function codeAddress() {
           position: results[0].geometry.location
           
       });
-    var latlng = [];
-    latlng.push(results[0].geometry.location.lat().toFixed(3));
-    latlng.push(results[0].geometry.location.lng().toFixed(3));
-      
-  
+   
+    var lat = results[0].geometry.location.lat().toFixed(3);
+    var lng = results[0].geometry.location.lng().toFixed(3);
       
       
-        document.getElementById('lat-long').value = latlng
+      
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
       
       
     } else {
@@ -40,6 +41,9 @@ function codeAddress() {
     }
   });
 }
+
+
+
 
 $(".card-category").click(function() {
   const categoryId = this.dataset.category;

@@ -17,7 +17,10 @@ module.exports.doEdit = (req, res, next) => {
       console.log("\n\nENCUENTRO EL USUARIOOOO\n\n, req.params.id")
       if (req.file) {
         console.log("encuentro cambio de fichero")
-        return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
+        return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename, location: {
+          coordinates: [req.body.longitude, req.body.latitude]
+        }}})
+      
           .then(user => res.redirect(`/users/${req.user.id}/edit`))
           .catch(err => next(err)); 
       }

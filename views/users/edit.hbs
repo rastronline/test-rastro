@@ -42,13 +42,21 @@
 
 <div>
     <input id="address" type="textbox" value="Madrid, Spain">
-    <input type="button" value="Save Address" onclick="codeAddress()">
+    <input type="button" value="Look Up Address" onclick="codeAddress()">
 </div>
-<div>
-    <label for="lat-long">Lat and Long</label><br>
-    <input type ='text' name="location.coordinates" id="lat-long">
-    <span>(esta será la ubicación por defecto de los artículos)</span>
-</div>
+<div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+        </div>
+        <input type="text" id="latitude" class="form-control" name="latitude" placeholder="Latitude"/>
+      </div>
+
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+        </div>
+        <input type="text" id="longitude" class="form-control" name="longitude" placeholder="Longitude"/>
+      </div>
 <div id="map"></div>
   <button type="submit" class="btn btn-primary my-3">Actualizar</button>
 </form>
