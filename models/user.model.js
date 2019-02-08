@@ -19,28 +19,31 @@ const userSchema = new mongoose.Schema({
  role: {
    type: String,
    enum: [constants.ROLE_ADMIN, constants.ROLE_USER],
-   default: constants.ROLE_USER
+   default: constants.ROLES.ROLE_USER
  },
  location: {
    type: {
      type: String,
      default: 'Point'
    },
-   coordinates: String
+   coordinates: [Number]
  },
  profilePic: {
    type: String,
    default: '../images/profile-default.png'
  },
- favorites: {
-   type: [mongoose.Schema.Types.ObjectId],
+ favorites: [{
+   type: mongoose.Schema.Types.ObjectId,
    ref: 'Article'
- },
+ }],
  hobbies: {
    type: [String],
    enum: constants.CATEGORIES.map(category => category.id)
+ },
+ penalties: {
+   type: Number,
+   default: 0 
  }
-
 }, {timestamps: true})
 
 const User = mongoose.model('User', userSchema);

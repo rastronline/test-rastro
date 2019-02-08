@@ -13,8 +13,11 @@ module.exports.createWithIDPCallback = (req, res, next) => {
       req.login(user, (error) => {
         if (error) {
           next(error)
-        } else {
-          res.redirect(`/articles/search`)
+        } else { if (user.role == 'GUEST') {
+            res.redirect('/articles/search');
+          } else {
+            res.redirect('/admins')
+         }
         }
       });
     }

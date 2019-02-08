@@ -1,23 +1,12 @@
-/* module.exports = (hbs) => {
-  hbs.registerHelper('get_book_rating_state', (book) => {
-      if (book.rating >= 8) {
-          return 'success';
-      } else if (book.rating >= 5) {
-          return 'warning';
-      } else {
-          return 'danger';
-      }
-  });
-}
- */
+const constants = require('../constants');
+
 module.exports = (hbs) => {
-  hbs.registerHelper('get_book_rating_state', (hobbies) => {
-      if (book.rating >= 8) {
-          return 'success';
-      } else if (book.rating >= 5) {
-          return 'warning';
-      } else {
-          return 'danger';
-      }
-  });
+  hbs.registerHelper('isAdmin', (user, options) => {
+    if (user.role === constants.ROLES.ROLE_ADMIN) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
+  })
 }
+

@@ -18,19 +18,21 @@
             <img src="/uploads/{{ article.photos }}" class="w-100" alt="photo article">
           </div>
           <div class="col-8 mx-3">
-            <p>{{ article.name }}<span class="badge badge-primary">{{#if article.isPriced}}{{ article.price }}{{else }} ???? {{/if }}</span></p>
+            <p>{{ article.name }}
+              <span class="badge badge-info mx-2">Precio propuesto: {{ article.priceSeller }}</span>
+              <span class="badge badge-primary mx-2">PRECIO TASADO{{#if article.isPriced}} {{ article.priceAppraiser }}{{else }} ???????? {{/if }}</span>
+            </p>
+            
             <p>{{ article.description }}</p>
             <a href="/articles/{{ article.id }}" class="my-4">Ver detalle</a>
-
             {{#if article.isPriced }}
-              <form action="/articles/{{ article.id }}/delete" method="POST">
-                <button class="btn btn-warning mx-2" type="submit">Retirar Artículo</button>
-              </form>
-              <form action="/articles/{{ article.id }}/......." method="POST">
-                <button class="btn btn-sucess mx-2" type="submit">Aceptar tasación</button>
-              <form>
-              <form action="/articles/{{ article.id }}/....." method="POST">
-                <button class="btn btn-primary mx-2" type="submit">Poner en subasta</button>
+              {{#if article.infoAppraiser}}
+                <p>Comentario del tasador <small>{{ article.infoAppraiser }}</small></p>
+              {{/if}}
+              <form action="/users/{{ article.id }}/handleDecisionUser" method="post">
+                <button class="btn btn-warning mx-2" type="submit" name="decisionUser" value="delete">Retirar Artículo</button>
+                <button class="btn btn-success mx-2" type="submit" name="decisionUser" value="accept">Aceptar tasación</button>
+                <button class="btn btn-primary mx-2" type="submit" name="decisionUser" value="auction">Poner en subasta</button>
               </form>
             {{else }}
               <div>
