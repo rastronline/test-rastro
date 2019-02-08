@@ -27,3 +27,7 @@ a {
 .card-body {
   background-size: 100%;
 }
+
+.handle-fav {
+  display: none;
+}

@@ -18,6 +18,7 @@ const indexRouter = require('./routes/index.routes');
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
 const articlesRouter = require('./routes/articles.routes');
+const adminsRouter = require('./routes/admins.routes');
 const constants = require('./constants');
 
 // const upload = multer({ dest: 'uploads/' });
@@ -45,7 +46,7 @@ app.use((req, res, next) => {
   res.locals.session = req.user;
   res.locals.categories = constants.CATEGORIES;
   res.locals.conditions = constants.CONDITIONS;
-  //console.log("\n\n\nEOOOOOOOOOOOOOOOOOOOOOOOOO\n\n\n", res.locals.categories)
+  //console.log("\n\n\nEOOOOOOOOOOOOOOOOOOOOOOOOO,    el PATH ES", req.path)
   next();
 })
 
@@ -80,6 +81,7 @@ app.use('/', indexRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/articles', articlesRouter);
 app.use('/users', usersRouter);
+app.use('/admins', adminsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,21 @@
+<ul class="list-group mt-5">
+  {{#each users as |user|}}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        {{ user.email }}
+        {{#isAdmin user}}
+          <span class="badge badge-danger">ADMIN</span>
+        {{else}}
+          <span class="badge badge-primary">GUEST</span>
+        {{/isAdmin}}
+      </div>
+      {{#isAdmin ../session }}
+        <form action="/users/{{user.id}}/delete" method="post" class="float-right">
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-times"></i>
+          </button>
+        </form>
+      {{/isAdmin}}
+    </li>
+  {{/each}}
+</ul>

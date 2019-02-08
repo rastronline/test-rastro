@@ -6,7 +6,10 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  price: {
+  priceSeller: {
+    type: Number
+  },
+  priceAppraiser: {
     type: Number
   },
   description: {
@@ -32,7 +35,7 @@ const articleSchema = new mongoose.Schema({
       type: String,
       default: 'Point'
     },
-    coordinates: [Number]
+    coordinates: String
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -41,6 +44,9 @@ const articleSchema = new mongoose.Schema({
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
+  },
+  infoAppraiser: {
+    type: String
   },
   dateOfPurchase: {
     type: Date,

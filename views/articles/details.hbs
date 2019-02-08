@@ -54,14 +54,17 @@
       <div class="row mb-0 py-4">
         <label class="col-3">Seller: </label>
         <span><a href="/articles/user/{{ article.owner }}" class="col-9">{{ user.name }}</a></span>
+        
       </div>
     </div>
   </div>
   <div class="row justify-content-around">
     {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a> --}}
-    <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a>
+    <a class="my-5 font-weight-bold text-right btn btn-secondary" href="javascript:history.back(-1);" title="Ir la página anterior">VOLVER</a>
+    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a> --}}
     <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/{{ session.id }}/buy">COMPRAR!</a>
-    <a class="my-5 font-weight-bold text-right btn btn-danger" href="/articles">AÑADIR A FAVORITOS</a>
+    <a class="my-5 font-weight-bold text-right btn btn-danger add-fav" href="/articles/{{ article.id }}/{{ session.id }}/addToFav">AÑADIR A FAVORITOS</a>
+    <a class="my-5 font-weight-bold text-right btn btn-info remove-fav" href="/articles/{{ article.id }}/{{ session.id }}/removeFromFav">QUITAR FAVORITOS</a>
   </div>
 </div>
    <div id="map"></div>

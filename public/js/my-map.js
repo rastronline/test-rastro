@@ -25,4 +25,4 @@ cityCircle = new google.maps.Circle({
   map: map,
   center: {lat: 40.4, lng: -3.7},
   radius: 100
-});  
+});  */

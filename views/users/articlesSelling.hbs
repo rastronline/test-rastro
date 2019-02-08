@@ -21,7 +21,7 @@
             <p>{{ article.name }}<span class="badge badge-primary">{{ article.price }}</span></p>
             <p>{{ article.description }}</p>
             <a href="/articles/{{ article.id }}" class="my-4">Ver detalle</a>
-            <form action="/articles/{{ article.id }}/delete" method="POST">
+            <form action="/articles/{{ article.id }}/delete" method="post">
               <button class="btn btn-warning mx-2" type="submit">Eliminar</button>
             </form>
             <a href="/articles/{{ article.id }}/edit" class="btn btn-info my-2" type="submit">Editar</a>
