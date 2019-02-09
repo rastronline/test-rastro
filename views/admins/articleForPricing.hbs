@@ -49,6 +49,25 @@
     <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/admins/">Back to articles list</a>
   </div>
 </div>
+<div>
+      <input id="address" type="textbox" name='address' value="{{ article.address }}">
+      <input type="button" value="Update your location" onclick="codeAddress()">
+    </div>
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+      </div>
+      <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
+        placeholder="Latitude" />
+    </div>
+
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+      </div>
+      <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
+        placeholder="Longitude" />
+    </div>
    <div id="map"></div>
   </div>
 </div>

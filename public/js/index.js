@@ -1,7 +1,7 @@
 var geocoder;
 var map;
-var userLat = document.getElementById("latitude").value;
-var userLng = document.getElementById("longitude").value;
+var userLat = document.getElementById("latitude").value || 43;
+var userLng = document.getElementById("longitude").value || -3.7;
 var marker;
 var postal;
 var city;
