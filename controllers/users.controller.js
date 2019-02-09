@@ -12,15 +12,18 @@ module.exports.edit = (req, res, next) => {
 module.exports.doEdit = (req, res, next) => {
   
   console.log("EL BODY ES ", req.body)
-  User.findByIdAndUpdate(req.params.id, {$set:req.body})
+  User.findByIdAndUpdate(req.params.id, {$set:req.body,
+  
+    location: {
+    type: 'Point',
+    coordinates: [req.body.longitude, req.body.latitude]
+  }})
     .then(user => {
+      console.log(req.body)
       console.log("\n\nENCUENTRO EL USUARIOOOO\n\n, req.params.id")
       if (req.file) {
         console.log("encuentro cambio de fichero")
-        return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename, location: {
-          coordinates: [req.body.longitude, req.body.latitude]
-        }}})
-      
+        return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
           .then(user => res.redirect(`/users/${req.user.id}/edit`))
           .catch(err => next(err)); 
       }

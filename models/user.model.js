@@ -22,9 +22,13 @@ const userSchema = new mongoose.Schema({
    default: constants.ROLE_USER
  },
  location: {
-   type: { type: String },
-   coordinates: [Number]
- },
+  type: { type: String },
+  coordinates: [Number]
+},
+  address: {
+    type: String,
+    default: '28001, Madrid'
+  },
  profilePic: {
    type: String,
    default: '../images/profile-default.png'

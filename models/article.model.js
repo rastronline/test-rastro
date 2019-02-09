@@ -28,11 +28,12 @@ const articleSchema = new mongoose.Schema({
     default: ['https://semantic-ui.com/images/wireframe/image.png'] */
   }, 
   location: {
-    type: {
-      type: String,
-      default: 'Point'
-    },
+    type: { type: String },
     coordinates: [Number]
+  },
+  address: {
+    type: String,
+    default: "28001, Madrid"
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
