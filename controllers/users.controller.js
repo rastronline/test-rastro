@@ -2,6 +2,7 @@
 //const mongoose = require('mongoose');
 const Article = require('../models/article.model');
 const User = require('../models/user.model');
+const articlesController = require('./articles.controller');
 
 module.exports.edit = (req, res, next) => {
   //console.log("EL REQ.LOCALS ES", res.locals);
@@ -93,4 +94,53 @@ module.exports.listArticlesPricing = (req, res, next) => {
         }) */
     })
     .catch(err => next(err))
+}
+
+module.exports.listFavorites = (req, res, next) => {
+  User.findById(req.params.id)
+    .populate('favorites')
+    .then(user => {
+      //res.send(user.favorites)
+      let favorites = user.favorites;
+      res.render('users/listFavorites', { favorites } )
+    })
+    .catch(err => next(err))
+}
+
+module.exports.doDelete = (req, res, next) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(user => {
+      res.redirect('/admins/listUsers');
+    })
+    .catch(err => next(err));
+}
+
+/* module.exports.doDeleteArticle = (req, res, next) => {
+  console.log("\nENTRE????\n")
+  req.params.path = `/users/${req.user.id}/selling`;
+  articlesController.delete(req, res, next);
+} */
+
+module.exports.doHandleDecisionUser = (req, res, next) => {
+
+  const acceptAppraisal = (req, res, next) => {
+    Article.findByIdAndUpdate(req.params.id, {$set: {isActive: true}})
+      .then(article => {
+        res.redirect(req.params.path);
+      })
+      .catch(err => next(err));
+  }
+  req.params.id = req.params.articleId;
+  req.params.path = `/users/${req.user.id}/pricing`;
+
+  switch (req.body.decisionUser) {
+    case 'delete':{
+      articlesController.remove(req, res, next);
+      break;
+    }
+    case 'accept':{
+      acceptAppraisal(req, res, next);
+      break;
+    }
+  }
 }

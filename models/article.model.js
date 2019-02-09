@@ -6,7 +6,10 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  price: {
+  priceSeller: {
+    type: Number
+  },
+  priceAppraiser: {
     type: Number
   },
   description: {
@@ -28,7 +31,10 @@ const articleSchema = new mongoose.Schema({
     default: ['https://semantic-ui.com/images/wireframe/image.png'] */
   }, 
   location: {
-    type: { type: String },
+    type: {
+      type: String,
+      default: 'Point'
+    },
     coordinates: [Number]
   },
   address: {
@@ -42,6 +48,9 @@ const articleSchema = new mongoose.Schema({
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
+  },
+  infoAppraiser: {
+    type: String
   },
   dateOfPurchase: {
     type: Date,

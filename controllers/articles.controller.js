@@ -23,22 +23,44 @@ module.exports.get = (req, res, next) => {
 }
 
 module.exports.listByUser = (req, res, next) => {
-  Article.find({owner: req.params.id})
+  console.log("estoy aQUIIII\n\n")
+  /* Article.find({owner: req.params.id})
     .then(articles => {
+      console.log("Y MAS DENTROO\n\n")
       User.findById(req.params.id)
         .then(user => {
-          res.render('articles/userListings', { articles, user })
+          //console.log("\n\n el USUARIO es", user.name)
+          res.render('articles/articlesByUser', { articles, user })
         })
     })
-    .catch(err => next(err))
-}
+    .catch(err => next(err)) */
+    Article.find({owner: req.params.userId})
+      .populate('owner')
+      .then(articles => {
+        //res.send(articles);
+        res.render('articles/articlesByUser', { articles })
+      })
+      .catch(err => next(err));
+    }   
 
-module.exports.delete = (req, res, next) => {
+
+const remove = (req, res, next) => {
+  console.log("\ny aqui????\n")
   Article.findByIdAndDelete(req.params.id)
     .then(article => {
       console.log("articulo ELIMINADOOOOOO");
-      res.redirect(`/users/${req.user.id}/articlesSelling`)})
+      res.redirect(req.params.path);
+    })
+      //res.redirect(`/users/${req.user.id}/articlesSelling`)})
     .catch(err => next(err));
+}
+
+module.exports.remove = remove;
+
+module.exports.doDelete = (req, res, next) => {
+  console.log("\nENTRE????\n")
+  req.params.path = `/users/${req.user.id}/selling`;
+  remove(req, res, next);
 }
 
 module.exports.create = (req, res, next) => {
@@ -101,3 +123,43 @@ module.exports.buy = (req, res, next) => {
     })
     .catch(err => next(err));
 }
+
+module.exports.addToFav = (req, res, next) => {
+  console.log("lo que VIENE EN EL PARAMS ES", req.params)
+
+  User.findByIdAndUpdate(req.params.userId, {$push: {favorites: req.params.articleId}})
+    .then(user => {
+      //res.send(user);
+      res.redirect(`/articles/${req.params.articleId}`);
+    })
+    .catch(err => next(err));
+
+
+  /* User.findById(req.params.userId)
+    .then(user => {
+      console.log("LOS FAVORITOS ANTES DE INSERTAR SON...", user.favorites)
+      if (!user.favorites.includes(req.params.articleId)) {
+          user.favorites.push(req.params.articleId);
+          console.log("LOS FAVORITOS DESPUESSSS DE INSERTAR SON...", user.favorites)
+          return user.save()
+            .then(user => {
+              res.redirect('/articles/search');
+            })
+      } else {
+        res.redirect('/articles/search');
+      }
+    })
+    .catch(err => next(err)) */
+}
+
+module.exports.removeFromFav = (req, res, next) => {
+  //console.log("lo que VIENE EN EL PARAMS ES", req.params)
+  User.findByIdAndUpdate(req.params.userId, {$pull: {favorites: req.params.articleId}})
+    .then(user => {
+      //res.send("yeahh");
+      let favorites = user.favorites;
+      res.redirect(`/users/${user.id}/favorites`);
+    })
+    .catch(err => next(err));
+}
+

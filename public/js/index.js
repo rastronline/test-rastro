@@ -69,3 +69,29 @@ $(".card-category").click(function() {
     $(`#category-${categoryId}`).remove();
   }
 });
+
+// $('.add-fav').click(function() {
+//   debugger;
+//  /*  $(this).toggleClass('handle-fav');
+//   $('.remove-fav').toggleClass('hande-fav'); */
+//   $(this).toggle();
+//   $('.remove-fav').toggle();
+// })
+
+// $('.remove-fav').click(function() {
+// /*   $(this).toggleClass('handle-fav');
+//   $('.add-fav').toggleClass('hande-fav'); */
+//   $(this).toggle();
+//   $('.add-fav').toggle();
+// })
+
+/* $(document).ready(function(){
+	
+	$("input[type=submit]").click(function() {
+    var accion = $(this).attr('dir');
+    console.log("lo mandamos a ", accion);
+		$('form').attr('action', accion);
+		$('form').submit();
+	});
+	
+}); */

@@ -4,24 +4,14 @@
 
 <div class="container">
   <form action="/users/{{ session.id }}/edit" class="edit-user-form" method="POST" enctype="multipart/form-data">
-    {{!-- <form action="/users/upload" method="post" enctype="multipart/form-data"> --}}
-      <img class="profile-img" src="/uploads/{{ session.profilePic }}" alt="no saleee">
-      <label for="profilePic" class="mx-3">Seleccione una foto de perfil:</label>
-      <input type="file" name="profilePic" accept="image/jpeg">
-      {{!-- <button type="submit" class="btn btn-primary my-3">Subir foto</button> --}}
-      {{!-- </form> --}}
+    <img class="profile-img" src="/uploads/{{ session.profilePic }}" alt="no saleee">
+    <label for="profilePic" class="mx-3">Seleccione una foto de perfil:</label>
+    <input type="file" name="profilePic" accept="image/jpeg">
     <div class="form-group my-4">
       <label for="formGroupExampleInput">Nombre: </label>
       <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre"
         value="{{ session.name }}">
     </div>
-    {{!-- <div class="form-group my-4">
-      <label for="formGroupExampleInput2">localización</label>
-      <input type="text" class="form-control" id="formGroupExampleInput2" name="location" placeholder="location..."
-        value="{{ session.location.coordinates }}">
-      <span>(esta será la ubicación por defecto de los artículos)</span>
-    </div> --}}
-
 
     <h3 class="my-3">¿¿EN QUÉ TIPO DE ARTÍCULOS ESTÁS INTERESADO??</h3>
     <div class="row">
@@ -64,5 +54,4 @@
     <div id="map"></div>
     <button type="submit" class="btn btn-primary my-3">Actualizar</button>
   </form>
-
 </div>
