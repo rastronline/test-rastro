@@ -35,7 +35,11 @@ const articleSchema = new mongoose.Schema({
       type: String,
       default: 'Point'
     },
-    coordinates: String
+    coordinates: [Number]
+  },
+  address: {
+    type: String,
+    default: "28001, Madrid"
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
