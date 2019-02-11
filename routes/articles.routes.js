@@ -7,7 +7,6 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 /* GET home page. */
 router.get('/search', authMiddleware.isAuthenticated, articlesController.list);
-router.post('/filtered', authMiddleware.isAuthenticated, articlesController.doFilter);
 router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
 router.post('/new', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doCreate);
 router.get('/:id/edit', authMiddleware.isAuthenticated, articlesController.edit);
@@ -16,7 +15,7 @@ router.get('/:articleId/purchases/:buyerId', authMiddleware.isAuthenticated, art
 router.get('/:articleId/:userId/addToFav', authMiddleware.isAuthenticated, articlesController.addToFav);
 router.get('/:articleId/:userId/removeFromFav', authMiddleware.isAuthenticated, articlesController.removeFromFav);
 router.get('/:id', authMiddleware.isAuthenticated, articlesController.get);
-router.post('/:id/delete', authMiddleware.isAuthenticated, articlesController.doDelete);
+router.get('/:id/delete', authMiddleware.isAuthenticated, articlesController.doDelete);
 router.get('/user/:userId', authMiddleware.isAuthenticated, articlesController.listByUser);
 //router.get('/new', articlesController.create);
 //router.post('/:ownerId/new', articlesController.doCreate);

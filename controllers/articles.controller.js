@@ -1,7 +1,15 @@
+<<<<<<< HEAD
+const passport = require('passport');
+const mongoose = require('mongoose');
+const Article = require('../models/article.model');
+const User = require('../models/user.model');
+const constants = require("../constants");
+=======
 const passport = require("passport");
 const mongoose = require("mongoose");
 const Article = require("../models/article.model");
 const User = require("../models/user.model");
+>>>>>>> 0700971ccdceab0cf234aace0df3bef100e099cc
 
 module.exports.list = (req, res, next) => {
 
@@ -57,16 +65,23 @@ module.exports.get = (req, res, next) => {
 };
 
 module.exports.listByUser = (req, res, next) => {
+<<<<<<< HEAD
+  
+  Article.find({owner: req.params.userId})
+    .populate('owner')
+=======
   console.log("estoy aQUIIII\n\n");
   /* Article.find({owner: req.params.id})
+>>>>>>> 0700971ccdceab0cf234aace0df3bef100e099cc
     .then(articles => {
-      console.log("Y MAS DENTROO\n\n")
-      User.findById(req.params.id)
-        .then(user => {
-          //console.log("\n\n el USUARIO es", user.name)
-          res.render('articles/articlesByUser', { articles, user })
-        })
+      //res.send(articles);
+      res.render('articles/articlesByUser', { articles })
     })
+<<<<<<< HEAD
+    .catch(err => next(err));
+  }   
+
+=======
     .catch(err => next(err)) */
   Article.find({ owner: req.params.userId })
     .populate("owner")
@@ -76,6 +91,7 @@ module.exports.listByUser = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+>>>>>>> 0700971ccdceab0cf234aace0df3bef100e099cc
 
 const remove = (req, res, next) => {
   console.log("\ny aqui????\n");
@@ -91,7 +107,10 @@ const remove = (req, res, next) => {
 module.exports.remove = remove;
 
 module.exports.doDelete = (req, res, next) => {
+<<<<<<< HEAD
+=======
   console.log("\nENTRE????\n");
+>>>>>>> 0700971ccdceab0cf234aace0df3bef100e099cc
   req.params.path = `/users/${req.user.id}/selling`;
   remove(req, res, next);
 };
@@ -209,9 +228,14 @@ module.exports.removeFromFav = (req, res, next) => {
       res.redirect(`/users/${user.id}/favorites`);
     })
     .catch(err => next(err));
+<<<<<<< HEAD
+}
+ 
+=======
 
 };
 
 }
 
 
+>>>>>>> 0700971ccdceab0cf234aace0df3bef100e099cc

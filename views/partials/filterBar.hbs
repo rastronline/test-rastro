@@ -1,0 +1,51 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h3 class="display-5">Fitrar por:</h3>
+    <form action="/articles/search" method="get">
+
+
+      <div class="form-row">
+          <div class="form-group col-4">
+            <label for="keyword">Introduzca lo que está buscando</label>
+            <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Buscar...">
+          </div>
+          <div class="form-group col-2">
+            <label for="minPrice">Desde (€)</label>
+            <input type="password" class="form-control" id="minPrice" name="minPrice" placeholder="(€)MIN">
+          </div>
+          <div class="form-group col-2">
+            <label for="maxPrice">Hasta (€)</label>
+            <input type="password" class="form-control" id="maxPrice" name="maxPrice" placeholder="(€)MAX">
+          </div>
+        </div>
+        
+
+
+
+
+      <div class="form-row">
+        <div class="col-2">
+          <input type="text" class="form-control" name="keyword" value="{{ fieldsForm.keyword }}" placeholder="Buscar...">
+        </div>
+        <div class="col-1">
+          <input type="text" class="form-control" name="minPrice" value="{{#if fieldsForm.minPrice }}{{ fieldsForm.minPrice }}{{else }}0{{/if }}"
+            placeholder="(€)MIN">
+        </div>
+        <div class="col-1">
+          <input type="text" class="form-control" name="maxPrice" value="{{#if fieldsForm.maxPrice }}{{ fieldsForm.maxPrice }}{{else }}99999{{/if }}"
+            placeholder="(€) MAX">
+        </div>
+        <div class="col-3">
+          <select id="inputState" placeholder="Category..." name="category" class="form-control">
+            <option selected>{{ fieldsForm.category }}</option>
+            <option value=""></option>
+            {{#each categories as |category| }}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {{/each }}
+          </select>
+        </div>
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+      </div>
+    </form>
+  </div>
+</div>
