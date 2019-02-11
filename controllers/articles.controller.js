@@ -6,6 +6,7 @@ const User = require("../models/user.model");
 module.exports.list = (req, res, next) => {
   //console.log("req user is  "+ req.user)
   //res.send(req.session.user);
+
   Article.find({
     owner: { $ne: req.user.id },
     isSold: false,
@@ -179,4 +180,35 @@ module.exports.removeFromFav = (req, res, next) => {
       res.redirect(`/users/${user.id}/favorites`);
     })
     .catch(err => next(err));
+
 };
+
+}
+
+module.exports.doFilter = (req, res, next) => {
+  //db.products.find( { sku: { $regex: /^ABC/i } } )
+  //let minPrice = Number.parseInt(req.body.minPrice);
+  //let maxPrice = Number.parseInt(req.body.maxPrice);
+  //console.log("\n\nENTRO AQUI¿¿???\n")
+  //res.send("YAAA", req.body)
+  let fieldsForm = req.body;
+  //res.send(fieldsForm)
+  Article.find({name: { $regex: `${req.body.keyword}`, $options: 'i' },
+                priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                category: req.body.category,
+                owner: {$ne: req.user.id },
+                isSold: false,
+                isActive: true,
+                isAuction: false})
+     .then((articles) => {
+   /*   //res.send("YEEEEEE", req.body.category)
+      if (req.body.category !== "") {
+        articles.find({category: req.body.category})
+          then(articles => {
+            res.render('articles/list', { articles })
+          })
+      }})*/
+      res.render('articles/list', { articles, fieldsForm })})
+    .catch(err => next(err))  
+}
+

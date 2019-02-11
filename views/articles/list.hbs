@@ -1,9 +1,36 @@
 <h2>BUSQUEDA DE ARTICULOS</h2>
 
-<div class="row my-5">
+
+  <form action="/articles/filtered" method="get">
+  <div class="form-row">
+    <div class="col-2">
+      <input type="text" class="form-control" name="keyword" value="{{ fieldsForm.keyword }}" placeholder="Buscar...">
+    </div>
+    <div class="col-1">
+      <input type="text" class="form-control" name="minPrice" value="{{#if fieldsForm.minPrice }}{{ fieldsForm.minPrice }}{{else }}0{{/if }}" placeholder="(€)MIN">
+    </div>
+    <div class="col-1">
+      <input type="text" class="form-control" name="maxPrice" value="{{#if fieldsForm.maxPrice }}{{ fieldsForm.maxPrice }}{{else }}99999{{/if }}" placeholder="(€) MAX">
+    </div>
+    <div class="col-3">
+      <select id="inputState" name="category" class="form-control">
+        <option selected>{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}Categoria ...{{/if }}</option>
+        {{#each categories as |category| }}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+        {{/each }}
+      </select>
+    </div>
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+  </div>
+</form>
+
+
+{{!-- <div class="row my-5">
     <div class="col-5"><a href="/articles/search">EN VENTA</a></div>
     <div class="col-5"><a href="/articles/{{ session.id }}/...........">EN SUBASTA</a></div>
-  </div>
+  </div> --}}
+
+{{> navArticles}}
 
 <ul class="list-group mt-5">
   {{#each articles as |article|}}
@@ -13,7 +40,8 @@
          <img src="/uploads/{{ article.photos }}" class="w-100" alt="photo article">
        </div>
        <div class="col-8 mx-3">
-        <p>{{ article.name }}<span class="badge badge-primary mx-3">{{ article.price }}</span></p>
+        <p>{{ article.name }}<span class="badge badge-primary mx-3">{{ article.priceAppraiser }}</span></p>
+        <p>Category: {{ article.category }}</p>
         <p>{{ article.description }}</p>
         <a href="/articles/{{ article.id }}">Ver detalle</a>
        </div>

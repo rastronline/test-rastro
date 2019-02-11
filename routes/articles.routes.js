@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 /* GET home page. */
 router.get('/search', authMiddleware.isAuthenticated, articlesController.list);
+router.post('/filtered', authMiddleware.isAuthenticated, articlesController.doFilter);
 router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
 router.post('/new', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doCreate);
 router.get('/:id/edit', authMiddleware.isAuthenticated, articlesController.edit);
