@@ -12,7 +12,7 @@ router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
 router.post('/new', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doCreate);
 router.get('/:id/edit', authMiddleware.isAuthenticated, articlesController.edit);
 router.post('/:id/edit', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doEdit);
-router.get('/:articleId/:buyerId/buy', authMiddleware.isAuthenticated, articlesController.buy);
+router.get('/:articleId/purchases/:buyerId', authMiddleware.isAuthenticated, articlesController.buy);
 router.get('/:articleId/:userId/addToFav', authMiddleware.isAuthenticated, articlesController.addToFav);
 router.get('/:articleId/:userId/removeFromFav', authMiddleware.isAuthenticated, articlesController.removeFromFav);
 router.get('/:id', authMiddleware.isAuthenticated, articlesController.get);

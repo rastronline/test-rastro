@@ -19,7 +19,14 @@ module.exports.list = (req, res, next) => {
  */
     //esto funciona, VOY A INTENTAR INCORPORAR LAS QUERIES 
   Article.find({ owner: {$ne: req.user.id }, isSold: false, isActive: true, isAuction: false})
-    .then((articles) => res.render('articles/list', { articles }))
+    .then((articles) => {
+      articles.map(article => { 
+       article.description = `${article.description.substr(0, 40)} ...`;
+       return article;
+      });
+      console.log("\n\ndescriptionnnn", articles[0].description)
+      res.render('articles/list', { articles });
+    })
     .catch(err => next(err))
 }
 
@@ -27,8 +34,8 @@ module.exports.get = (req, res, next) => {
   Article.findById(req.params.id)
     .then((article) => {
       User.findById(article.owner)
-        .then(user => {
-          res.render('articles/details', { article, user })
+        .then(owner => {
+          res.render('articles/details', { article, owner })
         })
       })
     .catch(err => next(err));
@@ -175,12 +182,17 @@ module.exports.removeFromFav = (req, res, next) => {
     .catch(err => next(err));
 }
 
+const hasCategory = body => !body.category && delete body.category;
+
 module.exports.doFilter = (req, res, next) => {
   //db.products.find( { sku: { $regex: /^ABC/i } } )
   //let minPrice = Number.parseInt(req.body.minPrice);
   //let maxPrice = Number.parseInt(req.body.maxPrice);
   //console.log("\n\nENTRO AQUI¿¿???\n")
   //res.send("YAAA", req.body)
+  const { body } = req;
+  hasCategory(body)
+  console.info('BODY => ', body)
   let fieldsForm = req.body;
   //res.send(fieldsForm)
   Article.find({name: { $regex: `${req.body.keyword}`, $options: 'i' },
