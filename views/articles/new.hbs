@@ -57,6 +57,7 @@
       <input id="address" type="textbox" name='address' value="{{ session.address }}">
       <input type="button" value="Update Item Location" onclick="codeAddress()">
     </div>
+    <div id = "lat-lng">
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
@@ -71,6 +72,7 @@
       </div>
       <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
         placeholder="Longitude" />
+    </div>
     </div>
   <div id='map'></div>
   

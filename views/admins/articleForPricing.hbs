@@ -1,14 +1,14 @@
 <div class="container details">
   <h1 class="my-5">DETALLES DEL ARTÍCULO A TASAR</h1>
 
-<div class="row">
-  <div class="col-3">
-    {{#each article.photos as |photo| }}
-      <img src="/uploads/{{ photo }}" class="align-self-center mr-3 w-100" alt="...">  
-    {{/each }}
-  </div>
+  <div class="row">
+    <div class="col-3">
+      {{#each article.photos as |photo| }}
+      <img src="/uploads/{{ photo }}" class="align-self-center mr-3 w-100" alt="...">
+      {{/each }}
+    </div>
     {{!-- <img src="/uploads/{{ article.photos }}" class="align-self-center mr-3 col-4" alt="..."> --}}
-    
+
     <div class="media-body col-8">
       <div class="mt-0 row py-4">
         <label class="col-3">name: </label>
@@ -40,34 +40,37 @@
           <label class="form-check-label" name="penalties" for="exampleCheck1">Marcar como fraude</label>
         </div>
         <button type="submit" class="btn btn-primary" name="resultAppraisal" value="send">ENVIAR TASACIÓN</button>
-        <button type="submit" class="btn btn-danger" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>   
+        <button type="submit" class="btn btn-danger" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>
       </form>
     </div>
   </div>
   <div class="row justify-content-around">
-    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a> --}}
+    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a>
+    --}}
     <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/admins/">Back to articles list</a>
   </div>
 </div>
 <div>
-      <input id="address" type="textbox" name='address' value="{{ article.address }}">
-      <input type="button" value="Update your location" onclick="codeAddress()">
+  <input id="address" type="textbox" name='address' value="{{ article.address }}">
+  
+</div>
+<div id='lat-lng'>
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
     </div>
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-      </div>
-      <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
-        placeholder="Latitude" />
-    </div>
-
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-      </div>
-      <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
-        placeholder="Longitude" />
-    </div>
-   <div id="map"></div>
+    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
+      placeholder="Latitude" />
   </div>
+
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    </div>
+    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
+      placeholder="Longitude" />
+  </div>
+</div>
+<div id="map"></div>
+</div>
 </div>

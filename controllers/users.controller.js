@@ -62,6 +62,21 @@ module.exports.listArticlesSelling = (req, res, next) => {
     .catch(err => next(err));
 };
 
+module.exports.listArticlesOwned = (req, res, next) => {
+  Article.find({
+    owner: req.params.id,
+    isSold: true
+  })
+    .then(articles => {
+      User.findById(req.params.id).then(user => {
+        res.render("users/articles-owned", { articles, user });
+      });
+    })
+    .catch(err => next(err));
+};
+
+
+
 module.exports.listArticlesAuctioning = (req, res, next) => {
   Article.find({ owner: req.params.id, isSold: false, isAuction: true })
     .then(articles => {

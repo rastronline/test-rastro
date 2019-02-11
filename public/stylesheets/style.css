@@ -31,3 +31,7 @@ a {
 .handle-fav {
   display: none;
 }
+
+#lat-lng {
+  display: none;
+}
