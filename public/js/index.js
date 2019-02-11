@@ -1,9 +1,9 @@
 var geocoder;
 var map;
 
-/* //HE TENIDO QUE COMENTAR ESTAS DOS LINEAS DE MOMENTO PORQUE EL JS ME FALLA
-var userLat = document.getElementById("latitude").value;
-var userLng = document.getElementById("longitude").value; */
+//HE TENIDO QUE COMENTAR ESTAS DOS LINEAS DE MOMENTO PORQUE EL JS ME FALLA
+var userLat = document.getElementById("latitude").value || 40.416775
+var userLng = document.getElementById("longitude").value || 3.703790
 
 var marker;
 var postal;
