@@ -1,7 +1,8 @@
 var geocoder;
 var map;
+/* //HE TENIDO QUE COMENTAR ESTAS DOS LINEAS DE MOMENTO PORQUE EL JS ME FALLA
 var userLat = document.getElementById("latitude").value;
-var userLng = document.getElementById("longitude").value;
+var userLng = document.getElementById("longitude").value; */
 var marker;
 var postal;
 var city;
@@ -69,6 +70,22 @@ $(".card-category").click(function() {
     $(`#category-${categoryId}`).remove();
   }
 });
+
+
+$(".category").click(function() {
+  
+  const categoryId = this.dataset.category;
+  console.log(`categoria escogida ${categoryId}`)
+
+  $(".category").addClass("disabled");
+  $(this).toggleClass("selected");
+
+  $("#category-filter").val(categoryId);
+  //console.log(`valor del input ${categoryId}`)
+
+  $(".search-btn").click();
+});
+
 
 // $('.add-fav').click(function() {
 //   debugger;

@@ -1,28 +1,6 @@
 <h2>BUSQUEDA DE ARTICULOS</h2>
 
-  <form action="/articles/filtered" method="post">
-    <div class="form-row">
-      <div class="col-2">
-        <input type="text" class="form-control" name="keyword" value="{{ fieldsForm.keyword }}" placeholder="Buscar...">
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control" name="minPrice" value="{{#if fieldsForm.minPrice }}{{ fieldsForm.minPrice }}{{else }}0{{/if }}" placeholder="(€)MIN">
-      </div>
-      <div class="col-1">
-        <input type="text" class="form-control" name="maxPrice" value="{{#if fieldsForm.maxPrice }}{{ fieldsForm.maxPrice }}{{else }}99999{{/if }}" placeholder="(€) MAX">
-      </div>
-      <div class="col-3">
-        <select id="inputState" placeholder="Category..." name="category" class="form-control">
-          <option selected>{{ fieldsForm.category }}</option>
-          <option value=""></option>
-          {{#each categories as |category| }}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-          {{/each }}
-        </select>
-      </div>
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-    </div>
-  </form> 
+{{> filterBar }}
 
 
 {{!-- <div class="row my-5">
@@ -30,7 +8,7 @@
     <div class="col-5"><a href="/articles/{{ session.id }}/...........">EN SUBASTA</a></div>
   </div> --}}
 
-{{> navArticles}}
+{{> navArticles }}
 
 {{!-- <ul class="list-group mt-5">
   {{#each articles as |article|}}

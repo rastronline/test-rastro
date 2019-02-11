@@ -2,32 +2,48 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const Article = require('../models/article.model');
 const User = require('../models/user.model');
+const constants = require("../constants");
 
 module.exports.list = (req, res, next) => {
-  //console.log("req user is  "+ req.user)
-  //res.send(req.session.user);
 
- /*  Article.find({name: { $regex: `${req.body.keyword}`, $options: 'i' }, owner: {$ne: req.user.id }, isSold: false, isActive: true, isAuction: false})
-  .then((articles) => res.render('articles/list', { articles }))
-  .catch(err => next(err))  */
+  function getCategoriesArray(categories) {
+    let categoriesArr = [];
+    switch (categories) {
+      case ("", "all"): {
+        constants.CATEGORIES.forEach(cat => categoriesArr.push(cat.id));
+        break;
+      }
+      case("preferences"): {
+        req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+        break;
+      }
+      default: {
+        categoriesArr.push(categories);
+      }
+    }
+    return categoriesArr;
+  }
 
-/*   Article.find({name: { $regex: `${req.body.keyword}`, i }})
-    .then(articles => {
-      res.render('articles/list', { articles } );
-    })
-    .catch(err => next(err));
- */
-    //esto funciona, VOY A INTENTAR INCORPORAR LAS QUERIES 
-  Article.find({ owner: {$ne: req.user.id }, isSold: false, isActive: true, isAuction: false})
-    .then((articles) => {
+  let fieldsForm = req.query;
+  let categoriesArr = getCategoriesArray(req.query.category);
+  
+  console.log("LAS CATEGORIAS A BUSCAR SON: ", categoriesArr);
+
+  Article.find({name: { $regex: `${req.query.keyword}`, $options: 'i' },
+                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                category: {$in: categoriesArr},
+                owner: {$ne: req.user.id },
+                isSold: false,
+                isActive: true,
+                isAuction: false})
+    .then((articles) => { 
       articles.map(article => { 
-       article.description = `${article.description.substr(0, 40)} ...`;
-       return article;
+        article.name = `${article.name.substr(0, 25)} ...`
+        article.description = `${article.description.substr(0, 100)} ...`;
+        return article
       });
-      console.log("\n\ndescriptionnnn", articles[0].description)
-      res.render('articles/list', { articles });
-    })
-    .catch(err => next(err))
+      res.render("articles/list", { articles, fieldsForm })})
+    .catch(err => next(err))  
 }
 
 module.exports.get = (req, res, next) => {
@@ -42,25 +58,15 @@ module.exports.get = (req, res, next) => {
 }
 
 module.exports.listByUser = (req, res, next) => {
-  console.log("estoy aQUIIII\n\n")
-  /* Article.find({owner: req.params.id})
+  
+  Article.find({owner: req.params.userId})
+    .populate('owner')
     .then(articles => {
-      console.log("Y MAS DENTROO\n\n")
-      User.findById(req.params.id)
-        .then(user => {
-          //console.log("\n\n el USUARIO es", user.name)
-          res.render('articles/articlesByUser', { articles, user })
-        })
+      //res.send(articles);
+      res.render('articles/articlesByUser', { articles })
     })
-    .catch(err => next(err)) */
-    Article.find({owner: req.params.userId})
-      .populate('owner')
-      .then(articles => {
-        //res.send(articles);
-        res.render('articles/articlesByUser', { articles })
-      })
-      .catch(err => next(err));
-    }   
+    .catch(err => next(err));
+  }   
 
 
 const remove = (req, res, next) => {
@@ -77,7 +83,6 @@ const remove = (req, res, next) => {
 module.exports.remove = remove;
 
 module.exports.doDelete = (req, res, next) => {
-  console.log("\nENTRE????\n")
   req.params.path = `/users/${req.user.id}/selling`;
   remove(req, res, next);
 }
@@ -180,37 +185,5 @@ module.exports.removeFromFav = (req, res, next) => {
       res.redirect(`/users/${user.id}/favorites`);
     })
     .catch(err => next(err));
-}
-
-const hasCategory = body => !body.category && delete body.category;
-
-module.exports.doFilter = (req, res, next) => {
-  //db.products.find( { sku: { $regex: /^ABC/i } } )
-  //let minPrice = Number.parseInt(req.body.minPrice);
-  //let maxPrice = Number.parseInt(req.body.maxPrice);
-  //console.log("\n\nENTRO AQUI¿¿???\n")
-  //res.send("YAAA", req.body)
-  const { body } = req;
-  hasCategory(body)
-  console.info('BODY => ', body)
-  let fieldsForm = req.body;
-  //res.send(fieldsForm)
-  Article.find({name: { $regex: `${req.body.keyword}`, $options: 'i' },
-                priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
-                category: req.body.category,
-                owner: {$ne: req.user.id },
-                isSold: false,
-                isActive: true,
-                isAuction: false})
-     .then((articles) => {
-   /*   //res.send("YEEEEEE", req.body.category)
-      if (req.body.category !== "") {
-        articles.find({category: req.body.category})
-          then(articles => {
-            res.render('articles/list', { articles })
-          })
-      }})*/
-      res.render('articles/list', { articles, fieldsForm })})
-    .catch(err => next(err))  
 }
  
