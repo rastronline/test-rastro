@@ -11,7 +11,7 @@ const authMiddleware = require('../middlewares/auth.middleware');
 router.get('/:id/edit', authMiddleware.isAuthenticated, usersController.edit);
 router.post('/:id/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit,);
 //router.post('/upload', upload.single('profilePic'), usersController.uploadProfilePic);
-
+router.get('/:id/owned',  authMiddleware.isAuthenticated, usersController.listArticlesOwned);
 router.get('/:id/selling', authMiddleware.isAuthenticated, usersController.listArticlesSelling);
 router.get('/:id/sold', authMiddleware.isAuthenticated, usersController.listArticlesSold);
 router.get('/:id/pricing', authMiddleware.isAuthenticated, usersController.listArticlesPricing);

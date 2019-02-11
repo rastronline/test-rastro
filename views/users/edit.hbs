@@ -36,22 +36,25 @@
       <input id="address" type="textbox" name='address' value="{{ session.address }}">
       <input type="button" value="Update your location" onclick="codeAddress()">
     </div>
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    <div id='lat-lng'>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+        </div>
+        <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
+          placeholder="Latitude" />
       </div>
-      <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
-        placeholder="Latitude" />
-    </div>
 
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+        </div>
+        <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
+          placeholder="Longitude" />
       </div>
-      <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
-        placeholder="Longitude" />
     </div>
-    <div id="map"></div>
-    <button type="submit" class="btn btn-primary my-3">Actualizar</button>
+    <div id="map">
+    </div>
+    <div> <button type="submit" class="btn btn-primary my-3">Actualizar</button></div>
   </form>
 </div>
