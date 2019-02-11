@@ -15,18 +15,18 @@
   </div>
 
   <div class="input-group mb-3">
-  {{!-- <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-  </div> --}}
-  <select class="custom-select" name="category" id="inputGroupSelect01">
-    <option selected>Elija la categoría ...</option>
-    {{!-- <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option> --}}
-    {{#each categories as |category| }}
+    {{!-- <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">Options</label>
+    </div> --}}
+    <select class="custom-select" name="category" id="inputGroupSelect01">
+      <option selected>Elija la categoría ...</option>
+      {{!-- <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option> --}}
+      {{#each categories as |category| }}
       <option value="{{ category.id }}">{{ category.name }}</option>
-    {{/each }}
-  </select>
+      {{/each }}
+    </select>
   </div>
 
   <div class="form-group">
@@ -35,24 +35,46 @@
   </div>
 
   <div class="input-group mb-3">
-  {{!-- <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-  </div> --}}
-  <select class="custom-select" name="condition" id="inputGroupSelect02">
-    <option selected>Estado de conservación ...</option>
-    {{!-- <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option> --}}
-    {{#each conditions as |condition| }}
+    {{!-- <div class="input-group-prepend">
+      <label class="input-group-text" for="inputGroupSelect01">Options</label>
+    </div> --}}
+    <select class="custom-select" name="condition" id="inputGroupSelect02">
+      <option selected>Estado de conservación ...</option>
+      {{!-- <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option> --}}
+      {{#each conditions as |condition| }}
       <option value="{{ condition }}">{{ condition }}</option>
-    {{/each }}
-  </select>
+      {{/each }}
+    </select>
   </div>
 
   <div class="form-group">
     <label for="photos">Fotos del producto</label>
     <input name="photos" type="file" class="form-control-file mb-2" id="photos" accept="image/jpeg" multiple>
   </div>
+  <div>
+      <input id="address" type="textbox" name='address' value="{{ session.address }}">
+      <input type="button" value="Update Item Location" onclick="codeAddress()">
+    </div>
+    <div id = "lat-lng">
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+      </div>
+      <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
+        placeholder="Latitude" />
+    </div>
 
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+      </div>
+      <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
+        placeholder="Longitude" />
+    </div>
+    </div>
+  <div id='map'></div>
+  
   <button type="submit" class="btn btn-primary my-3">Subir a valoración</button>
 </form>

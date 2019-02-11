@@ -1,20 +1,20 @@
 <div class="container details">
   <h1 class="my-5">DETALLES DEL ARTÍCULO</h1>
-  
-    <div class="row justify-content-around">
-      {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a>
-      --}}
-      <a class="my-5 font-weight-bold text-right btn btn-secondary" href="javascript:history.back(-1);" title="Ir la página anterior">VOLVER</a>
-      {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a>
-      --}}
-      <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/{{ session.id }}/buy">COMPRAR!</a>
-      <a class="my-5 font-weight-bold text-right btn btn-danger add-fav" href="/articles/{{ article.id }}/{{ session.id }}/addToFav">AÑADIR
-        A FAVORITOS</a>
-      <a class="my-5 font-weight-bold text-right btn btn-info remove-fav" href="/articles/{{ article.id }}/{{ session.id }}/removeFromFav">QUITAR
-        FAVORITOS</a>
-    </div>
+
+  <div class="row justify-content-around">
+    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a>
+    --}}
+    <a class="my-5 font-weight-bold text-right btn btn-secondary" href="javascript:history.back(-1);" title="Ir la página anterior">VOLVER</a>
+    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a>
+    --}}
+    <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/{{ session.id }}/buy">COMPRAR!</a>
+    <a class="my-5 font-weight-bold text-right btn btn-danger add-fav" href="/articles/{{ article.id }}/{{ session.id }}/addToFav">AÑADIR
+      A FAVORITOS</a>
+    <a class="my-5 font-weight-bold text-right btn btn-info remove-fav" href="/articles/{{ article.id }}/{{ session.id }}/removeFromFav">QUITAR
+      FAVORITOS</a>
   </div>
-  {{!-- <div id="map"></div> --}}
+</div>
+{{!-- <div id="map"></div> --}}
 </div>
 </div>
 
@@ -24,8 +24,7 @@
     <div class="card p-1 mx-1 my-2 col-8">
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
         <a href="/articles/user/{{ article.owner }}">
-          <img src="/uploads/{{ owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px"
-            alt="photo frofile">
+          <img src="/uploads/{{ owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
           <span>{{ owner.name }}</span>
         </a>
         <div>
@@ -42,14 +41,14 @@
         <div id="carouselExampleIndicators" class="carousel slide px-3" data-ride="carousel">
           <ol class="carousel-indicators">
             {{#each article.photos as |photo| }}
-              <li data-target="#carouselExampleIndicators" data-slide-to="{{@index }}" class="{{#if @first }} active {{/if }}"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{@index }}" class="{{#if @first }} active {{/if }}"></li>
             {{/each}}
           </ol>
           <div class="carousel-inner">
             {{#each article.photos as |photo| }}
-              <div class="carousel-item {{#if @first }} active {{/if }}">
-                <img src="/uploads/{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
-              </div>
+            <div class="carousel-item {{#if @first }} active {{/if }}">
+              <img src="/uploads/{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
+            </div>
             {{/each}}
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -70,29 +69,50 @@
           <p class="card-text">{{ article.description }}</p>
         </div>
         <hr>
-        <div class="rounded" id="map"></div>
+        <div>
+          <input id="address" type="textbox" name='address' value="{{ article.address }}">
+          <input type="button" value="Update your location" onclick="codeAddress()">
+        </div>
+        <div id='lat-lng'>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+            </div>
+            <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
+              placeholder="Latitude" />
+          </div>
+
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+            </div>
+            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
+              placeholder="Longitude" />
+          </div>
+          <div class="rounded" id="map"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				 <h5 class="modal-title">Aviso de compra</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-			</div>
-			<div class="modal-body">
-				<p>Está a punto de adquirir <span class="font-weight-bold"> {{article.name }}</span> por un valor de <span class="font-weight-bold">{{ article.priceAppraiser }} €</span>.</p> 
-			</div>
-      <div class="modal-footer">
-        <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-        <a href="/articles/{{ article.id }}/buy/{{ session.id }}/" class="btn btn-primary">Confirmar compra</a>
+  <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Aviso de compra</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Está a punto de adquirir <span class="font-weight-bold"> {{article.name }}</span> por un valor de <span
+              class="font-weight-bold">{{ article.priceAppraiser }} €</span>.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+          <a href="/articles/{{ article.id }}/buy/{{ session.id }}/" class="btn btn-primary">Confirmar compra</a>
+        </div>
       </div>
-		</div>
-	</div>
-</div>
+    </div>
+  </div>
