@@ -4,26 +4,55 @@ const Article = require("../models/article.model");
 const User = require("../models/user.model");
 
 module.exports.list = (req, res, next) => {
-  //console.log("req user is  "+ req.user)
-  //res.send(req.session.user);
 
-  Article.find({
-    owner: { $ne: req.user.id },
-    isSold: false,
-    isActive: true,
-    isAuction: false
-  })
-    .then(articles => res.render("articles/list", { articles }))
-    .catch(err => next(err));
-};
+  function getCategoriesArray(categories) {
+    let categoriesArr = [];
+    switch (categories) {
+      case ("", "all"): {
+        constants.CATEGORIES.forEach(cat => categoriesArr.push(cat.id));
+        break;
+      }
+      case("preferences"): {
+        req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+        break;
+      }
+      default: {
+        categoriesArr.push(categories);
+      }
+    }
+    return categoriesArr;
+  }
+
+  let fieldsForm = req.query;
+  let categoriesArr = getCategoriesArray(req.query.category);
+  
+  console.log("LAS CATEGORIAS A BUSCAR SON: ", categoriesArr);
+
+  Article.find({name: { $regex: `${req.query.keyword}`, $options: 'i' },
+                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                category: {$in: categoriesArr},
+                owner: {$ne: req.user.id },
+                isSold: false,
+                isActive: true,
+                isAuction: false})
+    .then((articles) => { 
+      articles.map(article => { 
+        article.name = `${article.name.substr(0, 25)} ...`
+        article.description = `${article.description.substr(0, 100)} ...`;
+        return article
+      });
+      res.render("articles/list", { articles, fieldsForm })})
+    .catch(err => next(err))  
+}
 
 module.exports.get = (req, res, next) => {
   Article.findById(req.params.id)
-    .then(article => {
-      User.findById(article.owner).then(user => {
-        res.render("articles/details", { article, user });
-      });
-    })
+    .then((article) => {
+      User.findById(article.owner)
+        .then(owner => {
+          res.render('articles/details', { article, owner })
+        })
+      })
     .catch(err => next(err));
 };
 
@@ -185,30 +214,4 @@ module.exports.removeFromFav = (req, res, next) => {
 
 }
 
-module.exports.doFilter = (req, res, next) => {
-  //db.products.find( { sku: { $regex: /^ABC/i } } )
-  //let minPrice = Number.parseInt(req.body.minPrice);
-  //let maxPrice = Number.parseInt(req.body.maxPrice);
-  //console.log("\n\nENTRO AQUI¿¿???\n")
-  //res.send("YAAA", req.body)
-  let fieldsForm = req.body;
-  //res.send(fieldsForm)
-  Article.find({name: { $regex: `${req.body.keyword}`, $options: 'i' },
-                priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
-                category: req.body.category,
-                owner: {$ne: req.user.id },
-                isSold: false,
-                isActive: true,
-                isAuction: false})
-     .then((articles) => {
-   /*   //res.send("YEEEEEE", req.body.category)
-      if (req.body.category !== "") {
-        articles.find({category: req.body.category})
-          then(articles => {
-            res.render('articles/list', { articles })
-          })
-      }})*/
-      res.render('articles/list', { articles, fieldsForm })})
-    .catch(err => next(err))  
-}
 
