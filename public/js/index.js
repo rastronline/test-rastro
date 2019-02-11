@@ -1,8 +1,10 @@
 var geocoder;
 var map;
+
 /* //HE TENIDO QUE COMENTAR ESTAS DOS LINEAS DE MOMENTO PORQUE EL JS ME FALLA
 var userLat = document.getElementById("latitude").value;
 var userLng = document.getElementById("longitude").value; */
+
 var marker;
 var postal;
 var city;
@@ -29,8 +31,8 @@ function codeAddress() {
   var address = document.getElementById("address").value;
   geocoder.geocode({ address: address }, function(results, status) {
     if (status == "OK") {
-      postal = results[0].address_components[0].short_name;
-      city = results[0].address_components[1].short_name;
+      postal = results[0].address_components[0].long_name;
+      city = results[0].address_components[1].long_name;
 
       map.setCenter(results[0].geometry.location);
 
