@@ -4,6 +4,16 @@ const Article = require('../models/article.model');
 const User = require('../models/user.model');
 const constants = require("../constants");
 
+const formattedArticles = (articles) => {
+  return articles.map(article => { 
+    article.name = `${article.name.substr(0, 25)} ...`
+    article.description = `${article.description.substr(0, 100)} ...`;
+    return article
+  });
+}
+
+module.exports.formattedArticles = formattedArticles;
+
 
 module.exports.list = (req, res, next) => {
 
@@ -46,11 +56,56 @@ module.exports.list = (req, res, next) => {
                 isActive: true,
                 isAuction: false})
     .then((articles) => { 
-      articles.map(article => { 
-        article.name = `${article.name.substr(0, 25)} ...`
-        article.description = `${article.description.substr(0, 100)} ...`;
-        return article
-      });
+      articles = formattedArticles(articles);
+      res.render("articles/list", { articles, fieldsForm })})
+    .catch(err => next(err))  
+}
+
+module.exports.listAuctions = (req, res, next) => {
+
+  function getCategoriesArray(categories) {
+    let categoriesArr = [];
+    switch (categories) {
+      case ("", "all"): {
+        constants.CATEGORIES.forEach(cat => categoriesArr.push(cat.id));
+        break;
+      }
+      case("preferences"): {
+        req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+        break;
+      }
+      default: {
+        categoriesArr.push(categories);
+      }
+    }
+    return categoriesArr;
+  }
+
+  let fieldsForm;
+  let categoriesArr = [];
+  let keyword = "";
+
+  if (constants.FIRST_SEARCH) {
+    constants.FIRST_SEARCH = false;
+    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+  } else {
+    fieldsForm = req.query;
+    categoriesArr = getCategoriesArray(req.query.category);
+    keyword = req.query.keyword;
+  }
+
+  console.log("articulos subastados\n")
+  Article.find({//name: { $regex: `${keyword}`, $options: 'i' },
+                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                //category: {$in: categoriesArr},
+                owner: {$ne: req.user.id },
+                isSold: false,
+                isActive: true,
+                isAuction: true})
+    .then((articles) => { 
+      //res.send({articles})
+
+      articles = formattedArticles(articles);
       res.render("articles/list", { articles, fieldsForm })})
     .catch(err => next(err))  
 }
@@ -94,7 +149,10 @@ module.exports.remove = remove;
 
 module.exports.doDelete = (req, res, next) => {
 
-  req.params.path = `/users/${req.user.id}/selling`;
+  //console.log("REQ", req.body.pathBack)
+  //res.send( req.body.example )
+  //res.send(req)
+  req.params.path = `/users/${req.body.pathBack}/`;
   remove(req, res, next);
 };
 
@@ -161,7 +219,7 @@ module.exports.buy = (req, res, next) => {
   Article.findByIdAndUpdate(req.params.articleId, {
     $set: {
       isSold: true,
-      buyer: req.params.buyerId,
+      buyer: req.user.id,
       dateOfPurchase: Date.now()
     }
   })

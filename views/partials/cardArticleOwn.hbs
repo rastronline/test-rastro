@@ -41,48 +41,32 @@
                   <button class="font-weight-bold btn btn-outline-primary mx-2 col-6 offset-10 m-1" type="submit" name="decisionUser" value="auction">Poner en subasta</button>
                 </form>
               </div>
+              {{else }}
+                <div class="d-flex justify-content-center">
+            {{!-- <form action="/articles/{{ ../article.id }}/edit" method="post"> --}}
+                  <a type="button" href="/articles/{{ article.id }}/edit" class="card-link mx-2"><i class="fas fa-pencil-alt fa-2x  btn btn-outline-info"></i></a>
+            {{!-- </form> --}}
+                <form action="/articles/{{ article.id }}/delete" method="post">
+                <input type="text" name="pathBack" value="{{ pathBack }}" style="display:none;">
+                  <button type="submit" href="#" class="card-link mx-2"><i class="far fa-trash-alt fa-2x btn btn-outline-danger"></i></button>
+                </form>
+              </div>
             {{/unless }}
           {{else}}
-            {{#unless article.isSold }}
-              <a href="/articles/{{ ../article.id }}/edit" class="card-link btn btn-outline-warning"><i class="fas fa-pencil-alt fa-2x text-warning"></i></a>
-            {{/unless}}
-            <a href="/articles/{{ article.id }}/delete" class="card-link"><i class="far fa-trash-alt fa-2x btn btn-outline-danger"></i></a>
+            <div class="d-flex justify-content-center">
+              {{#unless article.isSold }}
+              {{!-- <form action="/articles/{{ ../article.id }}/edit" method="post"> --}}
+                <a type="button" href="/articles/{{ article.id }}/edit" class="card-link mx-2"><i class="fas fa-pencil-alt fa-2x  btn btn-outline-info"></i></a>
+              {{!-- </form> --}}
+              {{/unless}}
+              <form action="/articles/{{ article.id }}/delete" method="post">
+                <input type="text" name="pathBack" value="{{ pathBack }}" style="display:none;">
+                <button type="submit" class="card-link mx-2"><i class="far fa-trash-alt fa-2x btn btn-outline-danger"></i></button>
+              </form>
+            </div>
           {{/if }}
         </div>
       </div>
     </div>
   </div>
 </div>
-
-{{!-- {{#each articles as |article|}}
-<li class="list-group-item d-flex justify-content-between align-items-center">
-  <div class="row">
-    <div class="col-3">
-      <img src="/uploads/{{ article.photos }}" class="w-100" alt="photo article">
-    </div>
-    <div class="col-8 mx-3">
-      <p>{{ article.name }}
-        <span class="badge badge-info mx-2">Precio propuesto: {{ article.priceSeller }}</span>
-        <span class="badge badge-primary mx-2">PRECIO TASADO{{#if article.isPriced}} {{ article.priceAppraiser
-          }}{{else }} ???????? {{/if }}</span>
-      </p>
-      <p>{{ article.description }}</p>
-      <a href="/articles/{{ article.id }}" class="my-4">Ver detalle</a>
-      {{#if article.isPriced }}
-      {{#if article.infoAppraiser}}
-      <p>Comentario del tasador <small>{{ article.infoAppraiser }}</small></p>
-      {{/if}}
-      <form action="/users/{{ article.id }}/handleDecisionUser" method="post">
-        <button class="btn btn-warning mx-2" type="submit" name="decisionUser" value="delete">Retirar Artículo</button>
-        <button class="btn btn-success mx-2" type="submit" name="decisionUser" value="accept">Aceptar tasación</button>
-        <button class="btn btn-primary mx-2" type="submit" name="decisionUser" value="auction">Poner en subasta</button>
-      </form>
-      {{else }}
-      <div>
-        <span class="badge badge-pill badge-secondary">PENDIENTE DE TASACIÓN</span>
-      </div>
-      {{/if }}
-    </div>
-  </div>
-</li>
-{{/each}} --}}

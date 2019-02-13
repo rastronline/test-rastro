@@ -112,7 +112,9 @@
         </div>
         <div class="modal-footer">
           <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-          <a href="/articles/{{ article.id }}/buy/{{ session.id }}/" class="btn btn-primary">Confirmar compra</a>
+          <form action="/articles/{{ article.id }}/buy" method="post">
+            <button type="submit" class="btn btn-primary">Confirmar compra</button>
+          </form>
         </div>
       </div>
     </div>

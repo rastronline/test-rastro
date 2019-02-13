@@ -35,10 +35,7 @@
 </div>
 
 <div class="container">
-
-
   <div class="card-columns row justify-content-center">
-
     <a href="/articles/new" class="card m-2">
       <div class="row no-gutters">
         <div class="p-2">
@@ -51,9 +48,8 @@
         </div>
       </div>
     </a>
-
     {{#each articles as |article| }}
-      {{> cardArticleOwn session=../session article=article }}
+      {{> cardArticleOwn session=../session article=article pathBack="selling"}}
     {{/each}}
   </div>
 </div>

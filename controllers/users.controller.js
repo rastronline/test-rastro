@@ -100,7 +100,7 @@ module.exports.listArticlesSelling = (req, res, next) => {
       article.description = `${article.description.substr(0, 100)} ...`;
       return article
     }); */
-    articles = formattedArticles(articles);
+    articles = articlesController.formattedArticles(articles);
     let user = req.user;
     //User.findById(req.params.id).then(user => {
       res.render("users/articlesSelling", { articles, user });
@@ -109,13 +109,6 @@ module.exports.listArticlesSelling = (req, res, next) => {
   .catch(err => next(err));
 };
 
-const formattedArticles = (articles) => {
-  return articles.map(article => { 
-    article.name = `${article.name.substr(0, 25)} ...`
-    article.description = `${article.description.substr(0, 100)} ...`;
-    return article
-  });
-}
 
 module.exports.listArticlesOwned = (req, res, next) => {
   Article.find({
@@ -150,7 +143,7 @@ module.exports.listArticlesSold = (req, res, next) => {
   Article.find({ owner: req.user.id, isSold: true })
     .populate("buyer")
     .then(articles => {
-      articles = formattedArticles(articles);
+      articles = articlesController.formattedArticles(articles);
       res.render("users/articlesSold", { articles });
       //res.send({articles})
       /* User.findById(req.params.id)
@@ -180,7 +173,7 @@ module.exports.listFavorites = (req, res, next) => {
     .then(user => {
       //res.send(user.favorites)
       let favorites = user.favorites;
-      favorites = formattedArticles(favorites);
+      favorites = articlesController.formattedArticles(favorites);
       res.render("users/listFavorites", { favorites });
     })
     .catch(err => next(err));
@@ -210,6 +203,15 @@ module.exports.doHandleDecisionArticle = (req, res, next) => {
       .catch(err => next(err));
   };
 
+  const putInAuction = (req, res, next) => {
+
+    Article.findByIdAndUpdate(req.params.id, { $set: { isAuction: true, isActive: true, dateOfAuction: Date.now() } })
+      .then(article => {
+        res.redirect(req.params.path);
+      })
+      .catch(err => next(err));
+  };
+
   req.params.id = req.params.articleId;
   req.params.path = "/users/pricing";
 
@@ -220,6 +222,10 @@ module.exports.doHandleDecisionArticle = (req, res, next) => {
     }
     case "accept": {
       acceptAppraisal(req, res, next);
+      break;
+    }
+    case "auction": {
+      putInAuction(req, res, next);
       break;
     }
   }
