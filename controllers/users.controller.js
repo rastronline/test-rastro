@@ -11,7 +11,6 @@ module.exports.edit = (req, res, next) => {
 };
 
 module.exports.doEdit = (req, res, next) => {
-  console.log("EL BODY ES ", req.body);
   User.findByIdAndUpdate(req.params.id, {
     $set: req.body,
     location: {
