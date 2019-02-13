@@ -4,6 +4,16 @@ const Article = require('../models/article.model');
 const User = require('../models/user.model');
 const constants = require("../constants");
 
+const formattedArticles = (articles) => {
+  return articles.map(article => { 
+    article.name = `${article.name.substr(0, 25)} ...`
+    article.description = `${article.description.substr(0, 100)} ...`;
+    return article
+  });
+}
+
+module.exports.formattedArticles = formattedArticles;
+
 
 module.exports.list = (req, res, next) => {
 
@@ -25,12 +35,20 @@ module.exports.list = (req, res, next) => {
     return categoriesArr;
   }
 
-  let fieldsForm = req.query;
-  let categoriesArr = getCategoriesArray(req.query.category);
-  
-  console.log("LAS CATEGORIAS A BUSCAR SON: ", categoriesArr);
+  let fieldsForm;
+  let categoriesArr = [];
+  let keyword = "";
 
-  Article.find({name: { $regex: `${req.query.keyword}`, $options: 'i' },
+  if (constants.FIRST_SEARCH) {
+    constants.FIRST_SEARCH = false;
+    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+  } else {
+    fieldsForm = req.query;
+    categoriesArr = getCategoriesArray(req.query.category);
+    keyword = req.query.keyword;
+  }
+
+  Article.find({name: { $regex: `${keyword}`, $options: 'i' },
                 //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
                 category: {$in: categoriesArr},
                 owner: {$ne: req.user.id },
@@ -38,11 +56,56 @@ module.exports.list = (req, res, next) => {
                 isActive: true,
                 isAuction: false})
     .then((articles) => { 
-      articles.map(article => { 
-        article.name = `${article.name.substr(0, 25)} ...`
-        article.description = `${article.description.substr(0, 100)} ...`;
-        return article
-      });
+      articles = formattedArticles(articles);
+      res.render("articles/list", { articles, fieldsForm })})
+    .catch(err => next(err))  
+}
+
+module.exports.listAuctions = (req, res, next) => {
+
+  function getCategoriesArray(categories) {
+    let categoriesArr = [];
+    switch (categories) {
+      case ("", "all"): {
+        constants.CATEGORIES.forEach(cat => categoriesArr.push(cat.id));
+        break;
+      }
+      case("preferences"): {
+        req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+        break;
+      }
+      default: {
+        categoriesArr.push(categories);
+      }
+    }
+    return categoriesArr;
+  }
+
+  let fieldsForm;
+  let categoriesArr = [];
+  let keyword = "";
+
+  if (constants.FIRST_SEARCH) {
+    constants.FIRST_SEARCH = false;
+    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+  } else {
+    fieldsForm = req.query;
+    categoriesArr = getCategoriesArray(req.query.category);
+    keyword = req.query.keyword;
+  }
+
+  console.log("articulos subastados\n")
+  Article.find({//name: { $regex: `${keyword}`, $options: 'i' },
+                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                //category: {$in: categoriesArr},
+                owner: {$ne: req.user.id },
+                isSold: false,
+                isActive: true,
+                isAuction: true})
+    .then((articles) => { 
+      //res.send({articles})
+
+      articles = formattedArticles(articles);
       res.render("articles/list", { articles, fieldsForm })})
     .catch(err => next(err))  
 }
@@ -86,7 +149,10 @@ module.exports.remove = remove;
 
 module.exports.doDelete = (req, res, next) => {
 
-  req.params.path = `/users/${req.user.id}/selling`;
+  //console.log("REQ", req.body.pathBack)
+  //res.send( req.body.example )
+  //res.send(req)
+  req.params.path = `/users/${req.body.pathBack}/`;
   remove(req, res, next);
 };
 
@@ -118,7 +184,7 @@ module.exports.doCreate = (req, res, next) => {
           .then(article => {
             console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
             debugger;
-            res.redirect(`/users/${article.owner}/selling`);
+            res.redirect(`/users/selling`);
           })
           .catch(err => next(err))
       );
@@ -153,7 +219,7 @@ module.exports.buy = (req, res, next) => {
   Article.findByIdAndUpdate(req.params.articleId, {
     $set: {
       isSold: true,
-      buyer: req.params.buyerId,
+      buyer: req.user.id,
       dateOfPurchase: Date.now()
     }
   })
@@ -166,11 +232,14 @@ module.exports.buy = (req, res, next) => {
 module.exports.addToFav = (req, res, next) => {
   console.log("lo que VIENE EN EL PARAMS ES", req.params);
 
-  User.findByIdAndUpdate(req.params.userId, {
+  User.findByIdAndUpdate(req.user.id, {
+  //User.findByIdAndUpdate(req.params.userId, {
     $push: { favorites: req.params.articleId }
   })
     .then(user => {
       //res.send(user);
+
+      console.log("\nmeto en favoritos!!\n")
       res.redirect(`/articles/${req.params.articleId}`);
     })
     .catch(err => next(err));
@@ -194,13 +263,15 @@ module.exports.addToFav = (req, res, next) => {
 
 module.exports.removeFromFav = (req, res, next) => {
   //console.log("lo que VIENE EN EL PARAMS ES", req.params)
-  User.findByIdAndUpdate(req.params.userId, {
+  User.findByIdAndUpdate(req.user.id, {
+  //User.findByIdAndUpdate(req.params.userId, {
     $pull: { favorites: req.params.articleId }
   })
     .then(user => {
       //res.send("yeahh");
+      console.log("\nEXTRAIGO DE FAVORITOS\n")
       let favorites = user.favorites;
-      res.redirect(`/users/${user.id}/favorites`);
+      res.redirect(`/users/favorites`);
     })
     .catch(err => next(err));
 };

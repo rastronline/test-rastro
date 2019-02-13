@@ -1,0 +1,72 @@
+<div class="card m-2">
+  <div class="row no-gutters">
+    <div class="p-2">
+      <img src="/uploads/{{ article.photos.[0] }}" style="width:125px; height:125px" class="card-img-top rounded" alt="{{ article.name }} photo">
+    </div>
+    <div class="col-md-10 m-auto">
+      <div class="row justify-between">
+        <div class="col-4">
+          {{#if article.isActive }}
+            <h3 class="font-weight-bold my-2">{{ article.priceAppraiser }} €</h3>
+            <h5 class="card-title my-2">{{ article.name }}</h5>
+          {{else }}
+            <h3 class="font-weight-bold my-2">{{ article.name }}</h3>
+            <h6 class="card-title my-2">Tu propuesta son</h6>
+            <h5>{{ article.priceSeller }} €</h5>
+            <small class="text-disabled">Publicado el <span class="font-weight-bold">{{ article.createdAt }}</span></small>
+          {{/if }}
+        </div>
+        <div class="col-4 text-center px-5 m-auto">
+          {{#unless article.isPriced }}
+            <h6 class="alert alert-warning" role="alert">Pendiente de tasación</h6>
+          {{else }}
+            {{#unless article.isActive}}
+            <h6 class="alert alert-primary my-2" role="alert">¡Tasación realizada!</h6>
+            <h3 class="my-2"><span class="badge badge-pill badge-primary p-2">TASACIÓN: {{ article.priceAppraiser }} €</span></h3>
+            {{/unless }}
+          {{/unless }}
+          {{#if article.isActive }}
+            <p class="my-2">Publicado</p>
+            <p class="my-2">{{ article.createdAt }}</p>
+          {{/if }}
+        </div>
+
+        <div class="col-4 text-center m-auto" style="width:20px">
+          {{#if article.isPriced }}
+            {{#unless article.isActive }}
+              <div class="row">
+                <form action="/users/handleDecisionArticle/{{ article.id }}" method="post">
+                  <button class="font-weight-bold btn btn-outline-danger mx-2 col-6 offset-10 m-1" type="submit" name="decisionUser" value="delete"><i class="fas fa-ban mr-2"></i>Retirar</button>
+                  <button class="font-weight-bold btn btn-outline-success mx-2 col-6 offset-10 m-1" type="submit" name="decisionUser" value="accept"><i class="far fa-check-circle mr-2"></i>Aceptar</button>
+                  <button class="font-weight-bold btn btn-outline-primary mx-2 col-6 offset-10 m-1" type="submit" name="decisionUser" value="auction">Poner en subasta</button>
+                </form>
+              </div>
+              {{else }}
+                <div class="d-flex justify-content-center">
+            {{!-- <form action="/articles/{{ ../article.id }}/edit" method="post"> --}}
+                  <a type="button" href="/articles/{{ article.id }}/edit" class="card-link mx-2"><i class="fas fa-pencil-alt fa-2x  btn btn-outline-info"></i></a>
+            {{!-- </form> --}}
+                <form action="/articles/{{ article.id }}/delete" method="post">
+                <input type="text" name="pathBack" value="{{ pathBack }}" style="display:none;">
+                  <button type="submit" href="#" class="card-link mx-2"><i class="far fa-trash-alt fa-2x btn btn-outline-danger"></i></button>
+                </form>
+              </div>
+            {{/unless }}
+          {{else}}
+            <div class="d-flex justify-content-center">
+              {{#unless article.isSold }}
+              {{!-- <form action="/articles/{{ ../article.id }}/edit" method="post"> --}}
+                <a type="button" href="/articles/{{ article.id }}/edit" class="card-link mx-2"><i class="fas fa-pencil-alt fa-2x  btn btn-outline-info"></i></a>
+              {{!-- </form> --}}
+              {{/unless}}
+              <form action="/articles/{{ article.id }}/delete" method="post">
+                <input type="text" name="pathBack" value="{{ pathBack }}" style="display:none;">
+                <button type="submit" class="card-link mx-2"><i class="far fa-trash-alt fa-2x btn btn-outline-danger"></i></button>
+              </form>
+            </div>
+          {{/if }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,17 +8,15 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 
 /* GET users listing. */
-router.get('/:id/edit', authMiddleware.isAuthenticated, usersController.edit);
-router.post('/:id/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit,);
+router.get('/edit', authMiddleware.isAuthenticated, usersController.edit);
+router.post('/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit,);
 //router.post('/upload', upload.single('profilePic'), usersController.uploadProfilePic);
 router.get('/:id/owned',  authMiddleware.isAuthenticated, usersController.listArticlesOwned);
-router.get('/:id/selling', authMiddleware.isAuthenticated, usersController.listArticlesSelling);
-router.get('/:id/sold', authMiddleware.isAuthenticated, usersController.listArticlesSold);
-router.get('/:id/pricing', authMiddleware.isAuthenticated, usersController.listArticlesPricing);
-router.get('/:id/favorites', authMiddleware.isAuthenticated, usersController.listFavorites);
+router.get('/selling', authMiddleware.isAuthenticated, usersController.listArticlesSelling);
+router.get('/sold', authMiddleware.isAuthenticated, usersController.listArticlesSold);
+router.get('/pricing', authMiddleware.isAuthenticated, usersController.listArticlesPricing);
+router.get('/favorites', authMiddleware.isAuthenticated, usersController.listFavorites);
 router.post('/:id/delete', authMiddleware.checkRole(constants.ROLES.ROLE_ADMIN), usersController.doDelete);
-router.post('/:articleId/handleDecisionUser', authMiddleware.isAuthenticated, usersController.doHandleDecisionUser);
-
-
+router.post('/handleDecisionArticle/:articleId', authMiddleware.isAuthenticated, usersController.doHandleDecisionArticle);
 
 module.exports = router;

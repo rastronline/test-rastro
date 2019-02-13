@@ -20,8 +20,12 @@ a {
   width: 15%;
 }
 
-.selected{
+.selected {
   opacity: 0.4;
+}
+
+.fav-selected {
+  font-weight: 700;
 }
 
 .card-body {
@@ -34,4 +38,8 @@ a {
 
 #lat-lng {
   display: none;
+}
+
+.new-icon {
+  background-color: darkseagreen"
 }

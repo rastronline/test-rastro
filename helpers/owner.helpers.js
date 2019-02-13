@@ -1,11 +1,11 @@
 module.exports = (hbs) => {
-  hbs.registerHelper('isOwner', (user, article) => {
+  hbs.registerHelper("isOwner", (user, article, options) => {
     //return (user.id == article.owner);
-
-    if (user._id == article.owner) {
-      return options.inverse(this);
-    } else {
+    //console.info('USER => ', user)
+    if (JSON.stringify(user.id) == JSON.stringify(article.owner)) {
       return options.fn(this);
+    } else {
+      return options.inverse(this);
     }
   })
 }

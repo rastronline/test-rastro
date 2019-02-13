@@ -5,18 +5,33 @@
     </div>
     <div class="card-body py-2 px-3">
       <div class="my-1 d-flex justify-content-between align-items-center">
-        <h4 class="card-title font-weight-bold m-0">{{ article.priceAppraiser }} €</h4>
+        <h4 class="card-title font-weight-bold m-0">{{#if article.isAuction }}{{ article.priceAuction }} €{{else }}{{
+          article.priceAppraiser }} €{{/if }}</h4>
         <div>
-          {{!-- {{#isOwner session article }} --}}
-            <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text.warning"></i></a>
-            <a href="/articles/{{ article.id }}/delete" class="card-link"><i class="far fa-trash-alt fa-2x"></i></a>
-         {{!--  {{else }} --}}
-            <i class="far fa-heart fa-2x"></i>
-          {{!-- {{/isOwner }} --}}
+          {{#isOwner session article }}
+          <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text-warning"></i></a>
+          <a href="/articles/{{ article.id }}/delete" class="card-link"><i class="far fa-trash-alt fa-2x"></i></a>
+          {{else }}
+          <a class="card-link fav-btn"><i data-value="{{ ../article.id }}" class="far fa-heart fa-2x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a>
+          {{/isOwner }}
         </div>
       </div>
       <h5 class="card-title mb-3">{{ article.name }}</h5>
       <p class="card-text">{{ article.description }}</p>
-    </div> 
+
+     {{!--  A PARTIR DE AQUÏ ESTOY EXPERIMANTANDO PARA LAS SUBASTAS.... --}}
+      {{#if article.isAuction }}
+        <small class="text-secondary">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
+        <h4>RESTAN <span id="time-auction"></span></h4>
+        <script>
+          let time = Date("{{ article.dateOfAuction }}";
+          console.log(time);
+          let diff = Date.now() - time;
+          // time = time.getTime();
+          // console.log(`el articulo se puso a subasta el ${time}`)
+          document.getElementById("time-auction").innerText = "{{ article.dateOfAuction }}";
+        </script>
+      {{/if }}
+    </div>
   </a>
 </div>

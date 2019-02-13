@@ -1,11 +1,6 @@
 <h2>LISTADO DE FAVORITOS</h2>
 
-{{!-- <div class="row my-5">
-    <div class="col-5"><a href="/articles/search">EN VENTA</a></div>
-    <div class="col-5"><a href="/articles/{{ session.id }}/...........">EN SUBASTA</a></div>
-  </div> --}}
-
-<ul class="list-group mt-5">
+{{!-- <ul class="list-group mt-5">
   {{#each favorites as |favorite|}}
     <li class="list-group-item d-flex justify-content-between align-items-center">
      <div class="row">
@@ -20,4 +15,17 @@
       </div> 
     </li>
   {{/each}}
-</ul>
+</ul> --}}
+
+
+
+<div class="container-fluid">
+  <div class="card-columns row justify-content-center">
+    {{#each favorites as |favorite|}}
+      {{> cardArticle session=../session article=favorite }}
+    {{/each}}
+  </div>
+  
+</div>
+
+  

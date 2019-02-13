@@ -12,6 +12,9 @@ const articleSchema = new mongoose.Schema({
   priceAppraiser: {
     type: Number
   },
+  priceAuction : {
+    type: Number
+  },
   description: {
     type: String,
   },
@@ -53,7 +56,10 @@ const articleSchema = new mongoose.Schema({
     type: String
   },
   dateOfPurchase: {
-    type: Date,
+    type: Date
+  },
+  dateOfAuction: {
+    type: Date
   },
   isSold: {
     type: Boolean,
