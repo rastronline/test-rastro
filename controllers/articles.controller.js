@@ -126,7 +126,7 @@ module.exports.doCreate = (req, res, next) => {
           .then(article => {
             console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
             debugger;
-            res.redirect(`/users/${article.owner}/selling`);
+            res.redirect(`/users/selling`);
           })
           .catch(err => next(err))
       );

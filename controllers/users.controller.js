@@ -44,10 +44,10 @@ module.exports.doEdit = (req, res, next) => {
         if (req.file) {
           console.log("encuentro cambio de fichero")
           return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
-            .then(user => res.redirect(`/users/${req.user.id}/edit`))
+            .then(user => res.redirect(`/users/edit`))
             .catch(err => next(err)); 
         }
-        res.redirect(`/users/${req.user.id}/edit`)})
+        res.redirect(`/users/edit`)})
       .catch(err => next(err));
  
 
@@ -95,11 +95,12 @@ module.exports.listArticlesSelling = (req, res, next) => {
         isActive: true,
         isAuction: false})
   .then(articles => {
-    articles.map(article => { 
+    /* articles.map(article => { 
       article.name = `${article.name.substr(0, 25)} ...`
       article.description = `${article.description.substr(0, 100)} ...`;
       return article
-    });
+    }); */
+    articles = formattedArticles(articles);
     let user = req.user;
     //User.findById(req.params.id).then(user => {
       res.render("users/articlesSelling", { articles, user });
@@ -107,6 +108,14 @@ module.exports.listArticlesSelling = (req, res, next) => {
   //})
   .catch(err => next(err));
 };
+
+const formattedArticles = (articles) => {
+  return articles.map(article => { 
+    article.name = `${article.name.substr(0, 25)} ...`
+    article.description = `${article.description.substr(0, 100)} ...`;
+    return article
+  });
+}
 
 module.exports.listArticlesOwned = (req, res, next) => {
   Article.find({
@@ -137,9 +146,11 @@ module.exports.listArticlesAuctioning = (req, res, next) => {
 
 module.exports.listArticlesSold = (req, res, next) => {
   console.log("\n\nDENTRO DE LOS VENDIDOS!!!\n");
-  Article.find({ owner: req.params.id, isSold: true })
+  //res.send("holii")
+  Article.find({ owner: req.user.id, isSold: true })
     .populate("buyer")
     .then(articles => {
+      articles = formattedArticles(articles);
       res.render("users/articlesSold", { articles });
       //res.send({articles})
       /* User.findById(req.params.id)
@@ -152,7 +163,7 @@ module.exports.listArticlesSold = (req, res, next) => {
 
 module.exports.listArticlesPricing = (req, res, next) => {
   console.log("\n\nDENTRO DE LOS PENDIENTES!!! \n");
-  Article.find({ owner: req.params.id, isActive: false })
+  Article.find({ owner: req.user.id, isActive: false })
     .then(articles => {
       res.render("users/articlesPricing", { articles });
       /* User.findById(req.params.id)
@@ -169,6 +180,7 @@ module.exports.listFavorites = (req, res, next) => {
     .then(user => {
       //res.send(user.favorites)
       let favorites = user.favorites;
+      favorites = formattedArticles(favorites);
       res.render("users/listFavorites", { favorites });
     })
     .catch(err => next(err));
@@ -188,7 +200,8 @@ module.exports.doDelete = (req, res, next) => {
   articlesController.delete(req, res, next);
 } */
 
-module.exports.doHandleDecisionUser = (req, res, next) => {
+module.exports.doHandleDecisionArticle = (req, res, next) => {
+  
   const acceptAppraisal = (req, res, next) => {
     Article.findByIdAndUpdate(req.params.id, { $set: { isActive: true } })
       .then(article => {
@@ -196,8 +209,9 @@ module.exports.doHandleDecisionUser = (req, res, next) => {
       })
       .catch(err => next(err));
   };
+
   req.params.id = req.params.articleId;
-  req.params.path = `/users/${req.user.id}/pricing`;
+  req.params.path = "/users/pricing";
 
   switch (req.body.decisionUser) {
     case "delete": {
