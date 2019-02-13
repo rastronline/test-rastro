@@ -11,8 +11,49 @@ module.exports.edit = (req, res, next) => {
 };
 
 module.exports.doEdit = (req, res, next) => {
-  console.log("EL BODY ES ", req.body);
-  User.findByIdAndUpdate(req.params.id, {
+  /* console.log("EL BODY ES ", req.body);
+  User.findByIdAndUpdate(req.params.id, {$set:req.body})
+    .then(user => {
+      console.log(req.body);
+      console.log("\n\nENCUENTRO EL USUARIOOOO\n\n, req.params.id");
+      if (req.file) {
+        console.log("encuentro cambio de fichero");
+        return User.findByIdAndUpdate(user, {
+          $set: { profilePic: req.file.filename }
+        })
+          .then(user => res.redirect(`/users/${req.user.id}/edit`))
+          .catch(err => next(err));
+      }
+      res.redirect(`/users/${req.user.id}/edit`);
+    })
+    .catch(err => next(err)); */
+
+
+    console.log("EL BODY ES ", req.body)
+
+
+    //if there are no hobbies selected...
+    if (!Object.prototype.hasOwnProperty.call(req.body, "hobbies")) {
+      req.body.hobbies = [];
+    }
+
+
+  User.findByIdAndUpdate(req.user.id, {$set:req.body})
+      .then(user => {
+        console.log("\n\nENCUENTRO EL USUARIOOOO\n\n", req.body)
+        if (req.file) {
+          console.log("encuentro cambio de fichero")
+          return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
+            .then(user => res.redirect(`/users/${req.user.id}/edit`))
+            .catch(err => next(err)); 
+        }
+        res.redirect(`/users/${req.user.id}/edit`)})
+      .catch(err => next(err));
+ 
+
+
+
+  /* User.findByIdAndUpdate(req.params.id, {
     $set: req.body,
     location: {
       type: "Point",
@@ -33,7 +74,7 @@ module.exports.doEdit = (req, res, next) => {
       res.redirect(`/users/${req.user.id}/edit`);
     })
     .catch(err => next(err));
-
+ */
   /*   let path = `${req.file.filename}`;
   User.findByIdAndUpdate(req.params.id, {$set:{profilePic: path}})
     .then(user => res.redirect('/articles'))
@@ -49,17 +90,22 @@ module.exports.uploadProfilePic = (req, res, next) => {
 
 module.exports.listArticlesSelling = (req, res, next) => {
   Article.find({
-    owner: req.params.id,
-    isSold: false,
-    isActive: true,
-    isAuction: false
-  })
-    .then(articles => {
-      User.findById(req.params.id).then(user => {
-        res.render("users/articlesSelling", { articles, user });
-      });
+        owner: req.user.id,
+        isSold: false,
+        isActive: true,
+        isAuction: false})
+  .then(articles => {
+    articles.map(article => { 
+      article.name = `${article.name.substr(0, 25)} ...`
+      article.description = `${article.description.substr(0, 100)} ...`;
+      return article
+    });
+    let user = req.user;
+    //User.findById(req.params.id).then(user => {
+      res.render("users/articlesSelling", { articles, user });
     })
-    .catch(err => next(err));
+  //})
+  .catch(err => next(err));
 };
 
 module.exports.listArticlesOwned = (req, res, next) => {
@@ -118,7 +164,7 @@ module.exports.listArticlesPricing = (req, res, next) => {
 };
 
 module.exports.listFavorites = (req, res, next) => {
-  User.findById(req.params.id)
+  User.findById(req.user.id)
     .populate("favorites")
     .then(user => {
       //res.send(user.favorites)

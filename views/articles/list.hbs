@@ -93,7 +93,7 @@
 <div class="container-fluid">
   <div class="card-columns row justify-content-center">
     {{#each articles as |article|}}
-      {{> cardArticle article=article }}
+      {{> cardArticle session=../session article=article }}
     {{/each}}
   </div>
 </div>

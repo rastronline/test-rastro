@@ -25,12 +25,20 @@ module.exports.list = (req, res, next) => {
     return categoriesArr;
   }
 
-  let fieldsForm = req.query;
-  let categoriesArr = getCategoriesArray(req.query.category);
-  
-  console.log("LAS CATEGORIAS A BUSCAR SON: ", categoriesArr);
+  let fieldsForm;
+  let categoriesArr = [];
+  let keyword = "";
 
-  Article.find({name: { $regex: `${req.query.keyword}`, $options: 'i' },
+  if (constants.FIRST_SEARCH) {
+    constants.FIRST_SEARCH = false;
+    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
+  } else {
+    fieldsForm = req.query;
+    categoriesArr = getCategoriesArray(req.query.category);
+    keyword = req.query.keyword;
+  }
+
+  Article.find({name: { $regex: `${keyword}`, $options: 'i' },
                 //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
                 category: {$in: categoriesArr},
                 owner: {$ne: req.user.id },
@@ -166,11 +174,14 @@ module.exports.buy = (req, res, next) => {
 module.exports.addToFav = (req, res, next) => {
   console.log("lo que VIENE EN EL PARAMS ES", req.params);
 
-  User.findByIdAndUpdate(req.params.userId, {
+  User.findByIdAndUpdate(req.user.id, {
+  //User.findByIdAndUpdate(req.params.userId, {
     $push: { favorites: req.params.articleId }
   })
     .then(user => {
       //res.send(user);
+
+      console.log("\nmeto en favoritos!!\n")
       res.redirect(`/articles/${req.params.articleId}`);
     })
     .catch(err => next(err));
@@ -194,13 +205,15 @@ module.exports.addToFav = (req, res, next) => {
 
 module.exports.removeFromFav = (req, res, next) => {
   //console.log("lo que VIENE EN EL PARAMS ES", req.params)
-  User.findByIdAndUpdate(req.params.userId, {
+  User.findByIdAndUpdate(req.user.id, {
+  //User.findByIdAndUpdate(req.params.userId, {
     $pull: { favorites: req.params.articleId }
   })
     .then(user => {
       //res.send("yeahh");
+      console.log("\nEXTRAIGO DE FAVORITOS\n")
       let favorites = user.favorites;
-      res.redirect(`/users/${user.id}/favorites`);
+      res.redirect(`/users/favorites`);
     })
     .catch(err => next(err));
 };

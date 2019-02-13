@@ -1,5 +1,6 @@
-const passport = require('passport');
-const mongoose = require('mongoose');
+const passport = require("passport");
+const mongoose = require("mongoose");
+const constants = require("../constants")
 
 module.exports.create = (req, res, next) => {
   res.render('sessions/create');
@@ -13,8 +14,9 @@ module.exports.createWithIDPCallback = (req, res, next) => {
       req.login(user, (error) => {
         if (error) {
           next(error)
-        } else { if (user.role == 'GUEST') {
-            res.redirect('/articles/search');
+        } else { if (user.role == "GUEST") {
+            constants.FIRST_SEARCH = true;
+            res.redirect("/articles/search");
           } else {
             res.redirect('/admins')
          }

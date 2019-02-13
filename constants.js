@@ -83,3 +83,5 @@ module.exports.CATEGORIES = [
 ];
 
 module.exports.CONDITIONS = ['Poor', 'Good', 'Excelent'];
+
+module.exports.FIRST_SEARCH = true;

@@ -7,12 +7,12 @@
       <div class="my-1 d-flex justify-content-between align-items-center">
         <h4 class="card-title font-weight-bold m-0">{{ article.priceAppraiser }} €</h4>
         <div>
-          {{!-- {{#isOwner session article }} --}}
-            <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text.warning"></i></a>
+          {{#isOwner session article }}
+            <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text-warning"></i></a>
             <a href="/articles/{{ article.id }}/delete" class="card-link"><i class="far fa-trash-alt fa-2x"></i></a>
-         {{!--  {{else }} --}}
-            <i class="far fa-heart fa-2x"></i>
-          {{!-- {{/isOwner }} --}}
+          {{else }}
+            <a class="card-link fav-btn"><i data-value="{{ ../article.id }}" class="far fa-heart fa-2x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a>
+          {{/isOwner }}
         </div>
       </div>
       <h5 class="card-title mb-3">{{ article.name }}</h5>
