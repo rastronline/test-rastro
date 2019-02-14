@@ -22,15 +22,15 @@
      {{!--  A PARTIR DE AQUÏ ESTOY EXPERIMANTANDO PARA LAS SUBASTAS.... --}}
       {{#if article.isAuction }}
         <small class="text-secondary">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
-        <h4>RESTAN <span id="time-auction"></span></h4>
-        <script>
+        <h4>RESTAN <span class="time-auction" data-auction="{{ article.dateOfAuction }}"></span></h4>
+        {{!-- <script>
           let time = Date("{{ article.dateOfAuction }}";
           console.log(time);
           let diff = Date.now() - time;
           // time = time.getTime();
           // console.log(`el articulo se puso a subasta el ${time}`)
           document.getElementById("time-auction").innerText = "{{ article.dateOfAuction }}";
-        </script>
+        </script> --}}
       {{/if }}
     </div>
   </a>

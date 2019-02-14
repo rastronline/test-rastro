@@ -112,10 +112,11 @@ module.exports.listArticlesSelling = (req, res, next) => {
 
 module.exports.listArticlesOwned = (req, res, next) => {
   Article.find({
-    owner: req.params.id,
+    buyer: req.params.id,
     isSold: true
   })
     .then(articles => {
+     // res.send(articles)
       User.findById(req.params.id).then(user => {
         res.render("users/articles-owned", { articles, user });
       });

@@ -5,6 +5,7 @@ const multer  = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const authMiddleware = require('../middlewares/auth.middleware')
 /* GET home page. */
+
 router.get('/search', authMiddleware.isAuthenticated, articlesController.list);
 router.get('/searchInAuction', authMiddleware.isAuthenticated, articlesController.listAuctions);
 router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
