@@ -14,6 +14,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 //const multer  = require('multer');
+const reviewsRouter = require('./routes/reviews.routes');
 const indexRouter = require('./routes/index.routes');
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
@@ -82,6 +83,7 @@ app.use('/sessions', sessionsRouter);
 app.use('/articles', articlesRouter);
 app.use('/users', usersRouter);
 app.use('/admins', adminsRouter);
+app.use('/reviews', reviewsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
