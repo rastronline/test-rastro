@@ -3,6 +3,7 @@
 const Article = require("../models/article.model");
 const User = require("../models/user.model");
 const articlesController = require("./articles.controller");
+const constants = require("../constants");
 
 module.exports.edit = (req, res, next) => {
   //console.log("EL REQ.LOCALS ES", res.locals);
@@ -38,15 +39,21 @@ module.exports.doEdit = (req, res, next) => {
     }
 
 
-  User.findByIdAndUpdate(req.user.id, {$set:req.body})
+  User.findByIdAndUpdate(req.user.id, 
+    { $set:req.body,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude]
+      }
+    })
       .then(user => {
         console.log("\n\nENCUENTRO EL USUARIOOOO\n\n", req.body)
-        if (req.file) {
+        /* if (req.file) {
           console.log("encuentro cambio de fichero")
           return User.findByIdAndUpdate(user, {$set:{profilePic: req.file.filename}})
             .then(user => res.redirect(`/users/edit`))
             .catch(err => next(err)); 
-        }
+        } */
         res.redirect(`/users/edit`)})
       .catch(err => next(err));
  
@@ -81,12 +88,22 @@ module.exports.doEdit = (req, res, next) => {
     .catch(err => next(err)); */
 };
 
-module.exports.uploadProfilePic = (req, res, next) => {
+
+module.exports.uploadPhotoProfile = (req, res, next) => {
+  console.log("\nENTRO A CAMBIAR LA FOTO DE PERFILLL", req.file.filename)
+  //let path = `/uploads/${req.file.filename}`;
+  User.findByIdAndUpdate(req.user.id, { $set: { profilePic: req.file.filename } })
+    .then(user => res.redirect("/users/edit"))
+    .catch(err => next(err));
+}
+
+
+/* module.exports.uploadProfilePic = (req, res, next) => {
   let path = `/uploads/${req.file.filename}`;
   User.findByIdAndUpdate(req.params.id, { $set: { profilePic: path } })
     .then(user => res.redirect("/articles"))
     .catch(err => next(err));
-};
+}; */
 
 module.exports.listArticlesSelling = (req, res, next) => {
   Article.find({
@@ -207,7 +224,7 @@ module.exports.doHandleDecisionArticle = (req, res, next) => {
   const putInAuction = (req, res, next) => {
 
     Article.findByIdAndUpdate(req.params.id, { $set: { isAuction: true, isActive: true, dateOfAuction: Date.now() } })
-      .then(article => {
+      .then(article => {        
         res.redirect(req.params.path);
       })
       .catch(err => next(err));

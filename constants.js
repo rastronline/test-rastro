@@ -11,47 +11,47 @@ module.exports.CATEGORIES = [
   },
   {
     id: "retroGaming",
-    image: "",
+    image: "../../images/categories/retroGame.jpg",
     name: "Retro Gaming",
   },
   {
     id: "books",
-    image: "",
+    image: "../../images/categories/libros.jpg",
     name: "Books",
   },
   {
     id: "vinylRecords",
-    image: "",
+    image: "../../images/categories/vinilos.jpg",
     name: "Vynil records",
   },
   {
     id: "comics",
-    image: "",
+    image: "../../images/categories/comics.jpg",
     name: "Comics",
   },
   {
     id: "philately",
-    image: "",
+    image: "../../images/categories/sellos.jpg",
     name: "Phylately",
   },
   {
     id: "numismatics",
-    image: "",
+    image: "../../images/categories/monedas.jpg",
     name: "Numismatics",
   },
   {
     id: "pictures",
-    image: "",
+    image: "../../images/categories/cuadros.jpg",
     name: "Pictures",
   },
   {
     id: "jewelry",
-    image: "",
+    image: "../../images/categories/joyas.jpg",
     name: "Jewelry",
   },
   {
     id: "antiques",
-    image: "",
+    image: "../../images/categories/antiguedades.jpg",
     name: "Antiques",
   }
   /* retroGaming: {
@@ -82,8 +82,9 @@ module.exports.CATEGORIES = [
   }, */
 ];
 
-module.exports.CONDITIONS = ['Poor', 'Good', 'Excelent'];
+module.exports.CONDITIONS = ['Pobre', 'Bueno', 'Excelente'];
 
 module.exports.FIRST_SEARCH = true;
 
-module.exports.AUCTION_TIME_LIMIT = 24*60*60*1000  //24 hours in milliseconds
+//module.exports.AUCTION_TIME_LIMIT = 24*60*60*1000  //24 hours in milliseconds
+module.exports.AUCTION_TIME_LIMIT = 2*60*1000  //24 hours in milliseconds

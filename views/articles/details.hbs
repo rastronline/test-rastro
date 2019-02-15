@@ -1,41 +1,44 @@
 <div class="container details">
   <h1 class="my-5">DETALLES DEL ARTÍCULO</h1>
 
-  <div class="row justify-content-around">
-    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a>
-    --}}
-    <a class="my-5 font-weight-bold text-right btn btn-secondary" href="javascript:history.back(-1);" title="Ir la página anterior">VOLVER</a>
-    {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/articles/search">Back to articles list</a>
-    --}}
-    <a class="my-5 font-weight-bold text-right btn btn-success" href="/articles/{{ article.id }}/{{ session.id }}/buy">COMPRAR!</a>
-    <a class="my-5 font-weight-bold text-right btn btn-danger add-fav" href="/articles/{{ article.id }}/{{ session.id }}/addToFav">AÑADIR
-      A FAVORITOS</a>
-    <a class="my-5 font-weight-bold text-right btn btn-info remove-fav" href="/articles/{{ article.id }}/{{ session.id }}/removeFromFav">QUITAR
-      FAVORITOS</a>
-  </div>
+ 
 </div>
 {{!-- <div id="map"></div> --}}
 </div>
 </div>
 
-
 <div class="container">
   <div class="row justify-content-center">
     <div class="card p-1 mx-1 my-2 col-8">
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
-        <a href="/articles/user/{{ article.owner }}">
+       {{!--  <a href="/articles/user/{{ article.owner }}">
           <img src="/uploads/{{ owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
           <span>{{ owner.name }}</span>
+        </a> --}}
+        <a href="/articles/user/{{ article.owner }}">
+          <img src="/uploads/{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
+          <span>{{ article.owner.name }}</span>
         </a>
         <div>
-          <a href="#" class="btn btn-primary rounded-pill mx-3" data-toggle="modal" data-target="#purchaseModal">
-            <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
-            <span>Comprar</span>
-          </a>
+          {{#isNotOwner session article }}
+          {{#unless ../article.isAuction }}
+            <a href="#" class="btn btn-primary rounded-pill mx-3" data-toggle="modal" data-target="#purchaseModal">
+              <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
+              <span>Comprar</span>
+            </a>
+          {{else }}
+            {{#existBuyer ../article }}
+            <a href="#" class="btn btn-success rounded-pill mx-3 {{#isBidLeader ../../session ../../article.buyer }} disabled {{/isBidLeader }}" data-toggle="modal" data-target="#bidModal">
+              <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
+              <span>Pujar</span>
+            </a>
+            {{/existBuyer }}
+          {{/unless }}
           {{!-- <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a> --}}
-          <a href="#">
-            <i class="far fa-heart fa-3x text-danger align-middle"></i>
+          <a class="link fav-btn">
+            <i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger align-middle {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i>
           </a>
+          {{/isNotOwner}}
         </div>
       </div>
       <div>
@@ -57,65 +60,109 @@
             <span class="sr-only">Previous</span>
           </a>
           <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="{{!-- carousel-control-next-icon --}}" aria-hidden="true"><i class="far fa-arrow-alt-circle-right fa-3x text-light"></i></span>
+            <span class="" aria-hidden="true"><i class="far fa-arrow-alt-circle-right fa-3x text-light"></i></span>
             <span class="sr-only">Next</span>
           </a>
         </div>
         <div class="card-body py-2 px-4">
-          <div class="my-1 d-flex justify-content-between align-items-center">
-            <h3 class="card-title font-weight-bold m-0">{{ article.priceAppraiser }} €</h3>
-          </div>
-          <h4 class="card-title mb-3">{{ article.name }}</h4>
-          <hr>
-          <p class="card-text">{{ article.description }}</p>
+          {{#if article.isAuction }}
+            <h4 class="card-title mb-3">{{ article.name }}</h4>
+            <div class="my-1 d-flex justify-content-between align-items-center">
+              <h3 class="card-title font-weight-bold m-0">{{ article.priceAuction }} €</h3>
+              {{#existBuyer article }}
+                {{#isBidLeader ../session ../article.buyer }}
+                  <div>
+                    <img src="/uploads/{{ ../../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
+                    <span class="text-success m-0">! ERES EL ACTUAL LIDER DE LA PUJA !<span>
+                  </div>    
+                {{else }}
+                  <div>
+                    <img src="/uploads/{{ ../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
+                    <p><span class="text-weight-bold">{{ ../article.buyer.name }}</span>es el actual lider de la puja</p>
+                  </div>  
+                {{/isBidLeader }}
+              {{else }}
+              <p>Aún nadie ha pujado por este artículo</p>
+              {{/existBuyer }}
+            </div>
+            <small class="text-secondary my-2">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
+            <p class="time-auction text-danger text-center my-2" data-auction="{{ article.dateOfAuction }}"></p>
+          {{else }}
+            <div class="my-1 d-flex justify-content-between align-items-center">
+              <h3 class="card-title font-weight-bold m-0">{{ article.priceAppraiser }} €</h3>
+            </div>
+            <h4 class="card-title mb-3">{{ article.name }}</h4>
+            <hr>
+            <p class="card-text">{{ article.description }}</p>
+          {{/if }}
+
         </div>
         <hr>
-        <div>
-          <input id="address" type="textbox" name='address' value="{{ article.address }}">
-          <input type="button" value="Update your location" onclick="codeAddress()">
-        </div>
+        
         <div id='lat-lng'>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
             </div>
-            <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
-              placeholder="Latitude" />
+            <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}" placeholder="Latitude"/>
           </div>
-
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
             </div>
-            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
-              placeholder="Longitude" />
+            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude" />
           </div>
-          <div class="rounded" id="map"></div>
         </div>
+        <input type="textbox" class="disabled form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}" readonly>          
+        <div id="map"></div>
       </div>
     </div>
   </div>
 </div>
 
-  <div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Aviso de compra</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Está a punto de adquirir <span class="font-weight-bold"> {{article.name }}</span> por un valor de <span
-              class="font-weight-bold">{{ article.priceAppraiser }} €</span>.</p>
-        </div>
-        <div class="modal-footer">
-          <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
-          <form action="/articles/{{ article.id }}/buy" method="post">
-            <button type="submit" class="btn btn-primary">Confirmar compra</button>
-          </form>
-        </div>
+<div class="modal fade" id="purchaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Aviso de compra</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Está a punto de adquirir <span class="font-weight-bold"> {{article.name }}</span> por un valor de <span
+            class="font-weight-bold">{{ article.priceAppraiser }} €</span>.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+        <form action="/articles/{{ article.id }}/buy" method="post">
+          <button type="submit" class="btn btn-primary">Confirmar compra</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Aviso de puja</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form action="/articles/{{ article.id }}/bid" method="post">
+      <div class="modal-body">
+        <p>En estos momentos la subasta de <span class="font-weight-bold"> {{article.name }}</span> está en un valor de <span
+            class="font-weight-bold">{{ article.priceAuction }} €</span>. ¿Cuánto deseas ofrecer?</p>
+            <input class="form-control" type="text" name="bid" placeholder="Introduce una cantidad superior a {{ article.priceAuction }} €">
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+          <button type="submit" class="btn btn-primary">Confirmar puja</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div

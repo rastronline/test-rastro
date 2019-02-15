@@ -51,7 +51,7 @@
   </div>
 </div>
 <div>
-  <input id="address" type="textbox" name='address' value="{{ article.address }}">
+  {{!-- <input id="address" type="textbox" name='address' value="{{ article.address }}"> --}}
   
 </div>
 <div id='lat-lng'>
@@ -59,18 +59,16 @@
     <div class="input-group-prepend">
       <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
     </div>
-    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}"
-      placeholder="Latitude" />
+    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}" placeholder="Latitude"/>
   </div>
-
   <div class="input-group mb-2">
     <div class="input-group-prepend">
       <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
     </div>
-    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}"
-      placeholder="Longitude" />
+    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude" />
   </div>
 </div>
+<input type="textbox" class="disabled form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}" readonly>          
 <div id="map"></div>
 </div>
 </div>

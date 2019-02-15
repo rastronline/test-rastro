@@ -76,6 +76,10 @@ const articleSchema = new mongoose.Schema({
   isAuction: {
     type: Boolean,
     default: false
+  },
+  alreadyAuctioned: {
+    type: Boolean,
+    default: false
   }
 }, {timestamps: true});
 

@@ -2,71 +2,148 @@
   <h1>EDITAR PERFIL DE USUARIO</h1>
 </div>
 
-<div class="container">
+<div class="container my-5">
+
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="p-2">
+        <img class="profile-img card-img-top rounded-circle m-2" src="/uploads/{{ session.profilePic }}" style="width:125px; height:125px"
+          alt="photo profile">
+      </div>
+      <div class="m-auto">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-6">
+            <h4 class="card-title">Cambia la imagen de tu perfil</h4>
+            <p class="card-text text-muted">Esta será la imagen que identificará tu perfil y que verá el resto de
+              usuarios. Solo aceptamos formato .jpg</p>
+          </div>
+          <div class="col-6 text-center">
+            <form action="/users/updateProfilePic" id="profile-pic-form" method="post" enctype="multipart/form-data">
+              <div class="position-relative">
+                <label for="profilePic" class=" m-0 btn btn-lg btn-warning rounded-pill">Sube una foto</label>
+                <input type="file" name="profilePic" class="file-input" accept="image/jpeg">
+              </div>
+              {{!-- <button type="submit" id="btn-profile-pic" style="display:none">Subir foto</button> --}}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <form action="/users/edit" class="edit-user-form" method="POST" enctype="multipart/form-data">
-    {{!-- <form action="/users/upload" method="post" enctype="multipart/form-data"> --}}
-      <img class="profile-img" src="/uploads/{{ session.profilePic }}" alt="no saleee">
-      <label for="profilePic" class="mx-3">Seleccione una foto de perfil:</label>
-      <input type="file" name="profilePic" accept="image/jpeg">
-      {{!-- <button type="submit" class="btn btn-primary my-3">Subir foto</button> --}}
-      {{!-- </form> --}}
-    <div class="form-group my-4">
-      <label for="formGroupExampleInput">Nombre: </label>
-      <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre"
-        value="{{ session.name }}">
-    </div>
-    {{!-- <div class="form-group my-4">
-      <label for="formGroupExampleInput2">localización</label>
-      <input type="text" class="form-control" id="formGroupExampleInput2" name="location" placeholder="location..."
-        value="{{ session.location.coordinates }}">
-      <span>(esta será la ubicación por defecto de los artículos)</span>
-    </div> --}}
+    <div class="card">
+      <div class="card-body">
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre y apellidos: </h5>
+          <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre"
+            value="{{ session.name }}">
+        </div>
+        <div class="form-group py-2">
+          <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
+          <div class="row">
+            {{#each categories as |category|}}
+            <div class="col-3 my-1 card-category {{category.id}}" data-category="{{ category.id }}" id="div-category-{{category.id}}">
+              <div class="card-body text-center m-1" style="background-image: url({{ category.image }})">
+                <h3 class=" badge badge-pill badge-light card-title" style="opacity:0.8">{{ category.name }}</h3>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+          {{#each session.hobbies as |hobby| }}
+          <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
+          <script>
+            $(".{{hobby}}").addClass("unselected");
+            //$(".{{hobby}}").removeClass("unselected");
+          </script>
+          {{/each }}
+        </div>
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Introduce tu ubicación: </h5>
+          <p class="text-muted">Por defecto esta será la ubicación de tus artículos</p>
+          <div class="row justify-content-center" style="margin: inherit">
+            <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
+            <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()">
+          </div>
 
 
-    <h3 class="my-3">¿¿EN QUÉ TIPO DE ARTÍCULOS ESTÁS INTERESADO??</h3>
-    <div class="row">
-      {{#each categories as |category|}}
-      <div class="card col-4 my-2 card-category {{category.id}}" data-category="{{ category.id }}" id="div-category-{{category.id}}">
-        <div class="card-body text-center" style="background-image: url({{ category.image }})">
-          <h5 class="card-title text-success">{{ category.name }}</h5>
+
+          {{!-- <div>
+            <input id="address" type="textbox" name='address' value="{{ session.address }}">
+            <input type="button" value="Update your location" onclick="codeAddress()">
+          </div> --}}
+          <div id='lat-lng'>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+              </div>
+              <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
+                placeholder="Latitude" />
+            </div>
+
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+              </div>
+              <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
+                placeholder="Longitude" />
+            </div>
+          </div>
+          <div id="map"></div>
         </div>
       </div>
-      {{/each}}
+      <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button>
     </div>
-
-
-
-    {{#each session.hobbies as |hobby| }}
-    <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
-    <script>
-      $(".{{hobby}}").addClass("selected");
-    </script>
-    {{/each }}
-
-
-    <div>
-      <input id="address" type="textbox" name='address' value="{{ session.address }}">
-      <input type="button" value="Update your location" onclick="codeAddress()">
-    </div>
-    <div id='lat-lng'>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-        </div>
-        <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
-          placeholder="Latitude" />
-      </div>
-
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-        </div>
-        <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
-          placeholder="Longitude" />
-      </div>
-    </div>
-    <div id="map"></div>
-
-    <button type="submit" class="btn btn-primary my-3">Actualizar</button>
   </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!-- <div>
+  <input id="address" type="textbox" name='address' value="{{ session.address }}">
+  <input type="button" value="Update your location" onclick="codeAddress()">
+</div>
+<div id='lat-lng'>
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    </div>
+    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
+      placeholder="Latitude" />
+  </div>
+
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    </div>
+    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
+      placeholder="Longitude" />
+  </div>
+</div>
+<div id="map"></div> --}}

@@ -45,6 +45,7 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.session = req.user;
+  res.locals.path = req.path;
   res.locals.categories = constants.CATEGORIES;
   res.locals.conditions = constants.CONDITIONS;
   //console.log("\n\n\nEOOOOOOOOOOOOOOOOOOOOOOOOO,    el PATH ES", req.path)

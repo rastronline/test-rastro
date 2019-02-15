@@ -4,7 +4,7 @@ var map;
 //HE TENIDO QUE COMENTAR ESTAS DOS LINEAS DE MOMENTO PORQUE EL JS ME FALLA
 if (document.getElementById("map")) {
 var userLat = document.getElementById("latitude").value || 40.416775;
-var userLng = document.getElementById("longitude").value || 3.70379;
+var userLng = document.getElementById("longitude").value || -3.70379;
 }
 
 var marker;

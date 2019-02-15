@@ -9,6 +9,8 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 /* GET users listing. */
 router.get('/edit', authMiddleware.isAuthenticated, usersController.edit);
+router.post('/updateProfilePic', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.uploadPhotoProfile);
+
 router.post('/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit,);
 //router.post('/upload', upload.single('profilePic'), usersController.uploadProfilePic);
 router.get('/:id/owned',  authMiddleware.isAuthenticated, usersController.listArticlesOwned);
