@@ -79,3 +79,19 @@ a {
 .rate > label:hover ~ input:checked ~ label {
   color: #c59b08;
 }
+
+.file-input {
+  position: absolute;
+  color: transparent;
+  z-index: 1;
+  height: 50px;
+  width: 150px;
+  opacity: 0;
+}
+
+.file-label {
+  position: absolute;
+  height: 50px;
+  width: 150px;
+  cursor: pointer;
+}

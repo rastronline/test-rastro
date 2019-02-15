@@ -3,10 +3,10 @@
 $(".card-category").click(function() {
   const categoryId = this.dataset.category;
 
-  $(this).toggleClass("selected");
+  $(this).toggleClass("unselected");
 
-  if ($(this).hasClass("selected")) {
-    console.log("hago una nuevo input")
+  if ($(this).hasClass("unselected")) {
+    //console.log("hago una nuevo input")
     const newInput = $(document.createElement("input"))
       .attr("name", "hobbies")
       .attr("value", categoryId)
@@ -17,6 +17,23 @@ $(".card-category").click(function() {
   } else {
     $(`#category-${categoryId}`).remove();
   }
+
+  /* const categoryId = this.dataset.category;
+
+  $(this).toggleClass("unselected");
+
+  if (!$(this).hasClass("unselected")) {
+    console.log("hago una nuevo input")
+    const newInput = $(document.createElement("input"))
+      .attr("name", "hobbies")
+      .attr("value", categoryId)
+      .attr("id", `category-${categoryId}`)
+      .css("display", "none");
+
+    $(".edit-user-form").append(newInput);
+  } else {
+    $(`#category-${categoryId}`).remove();
+  } */
 });
 
 $(".category").click(function() {
@@ -35,6 +52,11 @@ $(".category").click(function() {
 
   $(".search-btn").click();
 });
+
+$(".file-input").change(function() {
+  console.log("el texto que hay en el input es", $(".file-input").text()) 
+  $("#profile-pic-form").submit();
+})
 
 
 /* $(".search-by-category").click(function() {

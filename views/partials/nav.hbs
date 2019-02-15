@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100 m-0" style="z-index:10000">
+<nav class="navbar navbar-expand-lg navbar-light bg-light position-relative w-100 m-0" style="z-index:10000">
   <a class="navbar-brand" href="/articles/search">HOME</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -53,7 +53,7 @@
 
 
               for (var i = 0; i < categories.length; i++) {
-                console.log(i);
+                //console.log(i);
                 if ($(categories[i]).attr("data-category") != categorySelected) {
                   $(categories[i]).addClass("unselected");
                 }
