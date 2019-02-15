@@ -177,8 +177,23 @@ module.exports.create = (req, res, next) => {
   //res.send("HOLAAA")
 };
 
+const checkFields = fieldsObj => {
+
+  const isErrors = false;
+  const errors = {};
+  for (let prop in fieldsObj) {     
+    if (!fieldsObj[prop]) {
+      errors.prop = `"${prop}" is required`;
+      isErrors = true;
+    }
+  }
+  return errors;
+}
+
 module.exports.doCreate = (req, res, next) => {
-  const article = new Article(req.body);
+
+  //HOY 15-02 ESTO FUNCIONA, PERO LO COMENTO PARA VER SI PUEDO HACER VALIDACIONES
+  /* const article = new Article(req.body);
   console.log("dentroooooo", req.body);
   debugger;
   article.save().then(article => {
@@ -202,7 +217,39 @@ module.exports.doCreate = (req, res, next) => {
     }
     //res.send("YEAAAAAAAAAHH")
     res.redirect(`/users/${article.owner}/selling`);
+  }); */
+  //-------HASTA AQUI LO QUE FUNCIONA EL 15-02----------
+
+  const article = new Article(req.body);
+  console.log("dentroooooo", req.body);
+
+  //res.send(req.body)
+
+  //const errors = checkFields(req.body)
+
+  article.save().then(article => {
+    if (req.files) {
+      console.log("\n FOTOS", req.files);
+      return (
+        Article.findByIdAndUpdate(article.id, {
+          $set: {location: {
+            type: 'Point',
+            coordinates: [req.body.longitude, req.body.latitude],
+           photos: req.files.map(photo => photo.filename) }
+        }})
+          //req.files.map(f => f.path.replace('public', ''))
+          .then(article => {
+            console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
+            debugger;
+            res.redirect(`/users/selling`);
+          })
+          .catch(err => next(err))
+      );
+    }
+    //res.send("YEAAAAAAAAAHH")
+    res.redirect(`/users/${article.owner}/selling`);
   });
+
 };
 
 module.exports.edit = (req, res, next) => {
@@ -212,16 +259,21 @@ module.exports.edit = (req, res, next) => {
 };
 
 module.exports.doEdit = (req, res, next) => {
-  Article.findByIdAndUpdate(req.params.id, { $set: req.body })
+  Article.findByIdAndUpdate(req.params.id,
+     { $set: req.body,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude]
+      } })
     .then(article => {
       if (req.files) {
         return Article.findByIdAndUpdate(article.id, {
           $set: { photos: req.files.map(photo => photo.filename) }
         }).then(article => {
-          res.redirect(`/users/${article.owner}/selling`);
+          res.redirect(`/users/selling`);
         });
       }
-      res.redirect(`/users/${article.owner}/selling`);
+      res.redirect(`/users/selling`);
     })
     .catch(err => next(err));
 };

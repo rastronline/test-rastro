@@ -19,7 +19,7 @@
        
         <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Seleccione la categoría a la que corresponde: </h5>
-          <select class="custom-select" name="category" id="inputGroupSelect01" placeholder="Elija categoría...">
+          <select class="custom-select" name="category" id="inputGroupSelect01" value="" placeholder="Elija categoría...">
             <option disabled selected>Elija una categoría...</option>
             {{#each categories as |category| }}
             <option value="{{ category.id }}">{{ category.name }}</option>
@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group py-2">
-          <select class="custom-select" name="condition" id="inputGroupSelect02">
+          <select class="custom-select" name="condition" id="inputGroupSelect02" value="">
             <option selected disabled>Estado de conservación ...</option>
             {{#each conditions as |condition| }}
               <option value="{{ condition }}">{{ condition }}</option>

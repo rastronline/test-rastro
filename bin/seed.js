@@ -16,7 +16,11 @@ const articles = [
     priceAppraiser: 10,
     priceSeller: 10,
     owner: "5c59d13d18dd7047eb85d474",
-    isActive: true
+    isActive: true,
+    isPriced: true;
+    photos:["https://www.chuchesonline.com/18660-thickbox_default/cromos-sobres-panini-los-increibles-2.jpg"],
+
+
   },
   {
     name: "Harry Potter",

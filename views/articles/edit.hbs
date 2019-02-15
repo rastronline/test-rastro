@@ -57,5 +57,28 @@
     <input name="photos" type="file" class="form-control-file mb-2" id="photos" accept="image/jpeg" multiple>
   </div>
 
+  <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Ubicación del artículo: </h5>
+          <div class="row justify-content-center" style="margin: inherit">
+            <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
+            <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()">
+          </div>
+          <div id='lat-lng'>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+              </div>
+              <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}" placeholder="Latitude"/>
+            </div>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+              </div>
+              <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}" placeholder="Longitude"/>
+            </div>
+          </div>
+          <div id="map"></div>
+        </div>
+
   <button type="submit" class="btn btn-primary my-3">Actualizar</button>
 </form>

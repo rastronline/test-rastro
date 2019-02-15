@@ -39,7 +39,13 @@ module.exports.doEdit = (req, res, next) => {
     }
 
 
-  User.findByIdAndUpdate(req.user.id, {$set:req.body})
+  User.findByIdAndUpdate(req.user.id, 
+    { $set:req.body,
+      location: {
+        type: "Point",
+        coordinates: [req.body.longitude, req.body.latitude]
+      }
+    })
       .then(user => {
         console.log("\n\nENCUENTRO EL USUARIOOOO\n\n", req.body)
         /* if (req.file) {
