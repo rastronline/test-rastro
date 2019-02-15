@@ -1,6 +1,8 @@
-<div class="row">
-  <div class="col-3"><a href="/users/selling">EN VENTA</a></div>
-  <div class="col-3"><a href="/users/{{ session.id }}/...........">EN SUBASTA</a></div>
-  <div class="col-3"><a href="/users/sold">VENDIDOS</a></div>
-  <div class="col-3"><a href="/users/pricing">PENDIENTES DE TASAR</a></div>
+<div class="container-fluid my-4">
+  <div class="row">
+    <a class="col-2 offset-1 font-weight-bold mx-auto btn btn-lg btn-outline-primary {{ navPathActive path '/selling' }}" href="/users/selling">EN VENTA</a>
+    <a class="col-2 offset-1 font-weight-bold mx-auto btn btn-lg btn-outline-warning {{ navPathActive path '/...........' }}" href="/users/{{ session.id }}/...........">EN SUBASTA</a>
+    <a class="col-2 offset-1 font-weight-bold mx-auto btn btn-lg btn-outline-success {{ navPathActive path '/sold' }}" href="/users/sold">VENDIDOS</a>
+    <a class="col-2 offset-1 font-weight-bold mx-auto btn btn-lg btn-outline-danger {{ navPathActive path '/pricing' }}" href="/users/pricing">PENDIENTES DE TASAR</></a>
+  </div>
 </div>

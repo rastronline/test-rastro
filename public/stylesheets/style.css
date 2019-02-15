@@ -1,5 +1,6 @@
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -20,7 +21,7 @@ a {
   width: 15%;
 }
 
-.selected {
+.unselected {
   opacity: 0.4;
 }
 
@@ -40,10 +41,9 @@ a {
   display: none;
 }
 
-*{
+/* html {
   margin: 0;
-  padding: 0;
-}
+} */
 .rate {
   float: left;
   height: 46px;

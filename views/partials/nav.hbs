@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed w-100 m-0" style="z-index:10000">
   <a class="navbar-brand" href="/articles/search">HOME</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -24,13 +24,14 @@
            </div>
             
           </div> --}}
+      <input type="text" style="display: none" name="category" id="category-filter" value="{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}preferences{{/if }}">
           <div class="dropdown-menu row" style="width:40vw" aria-labelledby="navbarDropdownMenuLink">
            <div class="d-flex flex-wrap">
-              <div class="card col-2 my-2 category border-0" data-category="all" id="div-category-{{category.id}}">
-                <span class="badge badge-pill badge-secondary category">Todas</span>
+              <div class="card col-2 my-2 category border-0" data-category="all" id="div-category-all">
+                <span class="badge badge-pill badge-secondary">Todas</span>
               </div>
-              <div class="card col-2 my-2 category border-0" data-category="preferences" id="div-category-{{category.id}}">
-                <span class="badge badge-pill badge-secondary category">Mis prefencias</span>
+              <div class="card col-2 my-2 category border-0" data-category="preferences" id="div-category-preferences">
+                <span class="badge badge-pill badge-secondary ">Mis prefencias</span>
               </div>
             {{#each categories as |category|}}
             {{!-- <a class="dropdown-item" href="#">{{ category.name }}</a> --}}
@@ -38,13 +39,32 @@
                 {{!-- <div class="card-body text-center" style="background-image: url({{ category.image }})">
                   <h5 class="card-title text-success">{{ category.name }}</h5>
                 </div> --}}
-                <span class="badge badge-pill badge-secondary category">{{ category.name }}</span>
+                <span class="badge badge-pill badge-secondary">{{ category.name }}</span>
+
+                
               </div>
             {{/each}}
+            <script>
+
+              
+              let categorySelected = $("#category-filter").val()
+              console.log(categorySelected)
+              let categories = $(".category")
+
+
+              for (var i = 0; i < categories.length; i++) {
+                console.log(i);
+                if ($(categories[i]).attr("data-category") != categorySelected) {
+                  $(categories[i]).addClass("unselected");
+                }
+              }
+              //$($(`div[data-category]="${categorySelected}"`)).attr("data-category").addClass("unselected");
+              //$('.category[data-category]="all"').attr("data-category").addClass("unselected");
+              
+            </script>
            </div>
         </div>
       </div>
-      <input type="text" style="display: none" name="category" id="category-filter" value="{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}preferences{{/if }}">
       <input class="form-control my-2 my-sm-0" style="height: inherit" type="search" name="keyword" value="{{ fieldsForm.keyword }}" placeholder="Buscar..." aria-label="Search">
       <div class="input-group-append">
         <button class="btn btn-outline-success my-2 my-sm-0 search-btn" type="submit"><i class="fas fa-search"></i></button>

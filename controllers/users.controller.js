@@ -3,6 +3,7 @@
 const Article = require("../models/article.model");
 const User = require("../models/user.model");
 const articlesController = require("./articles.controller");
+const constants = require("../constants");
 
 module.exports.edit = (req, res, next) => {
   //console.log("EL REQ.LOCALS ES", res.locals);
@@ -207,7 +208,7 @@ module.exports.doHandleDecisionArticle = (req, res, next) => {
   const putInAuction = (req, res, next) => {
 
     Article.findByIdAndUpdate(req.params.id, { $set: { isAuction: true, isActive: true, dateOfAuction: Date.now() } })
-      .then(article => {
+      .then(article => {        
         res.redirect(req.params.path);
       })
       .catch(err => next(err));

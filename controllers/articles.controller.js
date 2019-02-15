@@ -6,8 +6,8 @@ const constants = require("../constants");
 
 const formattedArticles = (articles) => {
   return articles.map(article => { 
-    article.name = `${article.name.substr(0, 25)} ...`
-    article.description = `${article.description.substr(0, 100)} ...`;
+    article.name = (article.name.length > 25) ? `${article.name.substr(0, 25)} ...` : article.name;
+    article.description = (article.description.length > 25) ? `${article.description.substr(0, 100)} ...` : article.description;
     return article
   });
 }
@@ -111,13 +111,24 @@ module.exports.listAuctions = (req, res, next) => {
 }
 
 module.exports.get = (req, res, next) => {
-  Article.findById(req.params.id)
+ /*  Article.findById(req.params.id)
+   //.populate("buyer")
     .then((article) => {
+      //res.send(article)
       User.findById(article.owner)
         .then(owner => {
           res.render('articles/details', { article, owner })
         })
       })
+    .catch(err => next(err)); */
+
+    Article.findById(req.params.id)
+    .populate("owner")  
+    .populate("buyer")
+    .then((article) => {
+      //res.send(article)
+      res.render('articles/details', { article})
+    })
     .catch(err => next(err));
 };
 
@@ -229,6 +240,39 @@ module.exports.buy = (req, res, next) => {
     .catch(err => next(err));
 };
 
+module.exports.bid = (req, res, next) => {
+/*   Article.findByIdAndUpdate(req.params.articleId, {
+    $set: {
+      buyer: req.user.id,
+      priceAuction: req.body.bid
+    }
+  })
+    .then(article => {
+      res.redirect("/articles/searchInAuction");
+    })
+    .catch(err => next(err)); */
+
+    Article.findById(req.params.articleId)
+      .populate("buyer")
+      .then(article => {
+        if(req.body.bid <= article.priceAuction) {
+          if (article.buyer) {
+          //mandar un mensaje al que hasta ahora era al lider de la puja
+          }
+          article.buyer = req.user.id;
+          article.priceAuction = req.body.bid;
+          article.save()
+            .then(article => {
+              res.render("/articles/searchInAuction");  
+            })
+            .catch(err => next(err))
+        }})
+      .catch(err => {
+        //devolver a la vista diciendo que la cantidad introducida no ha sido la correcta
+      });
+};
+
+
 module.exports.addToFav = (req, res, next) => {
   console.log("lo que VIENE EN EL PARAMS ES", req.params);
 
@@ -240,7 +284,8 @@ module.exports.addToFav = (req, res, next) => {
       //res.send(user);
 
       console.log("\nmeto en favoritos!!\n")
-      res.redirect(`/articles/${req.params.articleId}`);
+      next()
+      //res.redirect(`/articles/${req.params.articleId}`);
     })
     .catch(err => next(err));
 
@@ -270,8 +315,33 @@ module.exports.removeFromFav = (req, res, next) => {
     .then(user => {
       //res.send("yeahh");
       console.log("\nEXTRAIGO DE FAVORITOS\n")
-      let favorites = user.favorites;
-      res.redirect(`/users/favorites`);
+      next()
+      //let favorites = user.favorites;
+      //res.redirect(`/users/favorites`);
     })
     .catch(err => next(err));
 };
+
+module.exports.auctionFinished = (req, res, next) => {
+  
+  Article.findById(req.params.articleId)
+    .populate("buyer")
+    .then(article => {
+      console.log("LA SUBASTA SE ACABOOOO")
+      if (typeof(article.buyer) == "object") {
+        article.dateOfPurchase = Date.now();
+        article.isSold = true;
+        article.priceAppraiser = article.priceAuction;
+      } else {
+        article.isAuction = false;
+        article.alreadyAuctioned = true;
+        article.isActive = false;
+      }
+      article.save()
+        .then(article => {
+          console.log(`GUARDE EL ARTICULO SUBASTADO ${article.name}`)
+          next()
+        })
+        .catch(err => next(err));
+    })
+}

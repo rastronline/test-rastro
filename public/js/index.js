@@ -21,16 +21,34 @@ $(".card-category").click(function() {
 
 $(".category").click(function() {
   const categoryId = this.dataset.category;
+  //console.log(`categoria escogida ${categoryId}`);
+
+  /* $(".category").addClass("unselected");
+  $(this).toggleClass("unselected");
+ */
+  $("#category-filter").val(categoryId);
+  //console.log(`valor del input ${categoryId}`)
+
+  /* axios.post(`/articles/${articleId}/search`)
+  .then(() => console.log("ok"))
+  .catch(err => console.log(err)) */
+
+  $(".search-btn").click();
+});
+
+
+/* $(".search-by-category").click(function() {
+  const categoryId = this.dataset.category;
   console.log(`categoria escogida ${categoryId}`);
 
-  $(".category").addClass("disabled");
-  $(this).toggleClass("selected");
+  $(".search-by-category").addClass("unselected");
+  $(this).toggleClass("unselected");
 
   $("#category-filter").val(categoryId);
   //console.log(`valor del input ${categoryId}`)
 
   $(".search-btn").click();
-});
+}); */
 
 // $('.add-fav').click(function() {
 //   debugger;
@@ -151,69 +169,58 @@ function doFav(event) {
 favBtn.addEventListener('click', doFav) */
 
 
-function twoDigitsNumber (value) {
-  
-  if ((value + "").length === 1) {
-      return ("0" + value);
-  } else {
-      return (value + "").slice(0,2); // ".slice(0,2) to get only two digits ("for the millisec.)
-  }
-};
 
-function setTime (time) {
-  
-  const hours = twoDigitsNumber(time.getHours());
-  const minutes = twoDigitsNumber(time.getMinutes());
-  const seconds = twoDigitsNumber(time.getSeconds());
 
-  return (`${hours}:${minutes}:${seconds}`);
-};
+function timeAuction() {
+
+  function twoDigitsNumber (value) {
+  
+    if ((value + "").length === 1) {
+        return ("0" + value);
+    } else {
+        return (value + "").slice(0,2); // ".slice(0,2) to get only two digits ("for the millisec.)
+    }
+  };
+  
+  function setTime (time) {
+    
+    const hours = twoDigitsNumber(time.getHours());
+    const minutes = twoDigitsNumber(time.getMinutes());
+    const seconds = twoDigitsNumber(time.getSeconds());
+  
+    return (`${hours}:${minutes}:${seconds}`);
+  };
+  
+  //if exists this class in the actual view...
+  if ($(".time-auction").length > 0) {
+    const auctionsCards = $(".time-auction");
+    let auctionDate = new Date;
+    let timeRemaining = new Date;
+    let currentTime = new Date;
+    
+    setInterval(function() {
+      for (let i = 0; i < auctionsCards.length; i++) {
+        currentTime = Date.now();
+        auctionDate = new Date($($(auctionsCards)[i]).attr("data-auction")).getTime();
+        timeRemaining = AUCTION_TIME_LIMIT - (currentTime + ONE_HOUR - auctionDate)
+        timeRemaining = new Date(timeRemaining);
+        if (timeRemaining.getSeconds() > 0) {
+          $($(".time-auction")[i]).text(`QUEDAN ${setTime(timeRemaining)}`);
+        } else {
+          const articleId = $(auctionsCards)[i].dataset.value;
+          console.log("LLEGO AL FINAL DEL TIEMPO del ARTICULO", articleId)
+          axios.post(`/articles/${articleId}/auctionFinished`)
+            .then(() => console.log("ok"))
+            .catch(err => console.log(err))
+          $($(".time-auction")[i]).text("TIEMPO AGOTADO");
+        }
+      }
+    }, 1000);
+  } 
+}
 
 $(document).ready(function() {
 
-  if ($(".time-auction").length > 0) {
-
-  const auctionsCards = $(".time-auction");
-  console.log("auctions...", auctionsCards)
-  // currentTime = new Date;
-  let auctionDate;
-  let timeRemaining = new Date;;
-  const AUCTION_TIME_LIMIT = 24*60*60*1000;
-  //debugger;
-  
-  setInterval(function() {
-    /*  $(".time-auction").forEach(() => {
-      auctionDate = $(this).attr("data-auction").getTime();
-      timeRemaining = AUCTION_TIME_LIMIT - (currentTime - auctionDate)
-      if (timeRemaining > 0) {
-        console.log(timeRemaining);
-        $(auctionsCards)[0].text = setTime(timeRemaining);
-      }
-    }); */
-    
-    for (let i = 0; i < auctionsCards.length; i++) {
-      let currentTime = Date.now();
-      auctionDate = new Date($($(auctionsCards)[i]).attr("data-auction")).getTime();
-      console.log ("auctionDate...", auctionDate)
-      console.log ("currentTime...", currentTime)
-      
-      timeRemaining = AUCTION_TIME_LIMIT - (currentTime - auctionDate)
-      //timeRemaining.setHours(24 + currentTime.getHours() - auctionDate.getHours())
-     // if (timeRemaining.getMilliseconds() > 0)  {
-        console.log(timeRemaining);
-        
-        let rest = new Date(timeRemaining);
-        //rest = rest.setMilliseconds(timeRemaining)
-        $($(".time-auction")[i]).text(setTime(rest));
-        $($(".time-auction")[i]).fadeIn(100);
-        setTimeout(function() {
-          $($(".time-auction")[i]).fadeOut(100);
-        }, 1500)
-
-      //}
-    }
-  }, 3000);
-
-}
+  timeAuction();
 });
 

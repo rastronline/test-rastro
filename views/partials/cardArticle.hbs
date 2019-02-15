@@ -1,5 +1,5 @@
-<div class="card p-1 mx-1 my-2" style="max-width: 300px">
-  <a href="/articles/{{ article.id }}">
+<div class="card p-1 mx-1 my-2 position-relative" style="max-width: 300px">
+  <a href="/articles/{{ article.id }}" class="position-absolute" style="width:100%; height:100%; z-index:1"></a>
     <div>
       <img src="/uploads/{{ article.photos.[0] }}" style="height:250px" class="card-img-top rounded" alt="{{ article.name }} photo">
     </div>
@@ -7,13 +7,13 @@
       <div class="my-1 d-flex justify-content-between align-items-center">
         <h4 class="card-title font-weight-bold m-0">{{#if article.isAuction }}{{ article.priceAuction }} €{{else }}{{
           article.priceAppraiser }} €{{/if }}</h4>
-        <div>
-          {{#isOwner session article }}
+        <div style="z-index: 10">
+         {{!--  {{#isOwner session article }}
           <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text-warning"></i></a>
           <a href="/articles/{{ article.id }}/delete" class="card-link"><i class="far fa-trash-alt fa-2x"></i></a>
-          {{else }}
-          <a class="card-link fav-btn"><i data-value="{{ ../article.id }}" class="far fa-heart fa-2x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a>
-          {{/isOwner }}
+          {{else }} --}}
+          <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-2x text-danger {{#isFavorite session article }} fav-selected {{/isFavorite }}"></i></a>
+          {{!-- {{/isOwner }} --}}
         </div>
       </div>
       <h5 class="card-title mb-3">{{ article.name }}</h5>
@@ -21,8 +21,8 @@
 
      {{!--  A PARTIR DE AQUÏ ESTOY EXPERIMANTANDO PARA LAS SUBASTAS.... --}}
       {{#if article.isAuction }}
-        <small class="text-secondary">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
-        <h4>RESTAN <span class="time-auction" data-auction="{{ article.dateOfAuction }}"></span></h4>
+        <small class="text-secondary my-2">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
+        <p class="time-auction text-danger text-center my-2" data-article="{{ article.id }}"  data-auction="{{ article.dateOfAuction }}"></p>
         {{!-- <script>
           let time = Date("{{ article.dateOfAuction }}";
           console.log(time);
@@ -33,5 +33,5 @@
         </script> --}}
       {{/if }}
     </div>
-  </a>
+  {{!-- </a> --}}
 </div>

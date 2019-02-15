@@ -1,8 +1,6 @@
 <div class="cointainer">
   <h1 class="my-2">MIS ARTICULOS EN VENTA</h1>
-  <div>
-    <a href="/articles/new" class="btn btn-primary my-5">SUBIR UN NUEVO ARTÍCULO</a>
-  </div>
+ 
   {{!-- <div class="row">
     <div class="col-3"><a href="/users/{{ session.id }}/selling">EN VENTA</a></div>
     <div class="col-3"><a href="/users/{{ session.id }}/...........">EN SUBASTA</a></div>
@@ -36,7 +34,8 @@
 
 <div class="container">
   <div class="card-columns row justify-content-center">
-    <a href="/articles/new" class="card m-2">
+    <div class="card m-2 position-relative">
+      <a href="/articles/new" class="position-absolute" style="width:100%; height:100%; z-index:10"></a>
       <div class="row no-gutters">
         <div class="p-2">
           <div style="width:125px; height:125px; background:powderblue" class="card-img-top rounded new-icon" alt="{{ article.name }} photo">
@@ -47,7 +46,7 @@
           <h2 class="text-center">Subir un producto más a mi catálogo</h2>
         </div>
       </div>
-    </a>
+    </div>
     {{#each articles as |article| }}
       {{> cardArticleOwn session=../session article=article pathBack="selling"}}
     {{/each}}

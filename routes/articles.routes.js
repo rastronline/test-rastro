@@ -13,6 +13,8 @@ router.post('/new', authMiddleware.isAuthenticated, upload.array('photos', 10), 
 router.get('/:id/edit', authMiddleware.isAuthenticated, articlesController.edit);
 router.post('/:id/edit', authMiddleware.isAuthenticated, upload.array('photos', 10), articlesController.doEdit);
 router.post('/:articleId/buy', authMiddleware.isAuthenticated, articlesController.buy);
+router.post('/:articleId/bid', authMiddleware.isAuthenticated, articlesController.bid);
+router.post('/:articleId/auctionFinished', authMiddleware.isAuthenticated, articlesController.auctionFinished);
 router.post('/:articleId/addToFav', authMiddleware.isAuthenticated, articlesController.addToFav);
 router.post('/:articleId/removeFromFav', authMiddleware.isAuthenticated, articlesController.removeFromFav);
 router.get('/:id', authMiddleware.isAuthenticated, articlesController.get);
