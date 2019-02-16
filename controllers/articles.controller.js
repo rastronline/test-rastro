@@ -1,7 +1,7 @@
-const passport = require('passport');
-const mongoose = require('mongoose');
-const Article = require('../models/article.model');
-const User = require('../models/user.model');
+const passport = require("passport");
+const mongoose = require("mongoose");
+const Article = require("../models/article.model");
+const User = require("../models/user.model");
 const constants = require("../constants");
 
 const formattedArticles = (articles) => {
@@ -14,9 +14,7 @@ const formattedArticles = (articles) => {
 
 module.exports.formattedArticles = formattedArticles;
 
-
 module.exports.list = (req, res, next) => {
-
   function getCategoriesArray(categories) {
     let categoriesArr = [];
     switch (categories) {
@@ -111,171 +109,128 @@ module.exports.listAuctions = (req, res, next) => {
 }
 
 module.exports.get = (req, res, next) => {
- /*  Article.findById(req.params.id)
-   //.populate("buyer")
-    .then((article) => {
-      //res.send(article)
-      User.findById(article.owner)
-        .then(owner => {
-          res.render('articles/details', { article, owner })
-        })
-      })
-    .catch(err => next(err)); */
-
-    Article.findById(req.params.id)
+  Article.findById(req.params.id)
     .populate("owner")  
     .populate("buyer")
-    .then((article) => {
-      //res.send(article)
-      res.render('articles/details', { article})
-    })
-    .catch(err => next(err));
+      .then(article => res.render('articles/details', { article }))
+      .catch(err => next(err));
 };
 
 module.exports.listByUser = (req, res, next) => {
-  
   Article.find({owner: req.params.userId})
-    .populate('owner')
-
-    .then(articles => {
-      //res.send(articles);
-      res.render('articles/articlesByUser', { articles })
-    })
-    .catch(err => next(err));
+    .populate("owner")
+      .then(articles => res.render("articles/articlesByUser", { articles }))
+      .catch(err => next(err));
 }   
 
-
 const remove = (req, res, next) => {
-  console.log("\ny aqui????\n");
   Article.findByIdAndDelete(req.params.id)
-    .then(article => {
-      console.log("articulo ELIMINADOOOOOO");
-      res.redirect(req.params.path);
-    })
-    //res.redirect(`/users/${req.user.id}/articlesSelling`)})
+    .then(article => res.redirect(req.params.path))
     .catch(err => next(err));
 };
 
 module.exports.remove = remove;
 
 module.exports.doDelete = (req, res, next) => {
-
-  //console.log("REQ", req.body.pathBack)
-  //res.send( req.body.example )
-  //res.send(req)
   req.params.path = `/users/${req.body.pathBack}/`;
   remove(req, res, next);
 };
 
 module.exports.create = (req, res, next) => {
-  /* User.findById(req.params.id)
-    .then(User => {
-      res.render('articles/new', user);
-    })
-    .catch(err => next(err)); */
   res.render("articles/new");
-  //res.send("HOLAAA")
 };
 
-const checkFields = fieldsObj => {
-
-  const isErrors = false;
-  const errors = {};
-  for (let prop in fieldsObj) {     
-    if (!fieldsObj[prop]) {
-      errors.prop = `"${prop}" is required`;
-      isErrors = true;
-    }
-  }
-  return errors;
-}
-
 module.exports.doCreate = (req, res, next) => {
-
-  //HOY 15-02 ESTO FUNCIONA, PERO LO COMENTO PARA VER SI PUEDO HACER VALIDACIONES
-  /* const article = new Article(req.body);
-  console.log("dentroooooo", req.body);
-  debugger;
-  article.save().then(article => {
-    if (req.files) {
-      console.log("\n FOTOS", req.files);
-      return (
-        Article.findByIdAndUpdate(article.id, {
-          $set: {location: {
-            type: 'Point',
-            coordinates: [req.body.longitude, req.body.latitude],
-           photos: req.files.map(photo => photo.filename) }
+  const name = req.body.name;
+  const priceSeller = req.body.priceSeller;
+  const description = req.body.description;
+  const category = req.body.category || "";
+  const condition = req.body.condition || "";
+  //const photosArticle = req.files || [];
+  if (!name || !priceSeller || !description || !category || !condition) {
+    res.render("articles/new", {
+      article: req.body,
+      errors: {
+        name: name ? undefined : "Tienes que ponerle un nombre al artículo",
+        priceSeller: priceSeller ? undefined : "Debes proponer un precio de venta",
+        description: description ? undefined : "Debes añadir una descripción del artículo",
+        category: category ? undefined : "Debes encasillarlo en una categoría",
+        condition: condition ? undefined : "Tienes que incluir el estado en que se encuenta"
+        //photos: photos ? [] : "Debes incluir al menos una foto del artículo"
+      }
+    })
+  } else {
+    const article = new Article(req.body);
+    article.save()
+      .then(article => {
+        if (req.files) {
+          return (
+            Article.findByIdAndUpdate(article.id, {
+                  $set:{location: {
+                          type: 'Point',
+                          coordinates: [req.body.longitude, req.body.latitude]},
+                        photos: req.files.map(photo => photo.filename)}})
+              .then(article => res.redirect("/users/pricing"))
+              .catch(err => next(err))
+          );
+        } else {
+          res.redirect("/users/pricing")
         }})
-          //req.files.map(f => f.path.replace('public', ''))
-          .then(article => {
-            console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
-            debugger;
-            res.redirect(`/users/selling`);
-          })
-          .catch(err => next(err))
-      );
-    }
-    //res.send("YEAAAAAAAAAHH")
-    res.redirect(`/users/${article.owner}/selling`);
-  }); */
-  //-------HASTA AQUI LO QUE FUNCIONA EL 15-02----------
-
-  const article = new Article(req.body);
-  console.log("dentroooooo", req.body);
-
-  //res.send(req.body)
-
-  //const errors = checkFields(req.body)
-
-  article.save().then(article => {
-    if (req.files) {
-      console.log("\n FOTOS", req.files);
-      return (
-        Article.findByIdAndUpdate(article.id, {
-          $set: {location: {
-            type: 'Point',
-            coordinates: [req.body.longitude, req.body.latitude],
-           photos: req.files.map(photo => photo.filename) }
-        }})
-          //req.files.map(f => f.path.replace('public', ''))
-          .then(article => {
-            console.log("\n\n HAY FOTOS DE FICHEROO y las GUARDOO\n\n");
-            debugger;
-            res.redirect(`/users/selling`);
-          })
-          .catch(err => next(err))
-      );
-    }
-    //res.send("YEAAAAAAAAAHH")
-    res.redirect(`/users/${article.owner}/selling`);
-  });
-
+      .catch(error => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          res.render("articles/new", { article: req.body, errors: error.errors });
+        } else {
+          next(error);
+        }});
+  }
 };
 
 module.exports.edit = (req, res, next) => {
-  Article.findById(req.params.id).then(article => {
-    res.render("articles/edit", { article });
-  });
-};
+  Article.findById(req.params.id)
+    .then(article => res.render("articles/edit", { article }))
+    .catch(err => next(err));
+  };
 
 module.exports.doEdit = (req, res, next) => {
-  Article.findByIdAndUpdate(req.params.id,
-     { $set: req.body,
-      location: {
-        type: "Point",
-        coordinates: [req.body.longitude, req.body.latitude]
-      } })
-    .then(article => {
-      if (req.files) {
-        return Article.findByIdAndUpdate(article.id, {
-          $set: { photos: req.files.map(photo => photo.filename) }
-        }).then(article => {
-          res.redirect(`/users/selling`);
-        });
+
+  res.send(req.body)
+
+  const name = req.body.name;
+  const description = req.body.description;
+  //const photosArticle = req.files || [];
+  if (!name || !description) {
+    res.render("articles/new", {
+      article: req.body,
+      errors: {
+        name: name ? undefined : "Tienes que ponerle un nombre al artículo",
+        description: description ? undefined : "Debes añadir una descripción del artículo",
+        //photos: photos ? [] : "Debes incluir al menos una foto del artículo"
       }
-      res.redirect(`/users/selling`);
     })
-    .catch(err => next(err));
+  } else {
+    Article.findByIdAndUpdate(req.params.id,
+                            { $set: req.body,
+                                    location: {
+                                      type: "Point",
+                                      coordinates: [req.body.longitude, req.body.latitude]
+                                    }
+                            })
+      .then(article => {
+        if (req.files) {
+          return (
+            Article.findByIdAndUpdate(article.id, {
+                $set: { photos: req.files.map(photo => photo.filename) }})
+              .then(article => res.redirect("/users/pricing")));
+        } else {
+          res.redirect("/users/pricing");
+        }})
+      .catch(err => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          res.render("articles/edit", { article: req.body, errors: error.errors });
+        } else {
+          next(error);
+        }});
+  }
 };
 
 module.exports.buy = (req, res, next) => {
@@ -379,7 +334,7 @@ module.exports.auctionFinished = (req, res, next) => {
   Article.findById(req.params.articleId)
     .populate("buyer")
     .then(article => {
-      console.log("LA SUBASTA SE ACABOOOO")
+      console.log("\n\nLA SUBASTA SE ACABOOOO00")
       if (typeof(article.buyer) == "object") {
         article.dateOfPurchase = Date.now();
         article.isSold = true;
@@ -396,4 +351,5 @@ module.exports.auctionFinished = (req, res, next) => {
         })
         .catch(err => next(err));
     })
+    //.catch(err => next(err));
 }

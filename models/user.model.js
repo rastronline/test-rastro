@@ -1,5 +1,6 @@
 const constants = require("../constants");
 const mongoose = require("mongoose");
+const ADMIN_ACCOUNT = process.env.ADMIN_ACCOUNT;
 
 const userSchema = new mongoose.Schema(
   {
@@ -14,22 +15,18 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: "Email is required",
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address"
-      ],
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"],
       unique: true
     },
     role: {
       type: String,
-      enum: [constants.ROLE_ADMIN, constants.ROLE_USER],
+      enum: [constants.ROLES.ROLE_ADMIN, constants.ROLES.ROLE_USER],
       default: constants.ROLES.ROLE_USER
     },
     location: {
       type: {
         type: String,
         default: "Point"
-        
       },
       coordinates: {
         type: [Number],
@@ -61,6 +58,14 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", function (next) {
+  
+if (this.email == ADMIN_ACCOUNT) {
+    this.role = constants.ROLE_ADMIN;
+  }
+  next();
+});
 
 userSchema.index({ location: "2dsphere" });
 

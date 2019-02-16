@@ -7,22 +7,22 @@ module.exports.CATEGORIES = [
   {
     id: "chromes",
     image: "../../images/categories/cromos.jpg",
-    name: "Chromes",
+    name: "Cromos",
   },
   {
     id: "retroGaming",
     image: "../../images/categories/retroGame.jpg",
-    name: "Retro Gaming",
+    name: "Retro Game",
   },
   {
     id: "books",
     image: "../../images/categories/libros.jpg",
-    name: "Books",
+    name: "Libros",
   },
   {
     id: "vinylRecords",
     image: "../../images/categories/vinilos.jpg",
-    name: "Vynil records",
+    name: "Vinilos",
   },
   {
     id: "comics",
@@ -32,27 +32,27 @@ module.exports.CATEGORIES = [
   {
     id: "philately",
     image: "../../images/categories/sellos.jpg",
-    name: "Phylately",
+    name: "Filatelia",
   },
   {
     id: "numismatics",
     image: "../../images/categories/monedas.jpg",
-    name: "Numismatics",
+    name: "Numismatica",
   },
   {
     id: "pictures",
     image: "../../images/categories/cuadros.jpg",
-    name: "Pictures",
+    name: "Cuadros",
   },
   {
     id: "jewelry",
     image: "../../images/categories/joyas.jpg",
-    name: "Jewelry",
+    name: "Joyería",
   },
   {
     id: "antiques",
     image: "../../images/categories/antiguedades.jpg",
-    name: "Antiques",
+    name: "Antigüedades",
   }
   /* retroGaming: {
     id: "retroGaming",

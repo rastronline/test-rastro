@@ -1,84 +1,103 @@
 <h2 class="my-3">EDITAR ARTÍCULO</h2>
 
-<form action="/articles/{{ article.id }}/edit" method="post" enctype="multipart/form-data">
+<div class="container my-5">
+  <form action="/articles/{{ article.id }}/edit" method="post" enctype="multipart/form-data" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
+    <div class="card">
+      <div class="card-body">
 
-  <input type="text" name="owner" value="{{ session.id }}" style="display: none">
+        <input type="text" name="owner" value="{{ session.id }}" style="display: none">
+       
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre: </h5>
+          <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Dale un nombre" value="{{ article.name }}">
+          {{#if errors.name }} <div class="invalid-feedback">{{ errors.name }}</div> {{/if}}
+        </div>
 
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Nombre del artículo</label>
-    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Nombre artículo" value="{{ article.name }}">
-  </div>
+        <div class="form-group py-2">
+          {{#if article.isPriced }}
+            <h5 for="formGroupExampleInput" class="font-weight-bold">Precio tasado: </h5>
+            <input type="text" class="form-control" id="formGroupExampleInput" name="priceAppraiser" placeholder="" value="{{ article.priceAppraiser }}" readonly disabled>
+          {{else }}
+            <h5 for="formGroupExampleInput" class="font-weight-bold">Precio al que te gustaría venderlo: </h5>
+            <input type="text" class="form-control {{#if errors.priceSeller }} is-invalid {{/if}}" id="formGroupExampleInput" name="priceSeller" placeholder="Ponle un precio" value="{{ article.priceSeller }}">
+            {{#if errors.priceSeller }} <div class="invalid-feedback">{{ errors.priceSeller }}</div> {{/if}}
+          {{/if }}
+        </div>
+       
+        <div class="form-group py-2">
+          {{#if article.isPriced }}
+            <h5 for="formGroupExampleInput" class="font-weight-bold">Englobado en la categoría de: </h5>
+            <input type="text" class="form-control" id="formGroupExampleInput" name="category" placeholder="" value="{{ article.category }}" readonly disabled>
+          {{else }}
+            <h5 for="formGroupExampleInput" class="font-weight-bold">Seleccione la categoría a la que corresponde: </h5>
+            <select class="custom-select {{#if errors.category }} is-invalid {{/if}}" name="category" id="inputGroupSelect01" placeholder="Elija categoría...">
+              <option value="" selected disabled>{{ article.category }}</option>
+              {{#each categories as |category| }}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {{/each }}
+            </select>
+            {{#if errors.category }} <div class="invalid-feedback">{{ errors.category }}</div> {{/if}}
+          {{/if }}
+        </div>
 
-  <div class="form-group">
-    <label for="exampleFormControlInput2">¿A qué precio te gustaría vender?</label>
-    <input type="text" class="form-control" name="price" id="exampleFormControlInput2" placeholder="Nombre artículo" value="{{ article.price }}">
-  </div>
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Descripción: </h5>
+          <textarea class="form-control {{#if errors.description }} is-invalid {{/if}}" id="exampleFormControlTextarea1" name="description" rows="4" placeholder="Describe el artículo">{{ article.description }}</textarea>
+          {{#if errors.description }} <div class="invalid-feedback">{{ errors.description }}</div> {{/if}}
+        </div>
 
-  <div class="input-group mb-3">
-  {{!-- <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-  </div> --}}
-  <select class="custom-select" name="category" id="inputGroupSelect01">
-    <option selected>{{ article.category }}</option>
-    {{!-- <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option> --}}
-    {{#each categories as |category| }}
-      <option value="{{ category.id }}">{{ category.name }}</option>
-    {{/each }}
-  </select>
-  </div>
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Estado de conservación: </h5>
+          {{#if article.isPriced }}
+            <input type="text" class="form-control" id="formGroupExampleInput" name="condition" placeholder="" value="{{ article.condition }}" readonly disabled>
+          {{else }}
+            <select class="custom-select {{#if errors.condition }} is-invalid {{/if}}" name="condition" id="inputGroupSelect02" value="{{ article.condition }}">
+              <option value="" selected disabled>Estado de conservación ...</option>
+              {{#each conditions as |condition| }}
+                <option value="{{ condition }}">{{ condition }}</option>
+              {{/each }}
+            </select>
+            {{#if errors.condition }} <div class="invalid-feedback">{{ errors.condition }}</div> {{/if}}
+          {{/if }}
+        </div>
 
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Descripción del artículo</label>
-    <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ article.description }}</textarea>
-  </div>
+        <div class="form-group py-2">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Cambie si desea las fotos del artículo: </h5>
+             <div class="row">
+              {{#each article.photos as |photo|}}
+                <div class="col-3 p-3">
+                  <img class="rounded" src="/uploads/{{ photo }}" alt="photo article" style="width:200px; height:200px">   
+                </div>
+              {{/each }}
+            </div>
+          <input name="photos" type="file" class="form-control-file mb-2 " id="photos" accept="image/jpeg" multiple>
+        </div>
 
-  <div class="input-group mb-3">
-  {{!-- <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-  </div> --}}
-  <select class="custom-select" name="condition" id="inputGroupSelect02">
-    <option selected>{{ article.condition }}</option>
-    {{!-- <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option> --}}
-    {{#each conditions as |condition| }}
-      <option value="{{ condition }}">{{ condition }}</option>
-    {{/each }}
-  </select>
-  </div>
-
-  <div class="form-group">
-    <label for="photos">Fotos del producto</label>
-    {{#each article.photos as |photo|}}
-       <img class="profile-img" src="/uploads/{{ photo }}" alt="no saleee">   
-    {{/each }}
-    <input name="photos" type="file" class="form-control-file mb-2" id="photos" accept="image/jpeg" multiple>
-  </div>
-
-  <div class="form-group py-2">
+        <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Ubicación del artículo: </h5>
           <div class="row justify-content-center" style="margin: inherit">
-            <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
-            <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()">
+            <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}">
+            {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" id="btn-update-address" value="Actualizar" onclick="codeAddress()"> --}}
+            <div id="map" class="col-6 m-2 rounded"></div>
           </div>
           <div id='lat-lng'>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
               </div>
-              <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}" placeholder="Latitude"/>
+              <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}" placeholder="Latitude"/>
             </div>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
               </div>
-              <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}" placeholder="Longitude"/>
+              <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude"/>
             </div>
           </div>
-          <div id="map"></div>
         </div>
-
-  <button type="submit" class="btn btn-primary my-3">Actualizar</button>
-</form>
+      
+      </div>
+      <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-danger my-3 rounded-pill my-2">Actualizar información</button>
+    </div>
+  </form>
+</div>
