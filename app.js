@@ -44,6 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
+  res.locals.GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
   res.locals.session = req.user;
   res.locals.path = req.path;
   res.locals.categories = constants.CATEGORIES;
