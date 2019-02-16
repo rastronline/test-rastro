@@ -26,21 +26,21 @@
             
           </div> --}}
       <input type="text" style="display: none" name="category" id="category-filter" value="{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}preferences{{/if }}">
-          <div class="dropdown-menu row" style="width:40vw" aria-labelledby="navbarDropdownMenuLink">
-           <div class="d-flex flex-wrap">
-              <div class="card col-2 my-2 category border-0" data-category="all" id="div-category-all">
-                <span class="badge badge-pill badge-secondary">Todas</span>
+          <div class="dropdown-menu row" style="width:80vw" aria-labelledby="navbarDropdownMenuLink">
+           <div class="d-flex flex-wrap justify-content-between">
+              <div class="card col-3 my-2 category border-2" data-category="all" id="div-category-all">
+                <span class="badge badge-pill">Todas</span>
               </div>
-              <div class="card col-2 my-2 category border-0" data-category="preferences" id="div-category-preferences">
-                <span class="badge badge-pill badge-secondary ">Mis prefencias</span>
+              <div class="card col-3 my-2 category border-2" data-category="preferences" id="div-category-preferences">
+                <span class="badge badge-pill">Mis prefencias</span>
               </div>
             {{#each categories as |category|}}
             {{!-- <a class="dropdown-item" href="#">{{ category.name }}</a> --}}
-              <div class="card col-2 my-2 category border-0" data-category="{{ category.id }}" id="div-category-{{category.id}}">
+              <div class="card col-3 my-2 category border-2" data-category="{{ category.id }}" id="div-category-{{category.id}}">
                 {{!-- <div class="card-body text-center" style="background-image: url({{ category.image }})">
                   <h5 class="card-title text-success">{{ category.name }}</h5>
                 </div> --}}
-                <span class="badge badge-pill badge-secondary">{{ category.name }}</span>
+                <span class="badge badge-pill">{{ category.name }}</span>
 
                 
               </div>
