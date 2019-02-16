@@ -32,9 +32,9 @@ passport.use('google-auth', new GoogleStrategy({
 }, authenticateOAuthUser));
 
 function authenticateOAuthUser(accessToken, refreshToken, profile, next) {
-  
+  let email = profile.emails[0].value;
   let socialId = `${profile.provider}Id`;
-  User.findOne({ [`social.${socialId}`]: profile.id })
+  User.findOne({$or:[{email: email}, { [`social.${socialId}`]: profile.id }]})
   //User.findOne({ ['social.facebookId']: profile.id })
     .then(user => {
       if (user) {
@@ -42,11 +42,9 @@ function authenticateOAuthUser(accessToken, refreshToken, profile, next) {
       } else {
         user = new User({
           name: profile.displayName,
-          email: profile.emails[0].value,
-          //password: Math.random().toString(36).substring(7),
+          email: email,
           social: {
             [socialId]: profile.id
-            //facebookId: profile.Id
           }
           
         })
