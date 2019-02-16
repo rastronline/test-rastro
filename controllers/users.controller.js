@@ -32,9 +32,11 @@ module.exports.doEdit = (req, res, next) => {
                       coordinates: [req.body.longitude, req.body.latitude]}
             })
         .then(user => {
+          alert("EStoy en el en salvado")
           res.redirect("/users/edit")})
         .catch(err => {
           if (error instanceof mongoose.Error.ValidationError) {
+            console.log("HA REVENTAOD POR PERMISOS AL GUARDARRR!", err.errors)
             res.render("articles/edit", { user: req.body, errors: error.errors });
           } else {
             next(error);

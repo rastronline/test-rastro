@@ -51,7 +51,7 @@
           <div class="carousel-inner">
             {{#each article.photos as |photo| }}
             <div class="carousel-item {{#if @first }} active {{/if }}">
-              <img src="/uploads/{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
+              <img src="{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
             </div>
             {{/each}}
           </div>
@@ -72,12 +72,12 @@
               {{#existBuyer article }}
                 {{#isBidLeader ../session ../article.buyer }}
                   <div>
-                    <img src="/uploads/{{ ../../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
+                    <img src="{{ ../../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
                     <span class="text-success m-0">! ERES EL ACTUAL LIDER DE LA PUJA !<span>
                   </div>    
                 {{else }}
                   <div>
-                    <img src="/uploads/{{ ../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
+                    <img src="{{ ../article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">
                     <p><span class="text-weight-bold">{{ ../article.buyer.name }}</span>es el actual lider de la puja</p>
                   </div>  
                 {{/isBidLeader }}

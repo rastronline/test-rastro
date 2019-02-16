@@ -100,6 +100,8 @@ const articles = [
   }
 ];
 
+
+
 Article.create(articles)
   .then(() => {
     console.log(`Created ${articles.length} articles`)

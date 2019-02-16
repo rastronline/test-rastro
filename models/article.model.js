@@ -36,9 +36,12 @@ const articleSchema = new mongoose.Schema({
   location: {
     type: {
       type: String,
-      default: [-104.9903, 39.7392] 
+      default: "Point"
     },
-    coordinates: [Number]
+    coordinates: {
+      type: [Number],
+      default: [-104.9903, 39.7392] 
+    }
   },
   address: {
     type: String,
