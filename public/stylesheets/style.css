@@ -1,19 +1,60 @@
 body {
   padding: 0;
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #c1dff0;
+  font-family: 'Source Sans Pro', sans-serif;
+
+}
+
+nav {
+  background-color: #3587a4;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
 
+ 
+.btn-nav-color {
+  background-color: #c1dff0;
+  border-color: #c1dff0;
+}
 
+.btn {
+  background-color: #c1dff0;
+  border-color: #c1dff0;
+  color: black;
+}
+
+.btn:hover {
+  background-color: #c1dff0;
+  border-color: #c1dff0;
+    color: black;
+}
+
+nav-item.dropdown {
+  background-color: #c1dff0;
+}
+
+.jumbotron.jumbotron-fluid {
+  background-color: #c1dff0;
+}
+
+div.card {
+  background-color: #3587a4;
+  color: white;
+}
+
+.login {
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 40px;
+}
 
 #map {
-  width:  600px;
+  width: 600px;
   height: 400px;
-  margin-top:  20px;
+  margin-top: 20px;
   margin: auto;
 }
 
@@ -50,27 +91,27 @@ a {
   padding: 0 10px;
 }
 .rate:not(:checked) > input {
-  position:absolute;
-  top:-9999px;
+  position: absolute;
+  top: -9999px;
 }
 .rate:not(:checked) > label {
-  float:right;
-  width:1em;
-  overflow:hidden;
-  white-space:nowrap;
-  cursor:pointer;
-  font-size:30px;
-  color:#ccc;
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 30px;
+  color: #ccc;
 }
 .rate:not(:checked) > label:before {
-  content: '★ ';
+  content: "★ ";
 }
 .rate > input:checked ~ label {
-  color: #ffc700;    
+  color: #ffc700;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-  color: #deb217;  
+  color: #deb217;
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,

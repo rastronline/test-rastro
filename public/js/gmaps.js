@@ -19,7 +19,8 @@ function initMap() {
 
   var mapOptions = {
     zoom: 14,
-    center: latlng
+    center: latlng,
+    disableDefaultUI: true
   };
   if (document.getElementById("map")) {
 
