@@ -13,8 +13,9 @@ router.post('/updateProfilePic', authMiddleware.isAuthenticated, upload.single('
 
 router.post('/edit', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.doEdit,);
 //router.post('/upload', upload.single('profilePic'), usersController.uploadProfilePic);
-router.get('/:id/owned',  authMiddleware.isAuthenticated, usersController.listArticlesOwned);
+router.get('/owned',  authMiddleware.isAuthenticated, usersController.listArticlesOwned);
 router.get('/selling', authMiddleware.isAuthenticated, usersController.listArticlesSelling);
+router.get('/auctioning', authMiddleware.isAuthenticated, usersController.listArticlesAuctioning);
 router.get('/sold', authMiddleware.isAuthenticated, usersController.listArticlesSold);
 router.get('/pricing', authMiddleware.isAuthenticated, usersController.listArticlesPricing);
 router.get('/favorites', authMiddleware.isAuthenticated, usersController.listFavorites);

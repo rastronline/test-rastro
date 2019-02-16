@@ -58,6 +58,12 @@ $(".file-input").change(function() {
   $("#profile-pic-form").submit();
 })
 
+$("#address").change(function() {
+  //console.log("e", $(".file-input").text()) 
+  //$("#profile-pic-form").submit();
+  codeAddress();
+})
+
 
 /* $(".search-by-category").click(function() {
   const categoryId = this.dataset.category;
@@ -203,7 +209,7 @@ function timeAuction() {
         return (value + "").slice(0,2); // ".slice(0,2) to get only two digits ("for the millisec.)
     }
   };
-  
+
   function setTime (time) {
     
     const hours = twoDigitsNumber(time.getHours());
@@ -220,29 +226,67 @@ function timeAuction() {
     let timeRemaining = new Date;
     let currentTime = new Date;
     
-    setInterval(function() {
+    
+    let interval = setInterval(function() {
       for (let i = 0; i < auctionsCards.length; i++) {
         currentTime = Date.now();
         auctionDate = new Date($($(auctionsCards)[i]).attr("data-auction")).getTime();
         timeRemaining = AUCTION_TIME_LIMIT - (currentTime + ONE_HOUR - auctionDate)
         timeRemaining = new Date(timeRemaining);
-        if (timeRemaining.getSeconds() > 0) {
+        console.log("TIPO DE DATO timeRemaining => ",typeof timeRemaining.getSeconds(), timeRemaining.getSeconds())
+
+
+        if ($($(".time-auction")[i]).hasClass("bid")) {
           $($(".time-auction")[i]).text(`QUEDAN ${setTime(timeRemaining)}`);
-        } else {
+          console.log($($(".time-auction")[i]).text())
+        };
+
+        if (($($(".time-auction")[i]).text() == "QUEDAN 00:00:00") && ($($(".time-auction")[i]).hasClass("bid"))) {
+          $($(".time-auction")[i]).removeClass("bid")
+          $($(".time-auction")[i]).text("SE HA AGOTADO EL TIEMPO");
+          let articleId = $($(".time-auction")[i]).attr("data-article")
+          alert("data article", articleId)
+          console.log("HA ELIMINADO LA CLASE BID")
+          axios.post(`/articles/${articleId}/auctionFinished`)
+            .then(() => {
+              console.log("EL POST DEL FIN DEL ARTICLO FUNCIONÓ PERFECTAMENTE!!");
+            })
+            .catch(err => console.log(err))
+        }
+
+        for (let i = 0; i < auctionsCards.length; i++) {
+          let thereAreBid = false
+          if ($($(".time-auction")[i]).hasClass("bid")) {
+            thereAreBid = true;
+            break
+          }
+        }
+
+
+       /*  if (timeRemaining.getSeconds() > 0) {
+          $($(".time-auction")[i]).text(`QUEDAN ${setTime(timeRemaining)}`);
+
+        } else {xios.post(`/articles/${articleId}/auctionFinished`)
+            .then(() => {
+              console.log("EL POST DEL FIN DEL ARTICLO FUNCIONÓ PERFECTAMENTE!!");
+            })
+            .catch(err => console.log(err))
           const articleId = $(auctionsCards)[i].dataset.value;
           console.log("LLEGO AL FINAL DEL TIEMPO del ARTICULO", articleId)
-          axios.post(`/articles/${articleId}/auctionFinished`)
-            .then(() => console.log("ok"))
-            .catch(err => console.log(err))
+          a
           $($(".time-auction")[i]).text("TIEMPO AGOTADO");
+          // endBid() */
         }
-      }
+      //}
     }, 1000);
+
+    function endBid() {
+      clearInterval(interval)
+    }
   } 
 }
 
 $(document).ready(function() {
-
   timeAuction();
 });
 

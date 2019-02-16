@@ -8,8 +8,14 @@
       <div class="row justify-between">
         <div class="col-4 position-relative">
           {{#if article.isActive }}
-            <h3 class="font-weight-bold my-2">{{ article.priceAppraiser }} €</h3>
-            <h5 class="card-title my-2">{{ article.name }}</h5>
+            {{#if article.isAuction }}
+              <small class="text-muted font-weight-bold">Precio de partida</small>
+              <h3 class="font-weight-bold my-2">{{ article.priceAuction }} €</h3>
+              <h5 class="card-title my-2">{{ article.name }}</h5>           
+            {{/else }}
+              <h3 class="font-weight-bold my-2">{{ article.priceAppraiser }} €</h3>
+              <h5 class="card-title my-2">{{ article.name }}</h5>
+            {{/if }}
             {{#if article.isSold }}
               <div class="position-relative" style="left:-75px; top:8px">
                 <img src="/uploads/{{ article.buyer.profilePic }}" class="rounded-circle mx-1" style="width: 35px; height: 35px" alt="photo frofile">

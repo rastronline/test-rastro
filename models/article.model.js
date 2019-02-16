@@ -7,7 +7,7 @@ const articleSchema = new mongoose.Schema({
     required: true
   },
   priceSeller: {
-    type: Number
+    type: Number,
   },
   priceAppraiser: {
     type: Number
@@ -16,7 +16,7 @@ const articleSchema = new mongoose.Schema({
     type: Number
   },
   description: {
-    type: String,
+    type: String
   },
   category: {
     type: String,

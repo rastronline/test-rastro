@@ -22,7 +22,7 @@
      {{!--  A PARTIR DE AQUÏ ESTOY EXPERIMANTANDO PARA LAS SUBASTAS.... --}}
       {{#if article.isAuction }}
         <small class="text-secondary my-2">El artículo fue tasado en <span class="font-weight-bold">{{ article.priceAppraiser }} €</span></small>
-        <p class="time-auction text-danger text-center my-2" data-article="{{ article.id }}"  data-auction="{{ article.dateOfAuction }}"></p>
+        <p class="time-auction bid text-danger text-center my-2" data-article="{{ article.id }}"  data-auction="{{ article.dateOfAuction }}"></p>
         {{!-- <script>
           let time = Date("{{ article.dateOfAuction }}";
           console.log(time);

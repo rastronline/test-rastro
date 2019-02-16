@@ -7,7 +7,7 @@
 </div>
 </div>
 
-<div class="container">
+<div class="container my-5">
   <div class="row justify-content-center">
     <div class="card p-1 mx-1 my-2 col-8">
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
@@ -21,23 +21,23 @@
         </a>
         <div>
           {{#isNotOwner session article }}
-          {{#unless ../article.isAuction }}
-            <a href="#" class="btn btn-primary rounded-pill mx-3" data-toggle="modal" data-target="#purchaseModal">
-              <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
-              <span>Comprar</span>
+            {{#unless ../article.isAuction }}
+              <a href="#" class="btn btn-primary rounded-pill mx-3" data-toggle="modal" data-target="#purchaseModal">
+                <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
+                <span>Comprar</span>
+              </a>
+            {{else }}
+             {{!--  {{#existBuyer ../article }} --}}
+              <a href="#" class="btn btn-success rounded-pill mx-3 {{#isBidLeader ../session ../article.buyer }} disabled {{/isBidLeader }}" data-toggle="modal" data-target="#bidModal">
+                <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
+                <span>Pujar</span>
+              </a>
+            {{!--   {{/existBuyer }} --}}
+            {{/unless }}
+            {{!-- <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a> --}}
+            <a class="link fav-btn">
+              <i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger align-middle {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i>
             </a>
-          {{else }}
-            {{#existBuyer ../article }}
-            <a href="#" class="btn btn-success rounded-pill mx-3 {{#isBidLeader ../../session ../../article.buyer }} disabled {{/isBidLeader }}" data-toggle="modal" data-target="#bidModal">
-              <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
-              <span>Pujar</span>
-            </a>
-            {{/existBuyer }}
-          {{/unless }}
-          {{!-- <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a> --}}
-          <a class="link fav-btn">
-            <i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger align-middle {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i>
-          </a>
           {{/isNotOwner}}
         </div>
       </div>
@@ -90,14 +90,24 @@
           {{else }}
             <div class="my-1 d-flex justify-content-between align-items-center">
               <h3 class="card-title font-weight-bold m-0">{{ article.priceAppraiser }} €</h3>
+              {{#isOwner session article }}
+                <div>
+                  <a href="/articles/{{ article.id }}/edit" class="card-link"><i class="fas fa-pencil-alt fa-2x text-warning"></i></a>
+                  <a href="/articles/{{ article.id }}/delete" class="card-link text-danger"><i class="far fa-trash-alt fa-2x"></i></a>
+                </div>
+              {{/isOwner }}
             </div>
             <h4 class="card-title mb-3">{{ article.name }}</h4>
+            <small class="text-secondary">Categoría: <span class="font-weight-bold">{{ article.category }}</small>
             <hr>
             <p class="card-text">{{ article.description }}</p>
+            <hr>
           {{/if }}
-
+          <div>
+            <input type="textbox" class="form-control col-12 mx-0" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}" readonly disabled>          
+            <div id="map" class="col-12 my-2 rounded" style="height:150px"></div>
+          </div>
         </div>
-        <hr>
         
         <div id='lat-lng'>
           <div class="input-group mb-2">
@@ -110,11 +120,9 @@
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
             </div>
-            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude" />
+            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude"/>
           </div>
         </div>
-        <input type="textbox" class="disabled form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}" readonly>          
-        <div id="map"></div>
       </div>
     </div>
   </div>
@@ -154,9 +162,8 @@
       </div>
         <form action="/articles/{{ article.id }}/bid" method="post">
       <div class="modal-body">
-        <p>En estos momentos la subasta de <span class="font-weight-bold"> {{article.name }}</span> está en un valor de <span
-            class="font-weight-bold">{{ article.priceAuction }} €</span>. ¿Cuánto deseas ofrecer?</p>
-            <input class="form-control" type="text" name="bid" placeholder="Introduce una cantidad superior a {{ article.priceAuction }} €">
+        <p>En estos momentos la subasta de <span class="font-weight-bold"> {{article.name }}</span> está en un valor de <span class="font-weight-bold">{{ article.priceAuction }} €</span>. ¿Cuánto deseas ofrecer?</p>
+        <input class="form-control" type="text" name="bid" placeholder="Introduce una cantidad superior a {{ article.priceAuction }} €">
       </div>
       <div class="modal-footer">
         <a href="#" class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
