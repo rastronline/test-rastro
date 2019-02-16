@@ -11,7 +11,7 @@ a {
 
 
 #map {
-  --width:  600px;
+  /* width:  600px; */
   height: 250px;
   margin-top:  20px;
   margin: auto;

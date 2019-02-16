@@ -3,6 +3,8 @@ const User = require("../models/user.model");
 const articlesController = require("./articles.controller");
 const constants = require("../constants");
 
+//const ifFileExists = ({ file }, event) => file && (event.picture = file.secure_url)
+//(ifFileExists(req, ))
 
 module.exports.edit = (req, res, next) => {
   res.render("users/edit");
@@ -42,7 +44,14 @@ module.exports.doEdit = (req, res, next) => {
 
 
 module.exports.uploadPhotoProfile = (req, res, next) => {
+  /* //ESTO ES CON MULTER
   User.findByIdAndUpdate(req.user.id, { $set: { profilePic: req.file.filename } })
+    .then(user => res.redirect("/users/edit"))
+    .catch(err => next(err)); */
+
+    //ESTO ES CON PARSER CLOUDINARY
+    console.log("\n\nQUE LLEVA EL REQQQQ => ", req.file)
+    User.findByIdAndUpdate(req.user.id, { $set: { profilePic: req.file.secure_url } })
     .then(user => res.redirect("/users/edit"))
     .catch(err => next(err));
 }
@@ -170,3 +179,7 @@ module.exports.doHandleDecisionArticle = (req, res, next) => {
     }
   }
 };
+
+
+
+
