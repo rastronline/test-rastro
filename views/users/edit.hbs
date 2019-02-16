@@ -19,8 +19,8 @@
           </div>
           <div class="col-6 text-center">
             <form action="/users/updateProfilePic" id="profile-pic-form" method="post" enctype="multipart/form-data">
-              <div class="position-relative">
-                <label for="profilePic" class=" m-0 btn btn-lg btn-warning rounded-pill">Sube una foto</label>
+              <div class="position-relative" style="height:50px;">
+                <label for="profilePic" class=" m-0 btn btn-lg btn-warning rounded-pill position-absolute">Sube una foto</label>
                 <input type="file" name="profilePic" class="file-input" accept="image/jpeg">
               </div>
               {{!-- <button type="submit" id="btn-profile-pic" style="display:none">Subir foto</button> --}}
@@ -31,13 +31,13 @@
     </div>
   </div>
 
-  <form action="/users/edit" class="edit-user-form" method="POST" enctype="multipart/form-data">
+  <form action="/users/edit" class="edit-user-form" method="POST" enctype="multipart/form-data" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
     <div class="card">
       <div class="card-body">
         <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre y apellidos: </h5>
-          <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre"
-            value="{{ session.name }}">
+          <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre" value="{{#unless errors.name }}{{ session.name }}{{/unless }}">
+          {{#if errors.name }} <div class="invalid-feedback">{{ errors.name }}</div> {{/if}}
         </div>
         <div class="form-group py-2">
           <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
@@ -62,16 +62,11 @@
           <h5 for="formGroupExampleInput" class="font-weight-bold">Introduce tu ubicación: </h5>
           <p class="text-muted">Por defecto esta será la ubicación de tus artículos</p>
           <div class="row justify-content-center" style="margin: inherit">
-            <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
-            <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()">
+            <input type="textbox" class="form-control col-8 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
+            {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()"> --}}
+            <div id="map" class="col-8 m-2 rounded"></div>
           </div>
 
-
-
-          {{!-- <div>
-            <input id="address" type="textbox" name='address' value="{{ session.address }}">
-            <input type="button" value="Update your location" onclick="codeAddress()">
-          </div> --}}
           <div id='lat-lng'>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
@@ -89,7 +84,6 @@
                 placeholder="Longitude" />
             </div>
           </div>
-          <div id="map"></div>
         </div>
       </div>
       <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button>

@@ -9,5 +9,6 @@ require('../helpers/notOwner.helpers')(hbs);
 require('../helpers/bidLeader.helpers')(hbs);
 require('../helpers/existBuyer.helpers')(hbs);
 require('../helpers/navPathActive.helpers')(hbs);
+require('../helpers/notPhotos.helpers')(hbs);
 
 

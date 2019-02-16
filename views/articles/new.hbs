@@ -1,49 +1,56 @@
 <h2 class="my-3">SUBIDA DE ARTÍCULO</h2>
 
 <div class="container my-5">
-  <form action="/articles/new" class="edit-user-form" method="POST" enctype="multipart/form-data">
+  <form action="/articles/new" method="post" enctype="multipart/form-data" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
     <div class="card">
       <div class="card-body">
 
         <input type="text" name="owner" value="{{ session.id }}" style="display: none">
        
         <div class="form-group py-2">
-          <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre del artículo: </h5>
-          <input type="text" class="form-control" id="formGroupExampleInput" name="name" placeholder="Dale un nombre" value="">
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre: </h5>
+          <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Dale un nombre" value="{{ article.name }}">
+          {{#if errors.name }} <div class="invalid-feedback">{{ errors.name }}</div> {{/if}}
         </div>
 
         <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Precio al que te gustaría venderlo: </h5>
-          <input type="text" class="form-control" id="formGroupExampleInput" name="priceSeller" placeholder="Ponle un precio" value="">
+          <input type="text" class="form-control {{#if errors.priceSeller }} is-invalid {{/if}}" id="formGroupExampleInput" name="priceSeller" placeholder="Ponle un precio" value="{{ article.priceSeller }}">
+          {{#if errors.priceSeller }} <div class="invalid-feedback">{{ errors.priceSeller }}</div> {{/if}}
         </div>
        
         <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Seleccione la categoría a la que corresponde: </h5>
-          <select class="custom-select" name="category" id="inputGroupSelect01" value="" placeholder="Elija categoría...">
-            <option disabled selected>Elija una categoría...</option>
+          <select class="custom-select {{#if errors.category }} is-invalid {{/if}}" name="category" id="inputGroupSelect01" placeholder="Elija categoría...">
+            <option value="" selected disabled>Elija una categoría...</option>
             {{#each categories as |category| }}
             <option value="{{ category.id }}">{{ category.name }}</option>
             {{/each }}
           </select>
+          {{#if errors.category }} <div class="invalid-feedback">{{ errors.category }}</div> {{/if}}
         </div>
 
         <div class="form-group py-2">
-          <h5 for="formGroupExampleInput" class="font-weight-bold">Descripción del artículo: </h5>
-          <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="4" placeholder="Describe el artículo" value=""></textarea>
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Descripción: </h5>
+          <textarea class="form-control {{#if errors.description }} is-invalid {{/if}}" id="exampleFormControlTextarea1" name="description" rows="4" placeholder="Describe el artículo">{{ article.description }}</textarea>
+          {{#if errors.description }} <div class="invalid-feedback">{{ errors.description }}</div> {{/if}}
         </div>
 
         <div class="form-group py-2">
-          <select class="custom-select" name="condition" id="inputGroupSelect02" value="">
-            <option selected disabled>Estado de conservación ...</option>
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Estado de conservación: </h5>
+          <select class="custom-select {{#if errors.condition }} is-invalid {{/if}}" name="condition" id="inputGroupSelect02" value="{{ article.condition }}">
+            <option value="" selected disabled>Estado de conservación ...</option>
             {{#each conditions as |condition| }}
               <option value="{{ condition }}">{{ condition }}</option>
             {{/each }}
           </select>
+          {{#if errors.condition }} <div class="invalid-feedback">{{ errors.condition }}</div> {{/if}}
         </div>
 
         <div class="form-group py-2">
-          <h5 for="formGroupExampleInput" class="font-weight-bold">Añada fotos del producto: </h5>
-          <input name="photos" type="file" class="form-control-file mb-2" id="photos" accept="image/jpeg" multiple>
+          <h5 for="formGroupExampleInput" class="font-weight-bold">Añada fotos del artículo: </h5>
+          <input name="photos" type="file" class="form-control-file mb-2 " id="photos" accept="image/jpeg" multiple>
+          {{!-- {{#if errors.photosArtice }} <div class="invalid-feedback">{{ errors.photosArtice }}</div> {{/if}} --}}
           {{!-- <input type="text" class="form-control" id="formGroupExampleInput" name="priceSeller" placeholder="Ponle un precio" value=""> --}}
         </div>
 
@@ -51,7 +58,8 @@
           <h5 for="formGroupExampleInput" class="font-weight-bold">Ubicación del artículo: </h5>
           <div class="row justify-content-center" style="margin: inherit">
             <input type="textbox" class="form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
-            <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()">
+            <div id="map" class="col-6 rounded m-2"></div>
+            {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()"> --}}
           </div>
           <div id='lat-lng'>
             <div class="input-group mb-2">
@@ -67,36 +75,9 @@
               <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}" placeholder="Longitude"/>
             </div>
           </div>
-          <div id="map"></div>
         </div>
-      
       </div>
       <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-danger my-3 rounded-pill my-2">Subir el artículo a tasación</button>
     </div>
   </form>
 </div>
-
-
-  {{!-- <div>
-      <input id="address" type="textbox" name='address' value="{{ session.address }}">
-      <input type="button" value="Update Item Location" onclick="codeAddress()">
-    </div>
-    <div id = "lat-lng">
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-      </div>
-      <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
-        placeholder="Latitude" />
-    </div>
-
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-      </div>
-      <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
-        placeholder="Longitude" />
-    </div>
-    </div>
-  <div id='map'></div> --}}
-  
