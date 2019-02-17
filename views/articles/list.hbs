@@ -1,12 +1,16 @@
-<h4><center>¿Qué quieres buscar?</center></h4>
+<div>
+  <h4>
+    <center>¿Qué quieres buscar?</center>
+  </h4>
 
-{{> filterBar }}
-{{> navArticles }}
+  {{> filterBar }}
+  {{> navArticles }}
 
-<div class="container-fluid">
-  <div class="card-columns row justify-content-center">
-    {{#each articles as |article|}}
+  <div class="container-fluid">
+    <div class="card-columns row justify-content-center">
+      {{#each articles as |article|}}
       {{> cardArticle session=../session article=article }}
-    {{/each}}
+      {{/each}}
+    </div>
   </div>
 </div>
