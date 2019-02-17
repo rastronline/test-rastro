@@ -7,10 +7,10 @@ const upload = require("../configs/multer.config");
 //const parser = require("../configs/cloudinary.config");
 //const upload = multer({ dest: 'uploads/' });
 const authMiddleware = require('../middlewares/auth.middleware');
-
+const articlesMiddleware = require('../middlewares/articles.middleware');
 
 /* GET users listing. */
-router.get('/edit', authMiddleware.isAuthenticated, usersController.edit);
+router.get('/edit', authMiddleware.isAuthenticated, articlesMiddleware.updateCategory, usersController.edit);
 //router.post('/updateProfilePic', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.uploadPhotoProfile);
 router.post('/updateProfilePic', authMiddleware.isAuthenticated, upload.single('profilePic'), usersController.uploadPhotoProfile);
 

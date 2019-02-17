@@ -39,24 +39,28 @@ module.exports.detailArticle = (req, res, next) => {
 
 module.exports.doHandlePricing = (req, res, next) => {
 
+  console.log("\nDENTROOO MANEJADOR DECISION")
+
   //let priceAuction = Math.round(req.body.priceAppraiser *);
   const sendPricing = (req, res, next) => {
     Article.findByIdAndUpdate(req.params.articleId, {$set: {priceAppraiser: req.body.priceAppraiser, infoAppraiser: req.body.infoAppraiser, isPriced: true, priceAuction: Math.round(req.body.priceAppraiser * 0.75) }})
       .then(article => {
-        res.redirect("/admins");
+        res.redirect("/admins/articles/pendings");
       })
       .catch(err => next(err));
     }
 
   req.params.id = req.params.articleId;
-  req.params.path = "/admins";
+  req.params.path = "/admins/articles/pendings";
   
   switch (req.body.resultAppraisal) {
     case "send":{
+      console.log("enviar tasación....")
       sendPricing(req, res, next);
       break;
     }
     case "refuse":{
+      console.log("rechazar tasación....")
       articlesController.remove(req, res, next);
       break;
     }

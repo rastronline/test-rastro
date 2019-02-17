@@ -25,7 +25,7 @@
             {{/unless }}
             {{!-- <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a> --}}
             <a class="link fav-btn">
-              <i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger align-middle {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i>
+              <i data-value="{{ ../article.id }}" class="far fa-heart fa-3x text-danger align-middle {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i>
             </a>
           {{/isNotOwner}}
         </div>

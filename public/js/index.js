@@ -149,11 +149,13 @@ $("#address").change(function() {
 
 //const favIcon = $(".fav-icon");
 
+//EVENTOS CLICK PARA EJECUTAR PETICIONES AXIOS
+
 $(".fav-btn").click(function(event) {
   
   const favIcon = event.target;
-  /* console.log("entroo", this)
-  console.log("entroo", favIcon)
+   console.log("entroo EN EVENTO FAVVV ", this)
+  /*console.log("entroo", favIcon)
   //debugger;
   const articleId = favIcon.dataset.value;
   console.log("y value", articleId) */
@@ -161,20 +163,27 @@ $(".fav-btn").click(function(event) {
   $(favIcon).toggleClass("fav-selected")
   //linkFav.firstChild.addClass("selected");
   const articleId = favIcon.dataset.value;
+  console.log("\ny value", articleId)
   if ($(favIcon).hasClass("fav-selected")) {
     
-    console.log("y ahora en el if")
+    console.log("voy por el if(Añadir")
     
     axios.post(`/articles/${articleId}/addToFav`)
       .then(() => console.log("ok"))
       .catch(err => console.log(err))
   } else {
+    console.log("voy por el else(QUITAR")
     axios.post(`/articles/${articleId}/removeFromFav`)
     .then(() => console.log("ok"))
     .catch(err => console.log(err))
   }
-
 });
+
+/* $("#on-sale-btn").click(function(event) {
+  axios.post("/articles/list")
+  .then(() => console.log("ok"))
+  .catch(err => console.log(err))
+}); */
 
 /* function handleFav(event) {
 

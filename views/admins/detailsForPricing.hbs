@@ -6,7 +6,7 @@
       
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
         <a href="/articles/user/{{ article.owner }}">
-          <img src="../{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
+          <img src="{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
           <span>{{ article.owner.name }}</span>
         </a>
         <div>
@@ -23,7 +23,7 @@
           <div class="carousel-inner">
             {{#each article.photos as |photo| }}
             <div class="carousel-item {{#if @first }} active {{/if }}">
-              <img src="../{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
+              <img src="{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
             </div>
             {{/each}}
           </div>

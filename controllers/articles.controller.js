@@ -9,11 +9,14 @@ const formattedArticles = (articles) => {
     article.name = (article.name.length > 25) ? `${article.name.substr(0, 25)} ...` : article.name;
     article.description = (article.description.length > 25) ? `${article.description.substr(0, 100)} ...` : article.description;
     article.publicationDate = new Date(article.createdAt).toLocaleDateString();
+    let categoryName = constants.CATEGORIES[constants.CATEGORIES.map(cat => cat.id).indexOf(article.category)].name;
+    article.category = categoryName;
     return article;
   });
 }
 
 module.exports.formattedArticles = formattedArticles;
+
 
 module.exports.list = (req, res, next) => {
   function getCategoriesArray(categories) {
@@ -36,19 +39,30 @@ module.exports.list = (req, res, next) => {
 
   let fieldsForm;
   let categoriesArr = [];
-  let keyword = "";
+  //let keyword = "";
+  constants.KEYWORDS ="";
 
-  if (constants.FIRST_SEARCH) {
+  console.log("CONSTANTE DE CAT ANTES", constants.CATEGORY_SELECTED)
+  console.log("el req.category", req.query.category)
+  
+  constants.CATEGORY_SELECTED = req.query.category || constants.CATEGORY_SELECTED;
+  constants.KEYWORDS = req.query.keyword || constants.KEYWORDS;
+  
+  console.log("CONSTANTE DE CAT DESPUESSS", constants.CATEGORY_SELECTED)
+
+  /* if (constants.FIRST_SEARCH) {
     constants.FIRST_SEARCH = false;
     req.user.hobbies.map(hobby => categoriesArr.push(hobby))
-  } else {
+  } else { */
     fieldsForm = req.query;
-    constants.CATEGORY_SELECTED = req.category;
-    categoriesArr = getCategoriesArray(req.query.category);
+    //constants.CATEGORY_SELECTED = req.category;
+    categoriesArr = getCategoriesArray(constants.CATEGORY_SELECTED);
     keyword = req.query.keyword;
-  }
 
-  Article.find({name: { $regex: `${keyword}`, $options: 'i' },
+    console.log("Y KEYWORDS ES ", constants.KEYWORDS)
+  //}
+
+  Article.find({name: { $regex: `${constants.KEYWORDS}`, $options: 'i' },
                 //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
                 category: {$in: categoriesArr},
                 owner: {$ne: req.user.id },
@@ -148,6 +162,8 @@ module.exports.doCreate = (req, res, next) => {
   const description = req.body.description;
   const category = req.body.category || "";
   const condition = req.body.condition || "";
+
+  //res.send(req.files)
   //const photosArticle = req.files || [];
   if (!name || !priceSeller || !description || !category || !condition) {
     res.render("articles/new", {
@@ -171,7 +187,9 @@ module.exports.doCreate = (req, res, next) => {
                   $set:{location: {
                           type: 'Point',
                           coordinates: [req.body.longitude, req.body.latitude]},
-                        photos: req.files.map(photo => photo.filename)}})
+                        //photos: req.files.map(photo => photo.filename)}})
+                          photos: req.files.map(photo => photo.secure_url)}})
+
               .then(article => res.redirect("/users/pricing"))
               .catch(err => next(err))
           );
@@ -244,7 +262,7 @@ module.exports.buy = (req, res, next) => {
     }
   })
     .then(article => {
-      res.redirect("/articles/search");
+      res.redirect("/articles/list");
     })
     .catch(err => next(err));
 };
@@ -272,7 +290,7 @@ module.exports.bid = (req, res, next) => {
           article.priceAuction = req.body.bid;
           article.save()
             .then(article => {
-              res.render("/articles/searchInAuction");  
+              res.render("/articles/listInAuction");  
             })
             .catch(err => next(err))
         }})
