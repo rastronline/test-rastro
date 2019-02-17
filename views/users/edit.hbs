@@ -7,7 +7,7 @@
   <div class="card mb-3">
     <div class="row no-gutters">
       <div class="p-2">
-        <img class="profile-img card-img-top rounded-circle m-2" src="{{ session.profilePic }}" style="width:125px; height:125px"
+        <img class="profile-img card-img-top rounded-circle m-2" src="{{#if session.profilePic }}{{ session.profilePic }}{{else }}../../profile-default-png{{/if}}" style="width:125px; height:125px"
           alt="photo profile">
       </div>
       <div class="m-auto">
@@ -20,7 +20,7 @@
           <div class="col-6 text-center">
             <form action="/users/updateProfilePic" id="profile-pic-form" method="post" enctype="multipart/form-data">
               <div class="position-relative" style="height:50px;">
-                <label for="profilePic" class=" m-0 btn btn-lg btn-warning rounded-pill position-absolute">Sube una foto</label>
+                <label for="profilePic" class=" m-0 btn btn-lg btn-warning rounded-pill position-absolute">Añade tu foto</label>
                 <input type="file" name="profilePic" class="file-input" accept="image/jpeg">
               </div>
               {{!-- <button type="submit" id="btn-profile-pic" style="display:none">Subir foto</button> --}}
@@ -40,7 +40,7 @@
           <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre" value="{{#if errors.name }}{{ user.name }}{{else }}{{ session.name }}{{/if }}">
           {{#if errors.name }} <div class="invalid-feedback">{{ errors.name }}</div> {{/if}}
         </div>
-        {{#isGuest }}
+        {{#isGuest session}}
           <div class="form-group py-2">
             <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
             <div class="row">
@@ -56,14 +56,14 @@
             <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
             <script>
               $(".{{hobby}}").removeClass("unselected");
-              //$(".{{hobby}}").removeClass("unselected");
             </script>
             {{/each }}
           </div>
 
+        {{/isGuest }}
           <div class="form-group py-2">
             <h5 for="formGroupExampleInput" class="font-weight-bold">Introduce tu ubicación: </h5>
-            <p>Por defecto esta será la ubicación de tus artículos</p>
+            {{#isGuest session }} <p>Por defecto esta será la ubicación de tus artículos</p> {{/isGuest }}
             <div class="row justify-content-center" style="margin: inherit">
               <input type="textbox" class="form-control col-8 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
               {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()"> --}}
@@ -88,9 +88,9 @@
               </div>
             </div>
           </div>
-        {{/isGuest }}
       </div>
-  <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button></div>
+      <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button>
+    </div>
   </form>
 </div>
 
@@ -121,26 +121,3 @@
 
 
 
-
-{{!-- <div>
-  <input id="address" type="textbox" name='address' value="{{ session.address }}">
-  <input type="button" value="Update your location" onclick="codeAddress()">
-</div>
-<div id='lat-lng'>
-  <div class="input-group mb-2">
-    <div class="input-group-prepend">
-      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-    </div>
-    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
-      placeholder="Latitude" />
-  </div>
-
-  <div class="input-group mb-2">
-    <div class="input-group-prepend">
-      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-    </div>
-    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
-      placeholder="Longitude" />
-  </div>
-</div>
-<div id="map"></div> --}}

@@ -88,11 +88,13 @@
               {{ session.email }}<sup class="mx-2"> {{ session.role }}</sup>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/users/edit">Perfil</a>
               {{#isAdmin session }}
-                <a class="dropdown-item"href="/admins/articles/pendings">Tasaciones Pendientes</a>
+                <a class="dropdown-item" href="/users/edit">Perfil</a>
+                <a class="dropdown-item" href="/admins/articles/pendings">Tasaciones Pendientes</a>
                 <a class="dropdown-item" href="/admins/listUsers">Lista de Usuarios</a>
               {{else }}
+                <a class="dropdown-item" href="/users/edit">Perfil</a>
+
                 <a class="dropdown-item" href="/users/selling">Mis artículos</a>
                 <a class="dropdown-item" href="/users/favorites">Favoritos</a>
                 <a class="dropdown-item" href="/users/owned">Mis compras</a>

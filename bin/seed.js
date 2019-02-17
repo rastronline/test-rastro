@@ -11,7 +11,8 @@ const articles = [
     priceAppraiser: 10,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true,
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false,
     isPriced: true,
     photos:["https://www.chuchesonline.com/18660-thickbox_default/cromos-sobres-panini-los-increibles-2.jpg"],
 
@@ -24,7 +25,8 @@ const articles = [
     priceAppraiser: 9,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true,
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false,
   },
   {
     name: "To Kill a Mockingbird ",
@@ -33,7 +35,8 @@ const articles = [
     priceAppraiser: 8,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "Pride and Prejudice ",
@@ -42,7 +45,8 @@ const articles = [
     priceAppraiser: 9,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "Twilight",
@@ -51,7 +55,8 @@ const articles = [
     priceAppraiser: 10,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "The Book Thief ",
@@ -60,7 +65,8 @@ const articles = [
     priceAppraiser: 7,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "The Chronicles of Narnia",
@@ -69,7 +75,8 @@ const articles = [
     priceAppraiser: 8,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "Animal Farm",
@@ -78,7 +85,8 @@ const articles = [
     priceAppraiser: 9,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "Gone with the Wind ",
@@ -87,7 +95,8 @@ const articles = [
     priceAppraiser: 10,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   },
   {
     name: "The Fault in Our Stars ",
@@ -96,7 +105,8 @@ const articles = [
     priceAppraiser: 8,
     priceSeller: 10,
     owner: "5c68df0ef32129159e749ebd",
-    isActive: true
+    photos: ["../images/img0.png", "../images/img1.png"],
+    isActive: false
   }
 ];
 

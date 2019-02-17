@@ -28,12 +28,13 @@ module.exports.detailArticle = (req, res, next) => {
 
   console.log("EL PARAMETRO ESS", req.params.articleId)
   Article.findById(req.params.articleId)
-    .then(article => {
-      //console.log("\nDENTROOO DEL DETALLE PARA TASAR!!\n\n\n")
-      //res.send(article.name)
-      res.render("admins/articleForPricing", { article });
-    })
-    .catch(err => next(err));
+    .populate("owner")
+      .then(article => {
+        //console.log("\nDENTROOO DEL DETALLE PARA TASAR!!\n\n\n")
+        //res.send(article.name)
+        res.render("admins/detailsForPricing", { article });
+      })
+      .catch(err => next(err));
 }
 
 module.exports.doHandlePricing = (req, res, next) => {

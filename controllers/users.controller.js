@@ -120,7 +120,10 @@ module.exports.listArticlesSold = (req, res, next) => {
 module.exports.listArticlesPricing = (req, res, next) => {
   Article.find({ owner: req.user.id,
                  isActive: false })
-    .then(articles => res.render("users/articlesPricing", { articles }))
+    .then(articles => {
+      articlesController.formattedArticles(articles);
+      res.render("users/articlesPricing", { articles })
+    })
     .catch(err => next(err));
 };
 

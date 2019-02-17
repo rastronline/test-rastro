@@ -23,10 +23,9 @@
               </div>  
             {{/if}}
           {{else }}
-            <h3 class="font-weight-bold my-2">{{ article.name }}</h3>
-            <h6 class="card-title my-2">Tu propuesta son</h6>
-            <h5>{{ article.priceSeller }} €</h5>
-            <small class="text-disabled">Publicado el <span class="font-weight-bold">{{ article.createdAt }}</span></small>
+            <h3 class="font-weight-bold my-2"><u>{{ article.name }}</u></h3>
+            <h5 class="card-title my-2">Tu propuesta son <span class="font-weight-bold">{{ article.priceSeller }} €</span>.</h5>
+            <small>Publicado el <span class="font-weight-bold mx-1">{{ article.publicationDate }}</span></small>
           {{/if }}
         </div>
         <div class="col-4 text-center px-5 m-auto">

@@ -6,7 +6,7 @@
       
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
         <a href="/articles/user/{{ article.owner }}">
-          <img src="{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
+          <img src="../{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
           <span>{{ article.owner.name }}</span>
         </a>
         <div>
@@ -23,7 +23,7 @@
           <div class="carousel-inner">
             {{#each article.photos as |photo| }}
             <div class="carousel-item {{#if @first }} active {{/if }}">
-              <img src="{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
+              <img src="../{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
             </div>
             {{/each}}
           </div>
@@ -37,7 +37,7 @@
           </a>
         </div>
       <div>
-
+      <div class="card-body py-2 px-4">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="name">Nombre del artículo:</label>
@@ -45,12 +45,12 @@
         </div>
         <div class="form-group col-md-6">
           <label for="priceSeller">Precio que propone el vendedor:</label>
-          <input type="text" class="form-control" name="priceSeller" id="priceSeller" value="{{ article.priceSeller }}" placeholder="Precio prupuesto por el vendedor" disabled>
+          <input type="text" class="form-control" name="priceSeller" id="priceSeller" value="{{ article.priceSeller }}" placeholder="Precio prupuesto por el vendedor" rows="5" disabled>
         </div>
       </div>
       <div class="form-group">
         <label for="description">Descripción:</label>
-        <input type="text" class="form-control" id="description" value="{{ article.desciption }}" placeholder="Descripción del artículo" disabled>
+        <textarea type="text" class="form-control" id="description" name="description" placeholder="Descripción del artículo" disabled>{{ article.desciption }}</textarea>
       </div>
       <div>
         <input type="textbox" class="form-control col-12 mx-0" id="address" name="address" placeholder="Dirección del artículo" value="{{ article.address }}" readonly disabled>          
@@ -58,14 +58,33 @@
       </div>
       <hr>
 
-      <form action="/admins/articles/{{ article.id }}/handlePricing" method="post">
+      <h4 class="font-weight-bold"><u>MI TASACIÓN</u></h4>
+      <form action="/admins/articles/{{ article.id }}/handlePricing" class="form-inline" method="post">
         <div class="form-group">
-          <label for="pricing">MI TASACIÓN</label>
-          <input type="text" name="priceAppraiser" placeholder="{{ article.priceSeller }}">
+          <label for="pricing" class="mx-2">Valoro este artículo en: 
+            <input type="text" class ="form-control col-2 mx-2 text-right" name="priceAppraiser" value="{{ article.priceSeller }}" placeholder="{{ article.priceSeller }} €">
+          EUROS</label>
         </div>
-        <button type="submit" class="btn btn-primary" name="resultAppraisal" value="send">ENVIAR TASACIÓN</button>
-        <button type="submit" class="btn btn-danger" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>
+        <div class="text-center w-100">
+          <button type="submit" class="btn btn-primary m-4" name="resultAppraisal" value="send">ENVIAR TASACIÓN</button>
+          <button type="submit" class="btn btn-danger m-4" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>
+        </div>
       </form>
+
+      {{!-- <form action="/admins/articles/{{ article.id }}/handlePricing" method="post">
+        <div class="row justify-content-around text-center align-items-center">
+          <div class="form-group col-4 offset-2 m-auto">
+            <h3 class="font-weight-bold">MI TASACIÓN:</h4>
+            <input type="text" class ="form-control" name="priceAppraiser" value="{{ article.priceSeller }}" placeholder="{{ article.priceSeller }} €">
+            <button type="submit" class="btn btn-primary m-4" name="resultAppraisal" value="send">ENVIAR TASACIÓN</button>
+          </div>
+          <div class="form-group col-4 offset-2 m-auto">
+            <button type="submit" class="btn btn-danger m-4" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>
+          </div>
+        </div>
+      </form> --}}
+
+      </div>
     </div>
   </div>
 </div>
