@@ -44,7 +44,7 @@
           <div class="form-group py-2">
             <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
             <div class="row">
-              {{#each categories as |category|}}
+              {{#each ../categories as |category|}}
               <div class="col-3 my-1 card-category {{category.id}} unselected" data-category="{{ category.id }}" id="div-category-{{category.id}}">
                 <div class="card-body text-center m-1" style="background-image: url({{ category.image }})">
                   <h3 class=" badge badge-pill badge-light card-title" style="opacity:0.8">{{ category.name }}</h3>
@@ -52,7 +52,7 @@
               </div>
               {{/each}}
             </div>
-            {{#each session.hobbies as |hobby| }}
+            {{#each ../session.hobbies as |hobby| }}
             <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
             <script>
               $(".{{hobby}}").removeClass("unselected");
