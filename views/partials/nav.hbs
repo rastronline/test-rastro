@@ -25,7 +25,9 @@
            </div>
             
           </div> --}}
-      <input type="text" style="display: none" name="category" id="category-filter" value="{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}preferences{{/if }}">
+          {{!-- <h3>{{categorySelected}}</h3> --}}
+          <input type="text" style="display: none" name="category" id="category-filter" value="{{#if fieldsForm.category }}{{ fieldsForm.category }}{{else }}preferences{{/if }}">
+     {{!--  <input type="text" style="display: none" name="category" id="category-filter" value="{{ categorySelected }}"> --}}
           <div class="dropdown-menu row" style="width:80vw" aria-labelledby="navbarDropdownMenuLink">
            <div class="d-flex flex-wrap justify-content-between">
               <div class="card col-3 my-2 category border-2" data-category="all" id="div-category-all">
@@ -86,12 +88,18 @@
               {{ session.email }}<sup class="mx-2"> {{ session.role }}</sup>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/users/edit">Perfil</a>
-              <a class="dropdown-item" href="/users/selling">Mis artículos</a>
-              <a class="dropdown-item" href="/users/favorites">Favoritos</a>
-              <a class="dropdown-item" href="/users/owned">Mis compras</a>
+                <a class="dropdown-item" href="/users/edit">Perfil</a>
+              {{#isAdmin session }}
+                <a class="dropdown-item"href="/admins/articles/pendings">Tasaciones Pendientes</a>
+                <a class="dropdown-item" href="/admins/listUsers">Lista de Usuarios</a>
+              {{else }}
+                <a class="dropdown-item" href="/users/selling">Mis artículos</a>
+                <a class="dropdown-item" href="/users/favorites">Favoritos</a>
+                <a class="dropdown-item" href="/users/owned">Mis compras</a>
+              {{/isAdmin }}
+              {{!-- {{#isAdmin session }} {{> menuAdmin }} {{else }} {{> menuUser }} {{/isAdmin }} --}}
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Cerrar sesión</a>
+              <a class="dropdown-item" href="/sessions/delete">Cerrar sesión</a>
               
             </div>
             

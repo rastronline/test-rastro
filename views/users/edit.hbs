@@ -1,5 +1,5 @@
 <div class="container">
-  <h4><center>Edita tú perfil</h4></center>
+  <h4><center>Edita tu perfil</h4></center>
 </div>
 
 <div class="container my-5">
@@ -31,63 +31,66 @@
     </div>
   </div>
 
-  <form action="/users/edit" class="edit-user-form" method="POST" enctype="multipart/form-data" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
+  <form action="/users/edit" class="edit-user-form" method="post" onKeypress="if(event.keyCode == 13) event.returnValue = false;">
     <div class="card">
       <div class="card-body">
+
         <div class="form-group py-2">
           <h5 for="formGroupExampleInput" class="font-weight-bold">Nombre y apellidos: </h5>
-          <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre" value="{{#unless errors.name }}{{ session.name }}{{/unless }}">
+          <input type="text" class="form-control {{#if errors.name }} is-invalid {{/if}}" id="formGroupExampleInput" name="name" placeholder="Introduzca el nombre" value="{{#if errors.name }}{{ user.name }}{{else }}{{ session.name }}{{/if }}">
           {{#if errors.name }} <div class="invalid-feedback">{{ errors.name }}</div> {{/if}}
         </div>
-        <div class="form-group py-2">
-          <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
-          <div class="row">
-            {{#each categories as |category|}}
-            <div class="col-3 my-1 card-category {{category.id}}" data-category="{{ category.id }}" id="div-category-{{category.id}}">
-              <div class="card-body text-center m-1" style="background-image: url({{ category.image }})">
-                <h3 class=" badge badge-pill badge-light card-title" style="opacity:0.8">{{ category.name }}</h3>
+        {{#isGuest }}
+          <div class="form-group py-2">
+            <h5 class="font-weight-bold">Categorías que más te interesan: </h5>
+            <div class="row">
+              {{#each categories as |category|}}
+              <div class="col-3 my-1 card-category {{category.id}} unselected" data-category="{{ category.id }}" id="div-category-{{category.id}}">
+                <div class="card-body text-center m-1" style="background-image: url({{ category.image }})">
+                  <h3 class=" badge badge-pill badge-light card-title" style="opacity:0.8">{{ category.name }}</h3>
+                </div>
               </div>
+              {{/each}}
             </div>
-            {{/each}}
+            {{#each session.hobbies as |hobby| }}
+            <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
+            <script>
+              $(".{{hobby}}").removeClass("unselected");
+              //$(".{{hobby}}").removeClass("unselected");
+            </script>
+            {{/each }}
           </div>
-          {{#each session.hobbies as |hobby| }}
-          <input name="hobbies" value="{{ hobby }}" id="category-{{ hobby }}" style="display: none">
-          <script>
-            $(".{{hobby}}").addClass("unselected");
-            //$(".{{hobby}}").removeClass("unselected");
-          </script>
-          {{/each }}
-        </div>
-        <div class="form-group py-2">
-          <h5 for="formGroupExampleInput" class="font-weight-bold">Introduce tu ubicación: </h5>
-          <p>Por defecto esta será la ubicación de tus artículos</p>
-          <div class="row justify-content-center" style="margin: inherit">
-            <input type="textbox" class="form-control col-8 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
-            {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()"> --}}
+
+          <div class="form-group py-2">
+            <h5 for="formGroupExampleInput" class="font-weight-bold">Introduce tu ubicación: </h5>
+            <p>Por defecto esta será la ubicación de tus artículos</p>
+            <div class="row justify-content-center" style="margin: inherit">
+              <input type="textbox" class="form-control col-8 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ session.address }}">
+              {{!-- <input type="button" class="col-2 btn btn-secondary mx-2" value="Actualizar" onclick="codeAddress()"> --}}
             <div id="map" class="col-8 m-2 rounded"></div>
-          </div>
-
-          <div id='lat-lng'>
-            <div class="input-group mb-2">
-              <div class="input-group-prepend">
-                <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
-              </div>
-              <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
-                placeholder="Latitude" />
             </div>
 
-            <div class="input-group mb-2">
-              <div class="input-group-prepend">
-                <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+            <div id='lat-lng'>
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+                </div>
+                <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"
+                  placeholder="Latitude"/>
               </div>
-              <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
-                placeholder="Longitude" />
+
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+                </div>
+                <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"
+                  placeholder="Longitude"/>
+              </div>
             </div>
           </div>
-        </div>
+        {{/isGuest }}
       </div>
-      <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button>
-    </div>
+  <button type="submit" class="col-6 offset-6 mx-auto btn btn-lg btn-warning my-3 rounded-pill my-2">Actualizar información de perfil</button></div>
   </form>
 </div>
 

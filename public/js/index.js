@@ -5,7 +5,7 @@ $(".card-category").click(function() {
 
   $(this).toggleClass("unselected");
 
-  if ($(this).hasClass("unselected")) {
+  if (!$(this).hasClass("unselected")) {
     //console.log("hago una nuevo input")
     const newInput = $(document.createElement("input"))
       .attr("name", "hobbies")
@@ -17,6 +17,14 @@ $(".card-category").click(function() {
   } else {
     $(`#category-${categoryId}`).remove();
   }
+
+
+//PARA CONTROLAR EL EVENTO DEL "ENTER" EN LOS MAPAS...
+
+
+
+
+
 
   /* const categoryId = this.dataset.category;
 
@@ -54,7 +62,7 @@ $(".category").click(function() {
 });
 
 $(".file-input").change(function() {
-  console.log("el texto que hay en el input es", $(".file-input").text()) 
+  console.log("el texto que hay en el input es", $(".file-input").val()) 
   $("#profile-pic-form").submit();
 })
 

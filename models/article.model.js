@@ -64,6 +64,9 @@ const articleSchema = new mongoose.Schema({
   dateOfAuction: {
     type: Date
   },
+  publicationDate: {
+    type: String
+  },
   isSold: {
     type: Boolean,
     default: false

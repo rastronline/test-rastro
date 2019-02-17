@@ -7,10 +7,12 @@ const articlesController = require('./articles.controller');
 module.exports.listArticlesPending = (req, res, next) => {
   
   Article.find({isPriced: false}).sort({createdAt: 1})
-    .then(articles => {
-      res.render('admins/articlesPending', { articles });
-    })
-    .catch(err => next(err));
+    .populate("owner")
+      .then(articles => {
+        articlesController.formattedArticles(articles);
+        res.render('admins/articlesPending', { articles });
+      })
+      .catch(err => next(err));
 }
 
 module.exports.listUsers = (req, res, next) => {

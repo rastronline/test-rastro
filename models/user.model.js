@@ -20,8 +20,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [constants.ROLES.ROLE_ADMIN, constants.ROLES.ROLE_USER],
-      default: constants.ROLES.ROLE_USER
+      enum: [constants.ROLES.ROLE_ADMIN, constants.ROLES.ROLE_GUEST],
+      default: constants.ROLES.ROLE_GUEST
     },
     location: {
       type: {
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
       },
       coordinates: {
         type: [Number],
-        default: [-104.9903, 39.7392] 
+        default: [-94.9903, 39.7392] 
       }
     },
     address: {
@@ -61,8 +61,10 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", function (next) {
   
-if (this.email == ADMIN_ACCOUNT) {
-    this.role = constants.ROLE_ADMIN;
+  if (this.email == ADMIN_ACCOUNT) {
+    this.role = constants.ROLES.ROLE_ADMIN;
+  } else {
+    this.role = constants.ROLES.ROLE_GUEST;
   }
   next();
 });

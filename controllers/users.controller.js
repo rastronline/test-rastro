@@ -12,12 +12,17 @@ module.exports.edit = (req, res, next) => {
 
 
 module.exports.doEdit = (req, res, next) => {
+
+  console.log("ENTRO EN EL PUTO EDIT DE USUARIO ",req.body )
+
+  //res.send(req.body)
     //if there are no hobbies selected...
     if (!Object.prototype.hasOwnProperty.call(req.body, "hobbies")) {
       req.body.hobbies = [];
     }
 
     if (!req.body.name) {
+      console.log("AQUÏ NO TENDRÏA qu")
       res.render("users/edit", {
         user: req.body,
         errors: {
@@ -32,12 +37,12 @@ module.exports.doEdit = (req, res, next) => {
                       coordinates: [req.body.longitude, req.body.latitude]}
             })
         .then(user => {
-          alert("EStoy en el en salvado")
+          console.log("ENTUENTRO AL MALDITO USUARIO A EDITAR")
           res.redirect("/users/edit")})
         .catch(err => {
           if (error instanceof mongoose.Error.ValidationError) {
             console.log("HA REVENTAOD POR PERMISOS AL GUARDARRR!", err.errors)
-            res.render("articles/edit", { user: req.body, errors: error.errors });
+            res.render("users/edit", { user: req.body, errors: error.errors });
           } else {
             next(error);
           }});
@@ -46,6 +51,7 @@ module.exports.doEdit = (req, res, next) => {
 
 
 module.exports.uploadPhotoProfile = (req, res, next) => {
+  //res.send(req.body)
   /* //ESTO ES CON MULTER
   User.findByIdAndUpdate(req.user.id, { $set: { profilePic: req.file.filename } })
     .then(user => res.redirect("/users/edit"))

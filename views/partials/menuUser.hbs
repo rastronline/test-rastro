@@ -1,8 +1,8 @@
-<ul>
-  <li><a href="/articles/search">BUSCAR ARTÍCULO</a></li>
-  <li><a href="/users/{{ session.id }}/edit">MI PERFIL</a></li>
-  <li><a href="/users/{{ session.id }}/selling">MIS ARTÍCULOS</a></li>
-  <li><a href="/users/{{ session.id }}/favorites">MIS FAVORITOS</a></li>
-  <li><a href="/users/{{ session.id }}/owned">Articulos Comprados</a></li>
-  
-</ul>
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+  <a class="dropdown-item" href="/users/edit">Perfil</a>
+  <a class="dropdown-item" href="/users/selling">Mis artículos</a>
+  <a class="dropdown-item" href="/users/favorites">Mis favoritos</a>
+  <a class="dropdown-item" href="/users/owned">Mis compras</a>
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" href="/sessions/delete">Cerrar sesión</a>
+</div>

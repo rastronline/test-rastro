@@ -10,7 +10,7 @@ const articles = [
     category: "chromes",
     priceAppraiser: 10,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true,
     isPriced: true,
     photos:["https://www.chuchesonline.com/18660-thickbox_default/cromos-sobres-panini-los-increibles-2.jpg"],
@@ -23,7 +23,7 @@ const articles = [
     category: "comics",
     priceAppraiser: 9,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true,
   },
   {
@@ -32,7 +32,7 @@ const articles = [
     category: "chromes",
     priceAppraiser: 8,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -41,7 +41,7 @@ const articles = [
     category: "chromes",
     priceAppraiser: 9,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -50,7 +50,7 @@ const articles = [
     category: "chromes",
     priceAppraiser: 10,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -59,7 +59,7 @@ const articles = [
     category: "books",
     priceAppraiser: 7,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -68,7 +68,7 @@ const articles = [
     category: "comics",
     priceAppraiser: 8,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -77,7 +77,7 @@ const articles = [
     category: "chromes",
     priceAppraiser: 9,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -86,7 +86,7 @@ const articles = [
     category: "books",
     priceAppraiser: 10,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   },
   {
@@ -95,7 +95,7 @@ const articles = [
     category: "books",
     priceAppraiser: 8,
     priceSeller: 10,
-    owner: "5c59d13d18dd7047eb85d474",
+    owner: "5c68df0ef32129159e749ebd",
     isActive: true
   }
 ];

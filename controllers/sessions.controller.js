@@ -14,13 +14,15 @@ module.exports.createWithIDPCallback = (req, res, next) => {
       req.login(user, (error) => {
         if (error) {
           next(error)
-        } else { if (user.role == "GUEST") {
+        } else if (constants.FIRST_LOGIN) {
+          res.redirect("/users/edit")
+          constants.FIRST_LOGIN = false;
+        } else if (user.role == "GUEST") {
             constants.FIRST_SEARCH = true;
             res.redirect("/articles/search");
           } else {
-            res.redirect('/admins')
-         }
-        }
+            res.redirect("/admins/articles/pendings")
+          }
       });
     }
   })(req, res, next);

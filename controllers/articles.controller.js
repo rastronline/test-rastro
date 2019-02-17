@@ -8,7 +8,8 @@ const formattedArticles = (articles) => {
   return articles.map(article => { 
     article.name = (article.name.length > 25) ? `${article.name.substr(0, 25)} ...` : article.name;
     article.description = (article.description.length > 25) ? `${article.description.substr(0, 100)} ...` : article.description;
-    return article
+    article.publicationDate = new Date(article.createdAt).toLocaleDateString();
+    return article;
   });
 }
 
@@ -42,6 +43,7 @@ module.exports.list = (req, res, next) => {
     req.user.hobbies.map(hobby => categoriesArr.push(hobby))
   } else {
     fieldsForm = req.query;
+    constants.CATEGORY_SELECTED = req.category;
     categoriesArr = getCategoriesArray(req.query.category);
     keyword = req.query.keyword;
   }

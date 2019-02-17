@@ -1,9 +1,6 @@
-<ul>
-  <li><a href="/admins">TASACIONES PENDIENTES</a></li>
-  <li><a href="/admins/listUsers">LISTA DE USUARIOS</a></li>
- {{!--  <li><a href="/users/{{ session.id }}/selling">MIS ARTÍCULOS</a></li>
-  <li><a href="/users/{{ session.id }}/favorites">MIS FAVORITOS</a></li>
-  <li><a href="">PERFIL</a></li>
-  <li><a href="">PERFIL</a></li> --}}
-</ul>
-
+<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+  <a class="dropdown-item" href="/admins/listPendings">Tasaciones Pendientes</a>
+  <a class="dropdown-item" href="/admins/listUsers">Lista de Usuarios</a>
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" href="/sessions/delete">Cerrar sesión</a>
+</div>

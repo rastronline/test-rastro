@@ -1,3 +1,26 @@
+<h2 class="my-3">ARTICULOS PENDIENTES DE TASACiÓN</h2>
+ 
+<div class="container">
+  <div class="card-columns row justify-content-center">
+    {{#each articles as |article| }}
+      {{> cardArticleAdmin session=../session article=article }}
+    {{/each}}
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!-- 
 <div class="cointainer">
   <h1 class="my-2">ARTICULOS PENDIENTES MI TASACiÓN</h1>
 
@@ -11,10 +34,10 @@
           <div class="col-8 mx-3">
             <p>{{ article.name }}<span class="badge badge-primary"></span></p>
             <p>{{ article.description }}</p>
-            <a href="/admins/{{ article.id }}/" class="my-4">Ver detalles para tasar</a>
+            <a href="/admins/articles/{{ article.id }}/" class="my-4">Ver detalles para tasar</a>
           </div>
         </div> 
       </li>
     {{/each}}
   </ul>
-</div>
+</div> --}}

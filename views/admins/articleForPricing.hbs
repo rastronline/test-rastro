@@ -1,3 +1,101 @@
+<h2 class="my-3">ARTÍCULO A TASAR</h2>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="card p-1 mx-1 my-2 col-8">
+      
+      <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
+        <a href="/articles/user/{{ article.owner }}">
+          <img src="{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
+          <span>{{ article.owner.name }}</span>
+        </a>
+        <div>
+        </div>
+      </div>
+
+      <div>
+        <div id="carouselExampleIndicators" class="carousel slide px-3" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {{#each article.photos as |photo| }}
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{@index }}" class="{{#if @first }} active {{/if }}"></li>
+            {{/each}}
+          </ol>
+          <div class="carousel-inner">
+            {{#each article.photos as |photo| }}
+            <div class="carousel-item {{#if @first }} active {{/if }}">
+              <img src="{{ photo }}" class="d-block w-100 rounded" style="height:500px" alt="photo {{@index}}">
+            </div>
+            {{/each}}
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="" aria-hidden="true"><i class="far fa-arrow-alt-circle-left fa-3x text-light"></i></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="" aria-hidden="true"><i class="far fa-arrow-alt-circle-right fa-3x text-light"></i></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      <div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="name">Nombre del artículo:</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Nombre" value="{{ article.name }}" disabled>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="priceSeller">Precio que propone el vendedor:</label>
+          <input type="text" class="form-control" name="priceSeller" id="priceSeller" value="{{ article.priceSeller }}" placeholder="Precio prupuesto por el vendedor" disabled>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <input type="text" class="form-control" id="description" value="{{ article.desciption }}" placeholder="Descripción del artículo" disabled>
+      </div>
+      <div>
+        <input type="textbox" class="form-control col-12 mx-0" id="address" name="address" placeholder="Dirección del artículo" value="{{ article.address }}" readonly disabled>          
+        <div id="map" class="col-12 my-2 rounded" style="height:150px"></div>
+      </div>
+      <hr>
+
+      <form action="/admins/articles/{{ article.id }}/handlePricing" method="post">
+        <div class="form-group">
+          <label for="pricing">MI TASACIÓN</label>
+          <input type="text" name="priceAppraiser" placeholder="{{ article.priceSeller }}">
+        </div>
+        <button type="submit" class="btn btn-primary" name="resultAppraisal" value="send">ENVIAR TASACIÓN</button>
+        <button type="submit" class="btn btn-danger" name="resultAppraisal" value="refuse">RECHAZAR ARTÍCULO</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id='lat-lng'>
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    </div>
+    <input type="text" id="latitude" class="form-control" name="latitude" value="{{ article.location.coordinates.[1] }}" placeholder="Latitude"/>
+  </div>
+  <div class="input-group mb-2">
+    <div class="input-group-prepend">
+      <span class="input-group-text"> <i class="fas fa-map-marker"></i> </span>
+    </div>
+    <input type="text" id="longitude" class="form-control" name="longitude" value="{{ article.location.coordinates.[0] }}" placeholder="Longitude"/>
+  </div>
+</div>
+
+
+
+ 
+
+ 
+
+
+
+{{!-- 
+
 <div class="container details">
   <h1 class="my-5">DETALLES DEL ARTÍCULO A TASAR</h1>
 
@@ -6,9 +104,9 @@
       {{#each article.photos as |photo| }}
       <img src="/uploads/{{ photo }}" class="align-self-center mr-3 w-100" alt="...">
       {{/each }}
-    </div>
+    </div> --}}
     {{!-- <img src="/uploads/{{ article.photos }}" class="align-self-center mr-3 col-4" alt="..."> --}}
-
+{{!-- 
     <div class="media-body col-8">
       <div class="mt-0 row py-4">
         <label class="col-3">name: </label>
@@ -44,16 +142,16 @@
       </form>
     </div>
   </div>
-  <div class="row justify-content-around">
+  <div class="row justify-content-around"> --}}
     {{!-- <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/celebrities">Back to celebrities list</a>
     --}}
-    <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/admins/">Back to articles list</a>
+   {{!--  <a class="my-5 font-weight-bold text-right btn btn-secondary" href="/admins/">Back to articles list</a>
   </div>
 </div>
-<div>
+<div> --}}
   {{!-- <input id="address" type="textbox" name='address' value="{{ article.address }}"> --}}
   
-</div>
+{{!-- </div>
 <div id='lat-lng'>
   <div class="input-group mb-2">
     <div class="input-group-prepend">
@@ -71,4 +169,4 @@
 <input type="textbox" class="disabled form-control col-6 mx-2" id="address" name="address" placeholder="Introduzca una dirección" value="{{ article.address }}" readonly>          
 <div id="map"></div>
 </div>
-</div>
+</div> --}}
