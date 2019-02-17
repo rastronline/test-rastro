@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   res.locals.path = req.path;
   res.locals.categories = constants.CATEGORIES;
   res.locals.conditions = constants.CONDITIONS;
-  res.locals.categorySelected = constants.CATEGORY_SELECTED;
+  res.locals.catSelected = constants.CATEGORY_SELECTED;
   //console.log("\n\n\nEOOOOOOOOOOOOOOOOOOOOOOOOO,    el PATH ES", req.path)
   next();
 })

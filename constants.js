@@ -87,6 +87,8 @@ module.exports.CONDITIONS = ['Pobre', 'Bueno', 'Excelente'];
 module.exports.FIRST_SEARCH = true;
 
 //module.exports.AUCTION_TIME_LIMIT = 24*60*60*1000  //24 hours in milliseconds
-module.exports.AUCTION_TIME_LIMIT = 2*60*1000  //24 hours in milliseconds
+module.exports.AUCTION_TIME_LIMIT = 5*60*1000  //24 hours in milliseconds
 
-module.exports.CATEGORY_SELECTED = "preferences"
+module.exports.CATEGORY_SELECTED;
+module.exports.KEYWORDS;
+

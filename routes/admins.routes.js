@@ -3,7 +3,8 @@ var express = require("express");
 var router = express.Router();
 const adminsController = require("../controllers/admins.controller");
 const multer  = require("multer");
-const upload = multer({ dest: "uploads/" });
+//const upload = multer({ dest: "uploads/" });
+const upload = require("../configs/multer.config");
 const authMiddleware = require("../middlewares/auth.middleware");
 
 router.get("/articles/pendings", authMiddleware.checkRole(constants.ROLES.ROLE_ADMIN), adminsController.listArticlesPending);

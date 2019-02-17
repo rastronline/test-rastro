@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const articlesController = require('../controllers/articles.controller');
 const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+//const upload = multer({ dest: 'uploads/' });
+const upload = require("../configs/multer.config");
 const authMiddleware = require('../middlewares/auth.middleware')
 /* GET home page. */
 

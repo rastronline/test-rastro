@@ -1,9 +1,9 @@
 module.exports = (hbs) => {
   hbs.registerHelper("isFavorite", (user, article, options) => {
     //return (user.id == article.owner);
-    console.log('\n\nUSER => ', user.favorites)
+   /*  console.log('\n\nUSER => ', user.favorites)
     console.log('\n\nARTICLE => ', article.id)
-    debugger;
+    debugger; */
 
     JSON.stringify()
     let favAux = user.favorites.map(fav => JSON.stringify(fav))
