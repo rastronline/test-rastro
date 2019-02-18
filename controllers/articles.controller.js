@@ -39,37 +39,26 @@ module.exports.list = (req, res, next) => {
 
   let fieldsForm;
   let categoriesArr = [];
-  //let keyword = "";
   constants.KEYWORDS ="";
-
-  console.log("CONSTANTE DE CAT ANTES", constants.CATEGORY_SELECTED)
-  console.log("el req.category", req.query.category)
+  let minPrice = Number.parseInt(req.body.minPrice) || 0;
+  let maxPrice = Number.parseInt(req.body.maxPrice) || 9999;
   
   constants.CATEGORY_SELECTED = req.query.category || constants.CATEGORY_SELECTED;
   constants.KEYWORDS = req.query.keyword || constants.KEYWORDS;
-  
-  console.log("CONSTANTE DE CAT DESPUESSS", constants.CATEGORY_SELECTED)
 
-  /* if (constants.FIRST_SEARCH) {
-    constants.FIRST_SEARCH = false;
-    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
-  } else { */
     fieldsForm = req.query;
-    //constants.CATEGORY_SELECTED = req.category;
     categoriesArr = getCategoriesArray(constants.CATEGORY_SELECTED);
     keyword = req.query.keyword;
 
-    console.log("Y KEYWORDS ES ", constants.KEYWORDS)
-  //}
-
   Article.find({name: { $regex: `${constants.KEYWORDS}`, $options: 'i' },
-                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                priceAppraiser: {$gte: minPrice, $lte: maxPrice},
                 category: {$in: categoriesArr},
                 owner: {$ne: req.user.id },
                 isSold: false,
                 isActive: true,
                 isAuction: false})
     .then((articles) => { 
+     // res.send(articles)
       articles = formattedArticles(articles);
       res.render("articles/list", { articles, fieldsForm })})
     .catch(err => next(err))  
@@ -97,20 +86,23 @@ module.exports.listAuctions = (req, res, next) => {
 
   let fieldsForm;
   let categoriesArr = [];
-  let keyword = "";
+  constants.KEYWORDS ="";
+  let minPrice = Number.parseInt(req.body.minPrice) || 0;
+  let maxPrice = Number.parseInt(req.body.maxPrice) || 9999;
 
-  if (constants.FIRST_SEARCH) {
-    constants.FIRST_SEARCH = false;
-    req.user.hobbies.map(hobby => categoriesArr.push(hobby))
-  } else {
+
+  constants.CATEGORY_SELECTED = req.query.category || constants.CATEGORY_SELECTED;
+  constants.KEYWORDS = req.query.keyword || constants.KEYWORDS;
+
     fieldsForm = req.query;
-    categoriesArr = getCategoriesArray(req.query.category);
+    categoriesArr = getCategoriesArray(constants.CATEGORY_SELECTED);
     keyword = req.query.keyword;
-  }
+
+    
 
   console.log("articulos subastados\n")
   Article.find({//name: { $regex: `${keyword}`, $options: 'i' },
-                //priceAppraiser: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
+                //priceAuction: {$gte: Number.parseInt(req.body.minPrice), $lte: Number.parseInt(req.body.maxPrice)},
                 //category: {$in: categoriesArr},
                 owner: {$ne: req.user.id },
                 isSold: false,
@@ -125,15 +117,17 @@ module.exports.listAuctions = (req, res, next) => {
 }
 
 module.exports.get = (req, res, next) => {
-  Article.findById(req.params.id)
-    .populate("owner")  
-    .populate("buyer")
-      .then(article => res.render('articles/details', { article }))
-      .catch(err => next(err));
+ 
+    Article.findById(req.params.id)
+      .populate("owner")  
+      .populate("buyer")
+        .then(article => res.render("articles/details", { article }))
+        .catch(err => next(err))
 };
 
 module.exports.listByUser = (req, res, next) => {
-  Article.find({owner: req.params.userId})
+  //res.send("holaa")
+  Article.find({owner: req.params.ownerId, isSold: false, isActive: true})
     .populate("owner")
       .then(articles => res.render("articles/articlesByUser", { articles }))
       .catch(err => next(err));
@@ -213,7 +207,7 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
 
-  res.send(req.body)
+  //res.send(req.body)
 
   const name = req.body.name;
   const description = req.body.description;
@@ -239,7 +233,7 @@ module.exports.doEdit = (req, res, next) => {
         if (req.files) {
           return (
             Article.findByIdAndUpdate(article.id, {
-                $set: { photos: req.files.map(photo => photo.filename) }})
+                $set: { photos: req.files.map(photo => photo.secure_url) }})
               .then(article => res.redirect("/users/pricing")));
         } else {
           res.redirect("/users/pricing");
@@ -262,7 +256,7 @@ module.exports.buy = (req, res, next) => {
     }
   })
     .then(article => {
-      res.redirect("/articles/list");
+      res.redirect("/articles/search");
     })
     .catch(err => next(err));
 };
@@ -282,18 +276,23 @@ module.exports.bid = (req, res, next) => {
     Article.findById(req.params.articleId)
       .populate("buyer")
       .then(article => {
+        console.log("DENTRO DE BIDD Y DE LA QUERY")
         if(req.body.bid <= article.priceAuction) {
-          if (article.buyer) {
+          /* if (article.buyer) {
           //mandar un mensaje al que hasta ahora era al lider de la puja
-          }
-          article.buyer = req.user.id;
+          } */
+          alert(`La puja debe ser mayor de ${article.priceAuction} €`)
+        } else {
+          console.log("el req.body lleva...", req.body)
+          //res.send(req.body)
+          article.buyer.id = req.user.id;
           article.priceAuction = req.body.bid;
-          article.save()
-            .then(article => {
-              res.render("/articles/listInAuction");  
-            })
-            .catch(err => next(err))
-        }})
+        }
+        article.save()
+          .then(article => {
+            res.redirect("/articles/searchInAuction");  
+          })
+          .catch(err => next(err))})
       .catch(err => {
         //devolver a la vista diciendo que la cantidad introducida no ha sido la correcta
       });

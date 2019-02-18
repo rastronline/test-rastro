@@ -1,0 +1,138 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #c1dff0;
+  font-family: "Source Sans Pro", sans-serif;
+  height:100%;
+}
+
+nav {
+  background-color: #3587a4;
+}
+
+a {
+  color: #00b7ff;
+}
+
+
+.btn-nav-color {
+  background-color: #c1dff0;
+  border-color: #c1dff0;
+}
+
+.btn {
+  background-color: #c1dff0;
+  border-color: #c1dff0;
+  color: black;
+}
+
+.btn:hover {
+  background-color: #2d848a;
+  border-color: #2d848a;
+  color: white;
+}
+
+nav-item.dropdown {
+  background-color: #c1dff0;
+}
+
+.jumbotron.jumbotron-fluid {
+  background-color: #c1dff0;
+}
+
+div.card {
+  background-color: #3587a4;
+  color: white;
+}
+
+.login {
+  margin: 0 auto;
+  width: 100%;
+  margin-top: 40px;
+}
+
+#map {
+  /* width:  600px; */
+  height: 250px;
+  margin-top: 20px;
+  margin: auto;
+}
+
+.profile-img {
+  width: 15%;
+}
+
+.unselected {
+  opacity: 0.4;
+}
+
+.fav-selected {
+  font-weight: 700;
+}
+
+.card-body {
+  background-size: 100%;
+}
+
+.handle-fav {
+  display: none;
+}
+
+#lat-lng {
+  display: none;
+}
+
+/* html {
+  margin: 0;
+} */
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px;
+}
+.rate:not(:checked) > input {
+  position: absolute;
+  top: -9999px;
+}
+.rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 30px;
+  color: #ccc;
+}
+.rate:not(:checked) > label:before {
+  content: "★ ";
+}
+.rate > input:checked ~ label {
+  color: #ffc700;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}
+
+.file-input {
+  position: absolute;
+  color: transparent;
+  z-index: 10;
+  height: 50px;
+  width: 150px;
+  opacity: 0;
+}
+
+.file-label {
+  position: absolute;
+  height: 50px;
+  width: 150px;
+  cursor: pointer;
+}

@@ -272,12 +272,15 @@ function timeAuction() {
         }
 
         for (let i = 0; i < auctionsCards.length; i++) {
-          let thereAreBid = false
+          //let thereAreBid = false
           if ($($(".time-auction")[i]).hasClass("bid")) {
-            thereAreBid = true;
+            //thereAreBid = true;
             break
           }
+          endBid();
         }
+
+        
 
 
        /*  if (timeRemaining.getSeconds() > 0) {

@@ -43,7 +43,7 @@ module.exports.doHandlePricing = (req, res, next) => {
 
   //let priceAuction = Math.round(req.body.priceAppraiser *);
   const sendPricing = (req, res, next) => {
-    Article.findByIdAndUpdate(req.params.articleId, {$set: {priceAppraiser: req.body.priceAppraiser, infoAppraiser: req.body.infoAppraiser, isPriced: true, priceAuction: Math.round(req.body.priceAppraiser * 0.75) }})
+    Article.findByIdAndUpdate(req.params.articleId, {$set: {priceAppraiser: req.body.priceAppraiser, infoAppraiser: req.body.infoAppraiser, isPriced: true, priceAuction: req.body.priceAppraiser }})
       .then(article => {
         res.redirect("/admins/articles/pendings");
       })
@@ -58,7 +58,7 @@ module.exports.doHandlePricing = (req, res, next) => {
       console.log("enviar tasación....")
       sendPricing(req, res, next);
       break;
-    }
+    }  
     case "refuse":{
       console.log("rechazar tasación....")
       articlesController.remove(req, res, next);

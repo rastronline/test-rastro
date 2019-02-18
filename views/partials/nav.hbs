@@ -1,121 +1,133 @@
 {{#if session }}
-<nav class="navbar navbar-expand-lg navbar-dark position-relative w-100 m-0" style="z-index:10000">
+<nav class="navbar navbar-expand-lg navbar-dark position-fixed w-100 m-0" style="z-index:10000">
   <a class="navbar-brand" href="/articles/search">Rastro Online</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
     <form action="/articles/search" class="form-inline my-2 my-lg-0 input-group w-25 search-form">
       <div class="input-group-prepend nav-item dropdown">
-        <a class="nav-link dropdown-toggle btn btn-nav-color my-2 my-sm-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{!-- <a class="btn btn-outline-success my-2 my-sm-0 nav-link" data-toggle="collapse" href="#collapseCategories" role="button" aria-expanded="false" aria-controls="collapseExample"> --}}
+        <a class="nav-link dropdown-toggle btn btn-secondary my-2 my-sm-0" href="#" id="navbarDropdownMenuLink" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{!-- <a class="btn btn-outline-success my-2 my-sm-0 nav-link" data-toggle="collapse" href="#collapseCategories"
+            role="button" aria-expanded="false" aria-controls="collapseExample"> --}}
             <i class="fas fa-list"></i>
           </a>
 
-        {{!--   <div class="collapse position-absolute my-5 container" style="width:40vw; z-index:2000" id="collapseCategories">
-           <div class="d-flex flex-wrap card card-body row">
-            {{#each categories as |category|}}
-            
+          {{!-- <div class="collapse position-absolute my-5 container" style="width:40vw; z-index:2000" id="collapseCategories">
+            <div class="d-flex flex-wrap card card-body row">
+              {{#each categories as |category|}}
+
               <div class="card col-2 my-2 card-category border-0" data-category="{{ category.id }}" id="div-category-{{category.id}}">
-                
+
                 <span class="badge badge-pill badge-secondary">{{ category.name }}</span>
               </div>
-            {{/each}}
-           </div>
-            
+              {{/each}}
+            </div>
+
           </div> --}}
           {{!-- <h3>{{categorySelected}}</h3> --}}
           <input type="text" style="display: none" name="category" id="category-filter" value="{{#if catSelected }}{{ catSelected }}{{else }}preferences{{/if }}">
-     {{!--  <input type="text" style="display: none" name="category" id="category-filter" value="{{ categorySelected }}"> --}}
+          {{!-- <input type="text" style="display: none" name="category" id="category-filter" value="{{ categorySelected }}">
+          --}}
           <div class="dropdown-menu row" style="width:80vw" aria-labelledby="navbarDropdownMenuLink">
-           <div class="d-flex flex-wrap justify-content-between">
-              <div class="card col-3 my-2 category border-2" data-category="all" id="div-category-all">
-                <span class="badge badge-pill">Todas</span>
+            <div class="d-flex flex-wrap justify-content-between">
+              <div class="card col-2 offset-1 my-2 category mx-auto border-0" data-category="all" id="div-category-all">
+                <span class="btn btn-info rounded-pill py-2 span-category font-weight-bold">Todas</span>
               </div>
-              <div class="card col-3 my-2 category border-2" data-category="preferences" id="div-category-preferences">
-                <span class="badge badge-pill">Mis prefencias</span>
+              <div class="card col-2 offset-1 my-2 category mx-auto border-0" data-category="preferences" id="div-category-preferences">
+                <span class="btn btn-info badge-pill rounded-pill py-2 span-category font-weight-bold">Mis prefencias</span>
               </div>
-            {{#each categories as |category|}}
-            {{!-- <a class="dropdown-item" href="#">{{ category.name }}</a> --}}
-              <div class="card col-3 my-2 category border-2" data-category="{{ category.id }}" id="div-category-{{category.id}}">
+              {{#each categories as |category|}}
+              {{!-- <a class="dropdown-item" href="#">{{ category.name }}</a> --}}
+              <div class="card col-2 offset-1 my-2 category mx-auto border-0" data-category="{{ category.id }}" id="div-category-{{category.id}}">
                 {{!-- <div class="card-body text-center" style="background-image: url({{ category.image }})">
                   <h5 class="card-title text-success">{{ category.name }}</h5>
                 </div> --}}
-                <span class="badge badge-pill">{{ category.name }}</span>
+                <span class="btn btn-info rounded-pill py-2 span-category font-weight-bold">{{ category.name }}</span>
 
-                
+
               </div>
-            {{/each}}
-            <script>
-
-              
-              let categorySelected = $("#category-filter").val()
-              console.log(categorySelected)
-              let categories = $(".category")
+              {{/each}}
+              <script>
 
 
-              for (var i = 0; i < categories.length; i++) {
-                //console.log(i);
-                if ($(categories[i]).attr("data-category") != categorySelected) {
-                  $(categories[i]).addClass("unselected");
+                let categorySelected = $("#category-filter").val()
+                console.log(categorySelected)
+                let categories = $(".category")
+
+
+                for (var i = 0; i < categories.length; i++) {
+                  //console.log(i);
+                  if ($(categories[i]).attr("data-category") != categorySelected) {
+                    $(categories[i]).addClass("unselected");
+                  }
                 }
-              }
               //$($(`div[data-category]="${categorySelected}"`)).attr("data-category").addClass("unselected");
               //$('.category[data-category]="all"').attr("data-category").addClass("unselected");
-              
-            </script>
-           </div>
-        </div>
+
+              </script>
+            </div>
+          </div>
       </div>
-      <input class="form-control my-2 my-sm-0" style="height: inherit" type="search" name="keyword" value="{{ fieldsForm.keyword }}" placeholder="Buscar..." aria-label="Search">
+      <input class="form-control my-2 my-sm-0" style="height: inherit" type="search" name="keyword" value="{{ fieldsForm.keyword }}"
+        placeholder="Buscar..." aria-label="Search">
       <div class="input-group-append">
-        <button class="btn btn-nav-color my-2 my-sm-0 search-btn" type="submit"><i class="fas fa-search"></i></button>
+        <button class="btn btn-secondary my-2 my-sm-0 search-btn" type="submit"><i class="fas fa-search"></i></button>
       </div>
     </form>
-    <div>
-    <ul class="navbar-nav mr-auto align-items-baseline">
-        {{#if session }}
-        <div>
-        <a href="/articles/new" class="btn btn-sm btn-danger rounded-pill">
+   
+      <div {{#isAdmin session }}hidden{{/isAdmin }}>
+        <a href="/articles/new" class="btn btn-lg btn-danger rounded-pill">
           <i class="fas fa-plus mx-1"></i>
           <span>Subir artículo</span>
         </a>
       </div>
+     
+      <div class="text-align-right{{!-- {{#isAdmin session }}text-right{{/isAdmin }} --}}">
+        <ul class="navbar-nav mr-auto align-items-baseline">
+          {{#if session }}
+
           <li class="nav-item dropdown mx-2">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{{ session.profilePic }}" class="rounded-circle mx-1" style="width: 70px; height: 70px" alt="photo frofile">
-              {{ session.email }}<sup class="mx-2"> {{ session.role }}</sup>
+            <a class="nav-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <img src="{{ session.profilePic }}" class="rounded-circle mx-1 profile-icon" style="width: 70px; height: 70px" alt="photo frofile">
+              {{ session.email }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               {{#isAdmin session }}
-                <a class="dropdown-item" href="/users/edit">Perfil</a>
-                <a class="dropdown-item" href="/admins/articles/pendings">Tasaciones Pendientes</a>
-                <a class="dropdown-item" href="/admins/listUsers">Lista de Usuarios</a>
+              <a class="dropdown-item" href="/users/edit">Perfil</a>
+              <a class="dropdown-item" href="/admins/articles/pendings">Tasaciones Pendientes</a>
+              <a class="dropdown-item" href="/admins/listUsers">Lista de Usuarios</a>
               {{else }}
-                <a class="dropdown-item" href="/users/edit">Perfil</a>
+              <a class="dropdown-item" href="/users/edit">Perfil</a>
 
-                <a class="dropdown-item" href="/users/selling">Mis artículos</a>
-                <a class="dropdown-item" href="/users/favorites">Favoritos</a>
-                <a class="dropdown-item" href="/users/owned">Mis compras</a>
+              <a class="dropdown-item" href="/users/selling">Mis artículos</a>
+              <a class="dropdown-item" href="/users/favorites">Mis favoritos</a>
+              <a class="dropdown-item" href="/users/purchases">Mis compras</a>
               {{/isAdmin }}
               {{!-- {{#isAdmin session }} {{> menuAdmin }} {{else }} {{> menuUser }} {{/isAdmin }} --}}
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/sessions/delete">Cerrar sesión</a>
-              
+
             </div>
-            
+
+          </li>
+          <li>
+            <span class="mx-2 rounded-pill badge badge-{{#isAdmin session }}danger{{else }}warning{{/isAdmin }}"> {{ session.role }}</span>
           </li>
           <li class="nav-item mx-2">
-            <a href="/sessions/delete" class="nav-link"><span class="mx-2">Logout</span><i class="fas fa-sign-out-alt"></i></a>
+            <a href="/sessions/delete" class="nav-brand"><span class="mx-2">Logout</span><i class="fas fa-sign-out-alt"></i></a>
           </li>
-        {{else }}
+          {{else }}
           <li class="nav-item mx-2">
-            <a href="/sessions/create" class="nav-link"><span class="mx-2">Login</span><i class="fas fa-sign-in-alt"></i></a>
+            <a href="/sessions/create" class="nav-brand"><span class="mx-2">Login</span><i class="fas fa-sign-in-alt"></i></a>
           </li>
-        {{/if}}
-      </ul>
+          {{/if}}
+        </ul>
+      </div>
     </div>
-  </div>
 </nav>
 {{/if}}

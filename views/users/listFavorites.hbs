@@ -1,9 +1,9 @@
-<h4 class="my-3">Listado de favoritos</h4>
-
-{{> filterBar }}
+<div class="mx-auto my-3 text-center">
+    <h2>Mis favoritos</h2>
+  </div>
 {{> navArticles }}
 
-<div class="container-fluid">
+<div class="container-fluid mx-1">
   <div class="card-columns row justify-content-center">
     {{#each favorites as |favorite|}}
       {{> cardArticle session=../session article=favorite }}

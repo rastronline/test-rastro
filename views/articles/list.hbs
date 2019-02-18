@@ -1,12 +1,11 @@
 <div>
-  <h4>
-    <center>¿Qué quieres buscar?</center>
-  </h4>
-
-  {{> filterBar }}
+  <div class="mx-auto my-3 text-center">
+    <h2> Listado de artículos</h2>
+  </div>
+  {{!-- {{> filterBar }} --}}
   {{> navArticles }}
 
-  <div class="container-fluid">
+  <div class="container-fluid mx-1">
     <div class="card-columns row justify-content-center">
       {{#each articles as |article|}}
       {{> cardArticle session=../session article=article }}

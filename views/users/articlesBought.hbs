@@ -1,0 +1,13 @@
+<div class="mx-auto my-3 text-center">
+    <h2> Mis compras</h2>
+  </div>
+
+
+
+<div class="container">
+  <div class="card-columns row justify-content-center">
+    {{#each articles as |article| }}
+      {{> cardArticleOwn session=../session article=article pathBack="pricing"}}
+    {{/each}}
+  </div>
+</div>

@@ -29,6 +29,7 @@ module.exports.createWithIDPCallback = (req, res, next) => {
 }
 
 module.exports.delete = (req, res, next) => {
+  constants.CATEGORY_SELECTED = "preferences";
   req.logout();
   res.redirect('/sessions/create');
 }

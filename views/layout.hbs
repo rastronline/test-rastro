@@ -22,31 +22,9 @@
 <body>
 
   {{> nav }}
-
-  <div style="width:400px">
-
-  </div>
-  {{!-- <div class="container-fluid">
-    <div class="row flex-xl-nowrap">
-      {{#if session }}
-      <div class="col-12 col-md-3 col-xl-2 bd-sidebar py-4">
-        {{#isAdmin session }}
-        {{> menuAdmin session=../session}}
-        {{else }}
-        {{> menuUser session=../session}}
-        {{/isAdmin }}
-      </div> --}}
-  {{!-- {{> menuUser}} --}}
-  {{!-- {{/if}}
-    </div>
-    --}}
-  {{!-- <div class="col-12 col-md-9 col-xl-8 bd-content">
-      {{{ body }}}
-    </div> --}}
-  {{!--
-  </div> --}}
-
+  <div style="height:100px"></div>
   {{{ body }}}
+  
 
   {{!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -73,5 +51,4 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </body>
-  {{> footer }}
 </html>

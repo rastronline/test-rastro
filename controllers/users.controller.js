@@ -78,7 +78,7 @@ module.exports.listArticlesSelling = (req, res, next) => {
 };
 
 
-module.exports.listArticlesOwned = (req, res, next) => {
+module.exports.listArticlesBought = (req, res, next) => {
  /*  Article.find({ buyer: req.params.id,
                  isSold: true })
     .then(articles => {
@@ -88,10 +88,10 @@ module.exports.listArticlesOwned = (req, res, next) => {
     })
     .catch(err => next(err)); */
 
-    Article.find({ buyer: req.params.id,
+    Article.find({ buyer: req.user.id,
                    isSold: true })
       .populate("buyer")
-        .then(articles => res.render("users/articles-owned", { articles }))
+        .then(articles => res.render("users/articlesBought", { articles }))
         .catch(err => next(err));
 };
 
@@ -126,6 +126,7 @@ module.exports.listArticlesPricing = (req, res, next) => {
     })
     .catch(err => next(err));
 };
+
 
 module.exports.listFavorites = (req, res, next) => {
   User.findById(req.user.id)

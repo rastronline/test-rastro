@@ -4,46 +4,91 @@ body {
   background-color: #c1dff0;
   font-family: "Source Sans Pro", sans-serif;
   height:100%;
+  font-size: 20px;
+  position: relative;
 }
+
 
 nav {
+  position: fixed;
+  width: 100%;
+  color: #fff;
+  font-size: 1.5rem;
+  background-color: #41b4dd;
+  box-shadow: 0 5px 6px 0px rgb(49, 49, 49);
+  z-index: 2000;
+
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+}
+
+nav a:hover {
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.7
+}
+profile-icon {
+  box-shadow: 5 5px 15px 5px rgb(49, 49, 49);
+}
+
+
+.main-inside {
   background-color: #3587a4;
+  color: #fff;
 }
 
-a {
+.btn-login {
+  border: #fff solid 4px;
+}
+
+.footer {
+  height: 75px;
+}
+
+.select:hover {
+  transform: translateY(-5px);
+  padding: 5px;
+  box-shadow: 2px 5px 25px 3px rgb(49, 49, 49);
+  background-color:rgb(230, 230, 230)
+}
+
+/* a {
   color: #00b7ff;
-}
+} */
 
 
-.btn-nav-color {
+/* .btn-nav-color {
   background-color: #c1dff0;
   border-color: #c1dff0;
-}
+} */
 
-.btn {
+/* .btn {
   background-color: #c1dff0;
   border-color: #c1dff0;
   color: black;
-}
+} */
 
-.btn:hover {
+/* .btn:hover {
   background-color: #2d848a;
   border-color: #2d848a;
   color: white;
-}
+} */
 
-nav-item.dropdown {
+/* nav-item.dropdown {
   background-color: #c1dff0;
-}
+} */
 
-.jumbotron.jumbotron-fluid {
+/* .jumbotron.jumbotron-fluid {
   background-color: #c1dff0;
-}
+} */
 
-div.card {
+/* div.card {
   background-color: #3587a4;
   color: white;
-}
+} */
 
 .login {
   margin: 0 auto;

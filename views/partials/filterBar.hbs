@@ -1,4 +1,7 @@
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid w-100">
+
+{{!-- 
+  <div></div>
   <div class="container">
     <h4 class="display-5">Fitrar por:</h4>
     <form action="/articles/search" method="get">
@@ -28,4 +31,64 @@
       </div>
     </form>
   </div>
+ --}}
+
+
+<div class="container">
+  <form action="/articles/search" method="get">
+    <div class="form-row">
+      <div class="col-2">
+        <label for="keyword">Categoría</label>
+        <select id="inputState" placeholder="Categoria..." name="category" class="form-control">
+          <option selected>{{!-- {{ fieldsForm.category }} --}} {{ catSelected }}</option>
+          {{!-- <option value=""></option> --}}
+          {{#each categories as |category| }}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+          {{/each }}
+        </select>
+      </div>
+
+    
+      
+      <div class="form-group col-md-3">
+        <label for="keyword">Palabra a buscar</label>
+      
+            <input type="text" class="form-control" id="keyword" name="keyword" value="{{ fieldsForm.keyword }}"
+              placeholder="Buscar...">
+        
+        {{!-- <input type="email" class="form-control" id="inputEmail4" placeholder="Email"> --}}
+      </div>
+
+      <div class="col-2">
+        <label for="keyword">Desde</label>
+        <input type="text" class="form-control" name="minPrice"
+                value="{{#if fieldsForm.minPrice }}{{ fieldsForm.minPrice }}{{else }}0{{/if }}" placeholder="(€)MIN">
+      </div>
+
+        <div class="col-2">
+          <label for="keyword">Hasta</label>
+        <input type="text" class="form-control" name="maxPrice"
+              value="{{#if fieldsForm.maxPrice }}{{ fieldsForm.maxPrice }}{{else }}99999{{/if }}" placeholder="(€) MAX">
+      </div>
+        <div class="col-1">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+
+        </div>
+
+      
+    </div>
+  </form>
+
 </div>
+
+
+
+
+
+
+
+
+
+</div>
+
+

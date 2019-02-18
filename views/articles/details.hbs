@@ -4,7 +4,7 @@
   <div class="row justify-content-center">
     <div class="card p-1 mx-1 my-2 col-8">
       <div class="py-2 px-4 d-flex justify-content-between align-items-baseline">
-        <a href="/articles/user/{{ article.owner }}">
+        <a href="/articles/user/{{ article.owner.id }}">
           <img src="{{ article/owner.profilePic }}" class="rounded-circle mr-1" style="width: 70px; height: 70px" alt="photo frofile">
           <span>{{ article.owner.name }}</span>
         </a>
@@ -16,12 +16,10 @@
                 <span>Comprar</span>
               </a>
             {{else }}
-             {{!--  {{#existBuyer ../article }} --}}
-              <a href="#" class="btn btn-success rounded-pill mx-3 {{#isBidLeader ../session ../article.buyer }} disabled {{/isBidLeader }}" data-toggle="modal" data-target="#bidModal">
-                <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
-                <span>Pujar</span>
-              </a>
-            {{!--   {{/existBuyer }} --}}
+                <a href="#" class="btn btn-success rounded-pill mx-3 {{#existBuyer ../article }}{{#isBidLeader ../../session ../../article.buyer }}disabled{{/isBidLeader }}{{/existBuyer }}" data-toggle="modal" data-target="#bidModal">
+                  <i class="fas fa-coins fa-2x mx-1 align-middle"></i>
+                  <span>Pujar</span>
+                </a>        
             {{/unless }}
             {{!-- <a class="card-link fav-btn"><i data-value="{{ article.id }}" class="far fa-heart fa-3x text-danger {{#isFavorite ../session ../article }} fav-selected {{/isFavorite }}"></i></a> --}}
             <a class="link fav-btn">

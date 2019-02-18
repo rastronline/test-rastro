@@ -7,6 +7,7 @@ const upload = require("../configs/multer.config");
 const authMiddleware = require('../middlewares/auth.middleware')
 /* GET home page. */
 
+router.get('/user/:ownerId', authMiddleware.isAuthenticated, articlesController.listByUser);
 router.get('/search', authMiddleware.isAuthenticated, articlesController.list);
 router.get('/searchInAuction', authMiddleware.isAuthenticated, articlesController.listAuctions);
 router.get('/new', authMiddleware.isAuthenticated, articlesController.create);
@@ -20,7 +21,6 @@ router.post('/:articleId/addToFav', authMiddleware.isAuthenticated, articlesCont
 router.post('/:articleId/removeFromFav', authMiddleware.isAuthenticated, articlesController.removeFromFav);
 router.get('/:id', authMiddleware.isAuthenticated, articlesController.get);
 router.post('/:id/delete', authMiddleware.isAuthenticated, articlesController.doDelete);
-router.get('/user/:userId', authMiddleware.isAuthenticated, articlesController.listByUser);
 //router.get('/new', articlesController.create);
 //router.post('/:ownerId/new', articlesController.doCreate);
 
